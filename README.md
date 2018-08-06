@@ -3,8 +3,10 @@
 ![Chrome x64 v60.4](https://img.shields.io/badge/Chrome%20x64-v63.0-brightgreen.svg)
 ![Safari v11.0.3](https://img.shields.io/badge/Safari%20-v11.0.3-brightgreen.svg)
 ### 安装地址
-[百度网盘直接下载助手 直链加速版](https://greasyfork.org/zh-CN/scripts/39504-%E7%99%BE%E5%BA%A6%E7%BD%91%E7%9B%98%E7%9B%B4%E6%8E%A5%E4%B8%8B%E8%BD%BD%E5%8A%A9%E6%89%8B-%E7%9B%B4%E9%93%BE%E5%8A%A0%E9%80%9F%E7%89%88)
+[百度网盘直接下载助手 直链加速版](https://greasyfork.org/zh-CN/scripts/39504)
 ### 更新日志
+
+**2018-06-06** : v1.2.4 修复链接错误的问题
 
 **2018-04-06** : v1.2.3 修复获取链接无法下载的问题
 
@@ -28,13 +30,13 @@
 
 均推荐使用 IDM 进行下载 ([IDM 下载地址](http://internetdownloadmanager.com/download.html))
 
-![IDM](https://syhyz1990.oss-cn-beijing.aliyuncs.com/idm.gif)
+![IDM](https://open-1252026789.cos.ap-beijing.myqcloud.com/idm.gif )
 
 Tips: 被列入百度黑名单的用户, 退出账号后获取链接即可达到最大速度
   
 ### 捐赠
 如果您觉得脚本对您有帮助，请往我的支付宝客户端，扫描二维码，捐赠 X元，^_^，谢谢！
   
-![支持我](https://syhyz1990.oss-cn-beijing.aliyuncs.com/a6x05537ltinxoigp3qvv90.png)
+![支持我](https://open-1252026789.cos.ap-beijing.myqcloud.com/alipay.png)
 
 以太坊地址: 0x7a0abF3f54Ed4d9a5b6A58fcb5b2BB5989C19F9C

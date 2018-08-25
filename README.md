@@ -6,6 +6,8 @@
 [百度网盘直接下载助手 直链加速版](https://greasyfork.org/zh-CN/scripts/39504)
 
 ### 更新日志
+**2018-08-25** : v1.2.5 修复部分链接失效的问题,增加程序稳定性能
+
 **2018-06-06** : v1.2.4 修复链接错误的问题
 
 **2018-04-06** : v1.2.3 修复获取链接无法下载的问题
@@ -31,13 +33,14 @@
 
 均推荐使用 IDM 进行下载 ([IDM 下载地址](http://internetdownloadmanager.com/download.html))
 
-![IDM](https://open-1252026789.cos.ap-beijing.myqcloud.com/idm.gif )
+![IDM](https://i.loli.net/2018/08/25/5b80b83c565ba.gif )
 
 Tips: 被列入百度黑名单的用户, 退出账号后获取链接即可达到最大速度
   
 ### 捐赠
-如果您觉得脚本对您有帮助，请往我的支付宝客户端，扫描二维码，捐赠 X元，^_^，谢谢！
+如果您觉得脚本对您有帮助，请往我的支付宝或微信客户端，扫描二维码，捐赠 X元，^_^，谢谢！
   
-![支持我](https://open-1252026789.cos.ap-beijing.myqcloud.com/alipay.png)
+![支持我](https://i.loli.net/2018/08/25/5b80ba335f515.png)
+![支持我](https://i.loli.net/2018/08/25/5b80ba336b6bf.png)
 
-以太坊地址: 0x7a0abF3f54Ed4d9a5b6A58fcb5b2BB5989C19F9C
+以太坊地址: 0x26d4d31336aa622dF0625FFcC19E988F2f457237

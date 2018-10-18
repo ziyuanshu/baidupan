@@ -1,7 +1,5 @@
 # 百度网盘直接下载助手 直链加速版
-![TamperMonkey v4.5](https://img.shields.io/badge/TamperMonkey-v4.5-brightgreen.svg)
-![Chrome x64 v60.4](https://img.shields.io/badge/Chrome%20x64-v63.0-brightgreen.svg)
-![Safari v11.0.3](https://img.shields.io/badge/Safari%20-v11.0.3-brightgreen.svg)
+![TamperMonkey v4.5](https://img.shields.io/badge/TamperMonkey-v4.5-brightgreen.svg) ![Chrome x64 v60.4](https://img.shields.io/badge/Chrome%20x64-v63.0-brightgreen.svg) ![Safari v11.0.3](https://img.shields.io/badge/Safari%20-v11.0.3-brightgreen.svg)
 ### 安装地址
 [百度网盘直接下载助手 直链加速版](https://greasyfork.org/zh-CN/scripts/39504)
 

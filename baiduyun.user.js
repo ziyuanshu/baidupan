@@ -4,7 +4,7 @@
 // @version           1.3
 // @icon              https://www.baidu.com/favicon.ico
 // @description       支持迅雷,IDM直接下载百度网盘和百度网盘分享的文件,告别百度VIP,免装客户端,支持批量下载
-// @author            syhyz1990 <syhyz1990@outlook.com>
+// @author            syhyz1990 <https://github.com/syhyz1990/baiduyun/issues>
 // @supportURL        https://github.com/syhyz1990/baiduyun
 // @contributionURL   https://i.loli.net/2018/08/25/5b80ba335f515.png
 // @match             *://pan.baidu.com/disk/home*

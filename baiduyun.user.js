@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name              百度网盘直接下载助手 直链加速版
 // @namespace         https://github.com/syhyz1990/baiduyun
-// @version           1.2.5
+// @version           1.3
 // @icon              https://www.baidu.com/favicon.ico
 // @description       支持迅雷,IDM直接下载百度网盘和百度网盘分享的文件,告别百度VIP,免装客户端,支持批量下载
 // @author            syhyz1990 <syhyz1990@outlook.com>
@@ -1367,7 +1367,7 @@
 
     //监视单个文件选中
     function registerFileSelect() {
-      console.log('registerFileSelect');
+      //console.log('registerFileSelect');
       //var $dd = $('div.list-view dd');
       var $dd = $('div.' + wordMap['list-view'] + ' dd');
       $dd.each(function (index, element) {
@@ -1471,6 +1471,7 @@
       }
       buttonTarget = 'download';
       var downloadLink = getDownloadLink();
+      //console.log(downloadLink);
 
       if (downloadLink.errno == -20) {
         vcode = getVCode();
@@ -1540,6 +1541,7 @@
         return;
       }
       var result = getDownloadLinkWithVCode(val);
+      //console.log(result);
       if (result.errno == -20) {
         vcodeDialog.close();
         $('#dialog-err').text('验证码输入错误，请重新输入');
@@ -1652,35 +1654,40 @@
 
     //获取下载链接
     function getDownloadLink() {
-      var result;
-      if (isSingleShare) {
-        fid_list = getFidList();
-        logid = getLogID();
-        var url = panAPIUrl + 'sharedownload?sign=' + sign + '&timestamp=' + timestamp + '&bdstoken=' + bdstoken + '&channel=' + channel + '&clienttype=' + clienttype + '&web=' + web + '&app_id=' + app_id + '&logid=' + logid;
-        var params = {
-          encrypt: encrypt,
-          product: product,
-          uk: uk,
-          primaryid: primaryid,
-          fid_list: fid_list
-        };
-        if (shareType == 'secret') {
-          params.extra = extra;
-        }
-        if (selectFileList[0].isdir == 1 || selectFileList.length > 1) {
-          params.type = 'batch';
-        }
-        $.ajax({
-          url: url,
-          method: 'POST',
-          async: false,
-          data: params,
-          success: function (response) {
-            result = response;
+      if (bdstoken === null) {
+        alert('脚本作者提示 : 百度升级, 请先登录百度云盘才能正常获取');
+        return '';
+      } else {
+        var result;
+        if (isSingleShare) {
+          fid_list = getFidList();
+          logid = getLogID();
+          var url = panAPIUrl + 'sharedownload?sign=' + sign + '&timestamp=' + timestamp + '&bdstoken=' + bdstoken + '&channel=' + channel + '&clienttype=' + clienttype + '&web=' + web + '&app_id=' + app_id + '&logid=' + logid;
+          var params = {
+            encrypt: encrypt,
+            product: product,
+            uk: uk,
+            primaryid: primaryid,
+            fid_list: fid_list
+          };
+          if (shareType == 'secret') {
+            params.extra = extra;
           }
-        });
+          if (selectFileList[0].isdir == 1 || selectFileList.length > 1) {
+            params.type = 'batch';
+          }
+          $.ajax({
+            url: url,
+            method: 'POST',
+            async: false,
+            data: params,
+            success: function (response) {
+              result = response;
+            }
+          });
+        }
+        return result;
       }
-      return result;
     }
 
     //有验证码输入时获取下载链接

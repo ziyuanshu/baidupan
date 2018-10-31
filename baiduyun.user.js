@@ -1,9 +1,9 @@
 // ==UserScript==
 // @name              百度网盘直接下载助手 直链加速版
 // @namespace         https://github.com/syhyz1990/baiduyun
-// @version           1.3
+// @version           1.3.1
 // @icon              https://www.baidu.com/favicon.ico
-// @description       支持迅雷,IDM直接下载百度网盘和百度网盘分享的文件,告别百度VIP,免装客户端,支持批量下载
+// @description       新增代理下载方法, 依然支持IDM, 迅雷下载
 // @author            syhyz1990 <https://github.com/syhyz1990/baiduyun/issues>
 // @supportURL        https://github.com/syhyz1990/baiduyun
 // @contributionURL   https://i.loli.net/2018/08/25/5b80ba335f515.png

@@ -1,9 +1,9 @@
 // ==UserScript==
 // @name              百度网盘直接下载助手 直链加速版
 // @namespace         https://github.com/syhyz1990/baiduyun
-// @version           1.3.1
+// @version           1.3.2
 // @icon              https://www.baidu.com/favicon.ico
-// @description       新增代理下载方法, 依然支持IDM, 迅雷下载
+// @description       2018-10-31修复失效问题 依然支持IDM, 迅雷下载
 // @author            syhyz1990 <https://github.com/syhyz1990/baiduyun/issues>
 // @supportURL        https://github.com/syhyz1990/baiduyun
 // @contributionURL   https://i.loli.net/2018/08/25/5b80ba335f515.png
@@ -75,9 +75,9 @@
     var http = http || false;
     //是否强制将https替换为http
     if (http) {
-      return link.replace('https://d.pcs.baidu.com', 'http://yqall02.baidupcs.com');
+      return link.replace('https://d.pcs.baidu.com', 'http://c.pcs.baidu.com');
     } else {
-      return link.replace('d.pcs.baidu.com', 'yqall02.baidupcs.com');
+      return link.replace('d.pcs.baidu.com', 'c.pcs.baidu.com');
     }
   }
 
@@ -640,9 +640,9 @@
           return;
         }
         var httplink = downloadLink.replace(/^([A-Za-z]+):/, 'http:');
-        //httplink = replaceDownloadLink(httplink);
+        httplink = replaceDownloadLink(httplink);
         var httpslink = downloadLink.replace(/^([A-Za-z]+):/, 'https:');
-        //httpslink = replaceDownloadLink(httpslink);
+        httpslink = replaceDownloadLink(httpslink);
         var filename = '';
         $.each(selectFileList, function (index, element) {
           if (selectFileList.length == 1)
@@ -792,7 +792,7 @@
           else if (downloadType == 'batch')
             downloadLink = result.dlink;
           downloadLink = downloadLink.replace(/^([A-Za-z]+):/, linkType);
-          //downloadLink = replaceDownloadLink(downloadLink);
+          downloadLink = replaceDownloadLink(downloadLink);
         } else {
           downloadLink = 'error';
         }
@@ -1489,7 +1489,7 @@
           link = downloadLink.list[0].dlink;
         else
           link = downloadLink.dlink;
-        //link = link.replace("https://d.pcs.baidu.com","http://yqall02.baidupcs.com");
+        link = link.replace("https://d.pcs.baidu.com","http://c.pcs.baidu.com");
         execDownload(link);
       } else {
         alert('获取下载链接失败！');
@@ -1572,7 +1572,7 @@
                 filename = filename + ',' + element.filename;
             }
           });
-          //link = replaceDownloadLink(link, true);
+          link = replaceDownloadLink(link);
           var linkList = {
             filename: filename,
             urls: [
@@ -1637,7 +1637,7 @@
               filename = filename + ',' + element.filename;
           }
         });
-        //link = replaceDownloadLink(link, true);
+        link = replaceDownloadLink(link);
         var linkList = {
           filename: filename,
           urls: [

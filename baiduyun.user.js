@@ -640,9 +640,9 @@
           return;
         }
         var httplink = downloadLink.replace(/^([A-Za-z]+):/, 'http:');
-        httplink = replaceDownloadLink(httplink);
+        //httplink = replaceDownloadLink(httplink);
         var httpslink = downloadLink.replace(/^([A-Za-z]+):/, 'https:');
-        httpslink = replaceDownloadLink(httpslink);
+        //httpslink = replaceDownloadLink(httpslink);
         var filename = '';
         $.each(selectFileList, function (index, element) {
           if (selectFileList.length == 1)
@@ -792,7 +792,7 @@
           else if (downloadType == 'batch')
             downloadLink = result.dlink;
           downloadLink = downloadLink.replace(/^([A-Za-z]+):/, linkType);
-          downloadLink = replaceDownloadLink(downloadLink);
+          //downloadLink = replaceDownloadLink(downloadLink);
         } else {
           downloadLink = 'error';
         }
@@ -1489,7 +1489,7 @@
           link = downloadLink.list[0].dlink;
         else
           link = downloadLink.dlink;
-        link = link.replace("https://d.pcs.baidu.com","http://c.pcs.baidu.com");
+        //link = link.replace("https://d.pcs.baidu.com","http://c.pcs.baidu.com");
         execDownload(link);
       } else {
         alert('获取下载链接失败！');
@@ -1572,7 +1572,7 @@
                 filename = filename + ',' + element.filename;
             }
           });
-          link = replaceDownloadLink(link);
+          //link = replaceDownloadLink(link);
           var linkList = {
             filename: filename,
             urls: [
@@ -1637,7 +1637,7 @@
               filename = filename + ',' + element.filename;
           }
         });
-        link = replaceDownloadLink(link);
+        //link = replaceDownloadLink(link);
         var linkList = {
           filename: filename,
           urls: [

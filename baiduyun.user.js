@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name              百度网盘直接下载助手 直链加速版
 // @namespace         https://github.com/syhyz1990/baiduyun
-// @version           1.3.2
+// @version           1.3.3
 // @icon              https://www.baidu.com/favicon.ico
 // @description       2018-10-31修复失效问题 依然支持IDM, 迅雷下载
 // @author            syhyz1990 <https://github.com/syhyz1990/baiduyun/issues>

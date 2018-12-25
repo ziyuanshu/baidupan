@@ -1,9 +1,9 @@
 // ==UserScript==
 // @name              百度网盘直接下载助手 直链加速版
 // @namespace         https://github.com/syhyz1990/baiduyun
-// @version           1.3.2
+// @version           1.4.0
 // @icon              https://www.baidu.com/favicon.ico
-// @description       2018-10-31修复失效问题 依然支持IDM, 迅雷下载
+// @description       2018-12-25 新增关于网盘限速的说明
 // @author            syhyz1990 <https://github.com/syhyz1990/baiduyun/issues>
 // @supportURL        https://github.com/syhyz1990/baiduyun
 // @contributionURL   https://i.loli.net/2018/08/25/5b80ba335f515.png
@@ -544,8 +544,7 @@
             downloadLink = result.dlink;
             if (selectFileList.length === 1)
               downloadLink = downloadLink + '&zipname=' + encodeURIComponent(selectFileList[0].filename) + '.zip';
-          }
-          else {
+          } else {
             alert("发生错误！");
             return;
           }
@@ -624,8 +623,7 @@
             downloadLink = result.dlink;
             if (selectFileList.length === 1)
               downloadLink = downloadLink + '&zipname=' + encodeURIComponent(selectFileList[0].filename) + '.zip';
-          }
-          else {
+          } else {
             alert("发生错误！");
             return;
           }
@@ -661,7 +659,7 @@
             {url: httpslink, rank: 2}
           ]
         };
-        tip = '显示模拟百度网盘网页获取的链接，可以使用右键迅雷下载，复制到下载工具需要传递cookie，多文件打包下载的链接可以直接复制使用';
+        tip = '显示模拟百度网盘网页获取的链接，可以使用右键迅雷或IDM下载，复制到下载工具需要传递cookie，多文件打包下载的链接可以直接复制使用';
         dialog.open({title: '下载链接', type: 'link', list: linkList, tip: tip});
       } else {
         if (selectFileList.length === 0) {
@@ -691,7 +689,7 @@
           httpslink = httpslink.replace('250528', '266719');
           linkList.urls.push({url: httplink, rank: 3});
           linkList.urls.push({url: httpslink, rank: 4});
-          tip = '显示模拟APP获取的链接(使用百度云ID)，可以使用右键迅雷下载，复制到下载工具需要传递cookie';
+          tip = '显示模拟APP获取的链接(使用百度云ID)，可以使用右键迅雷或IDM下载，复制到下载工具需要传递cookie';
           dialog.open({title: '下载链接', type: 'link', list: linkList, tip: tip});
         } else if (id.indexOf('outerlink') != -1) {
           var result = getDownloadLinkWithClientAPI(selectFileList[0].path);
@@ -1208,8 +1206,7 @@
         $('div.slide-show-right').css('width', '500px');
         $('div.frame-main').css('width', '96%');
         $('div.share-file-viewer').css('width', '740px').css('margin-left', 'auto').css('margin-right', 'auto');
-      }
-      else
+      } else
         $('div.slide-show-right').css('width', '500px');
       var $dropdownbutton = $('<span class="g-dropdown-button"></span>');
       var $dropdownbutton_a = $('<a class="g-button" data-button-id="b200" data-button-index="200" href="javascript:void(0);"></a>');
@@ -1579,7 +1576,7 @@
               {url: link, rank: 1}
             ]
           };
-          var tip = "显示获取的链接，可以使用右键迅雷下载，复制无用，需要传递cookie";
+          var tip = "显示获取的链接，可以使用右键迅雷或IDM下载，复制无用，需要传递cookie";
           dialog.open({title: '下载链接', type: 'link', list: linkList, tip: tip});
         }
       } else {
@@ -1644,7 +1641,7 @@
             {url: link, rank: 1}
           ]
         };
-        var tip = "显示获取的链接，可以使用右键迅雷下载，复制无用，需要传递cookie";
+        var tip = "显示获取的链接，可以使用右键迅雷或IDM下载，复制无用，需要传递cookie";
         dialog.open({title: '下载链接', type: 'link', list: linkList, tip: tip});
       } else {
         alert('获取下载链接失败！');
@@ -1848,7 +1845,7 @@
 
       var $dialog_button = $('<div class="dialog-button" style="display:none"></div>');
       var $dialog_button_div = $('<div style="display:table;margin:auto"></div>')
-      var $dialog_copy_button = $('<button id="dialog-copy-button" style="display:none">复制</button>');
+      var $dialog_copy_button = $('<button id="dialog-copy-button" style="display:none;width: 100px; margin: 5px 0 10px 0; cursor: pointer; background: #3b8cff; border: none; height: 30px; color: #fff; border-radius: 3px;">复制</button>');
       var $dialog_edit_button = $('<button id="dialog-edit-button" style="display:none">编辑</button>');
       var $dialog_exit_button = $('<button id="dialog-exit-button" style="display:none">退出</button>');
 

@@ -1,9 +1,9 @@
 // ==UserScript==
 // @name              百度网盘直接下载助手 直链加速版
 // @namespace         https://github.com/syhyz1990/baiduyun
-// @version           1.4.0
+// @version           2.0.0
 // @icon              https://www.baidu.com/favicon.ico
-// @description       2018-12-25 新增关于网盘限速的说明
+// @description       2019-02-01 满血复活，告别限速（详见Tips2）。支持IDM，迅雷下载，请先安装chrome插件
 // @author            syhyz1990 <https://github.com/syhyz1990/baiduyun/issues>
 // @supportURL        https://github.com/syhyz1990/baiduyun
 // @contributionURL   https://i.loli.net/2018/08/25/5b80ba335f515.png
@@ -24,30 +24,14 @@
 
   var $ = $ || window.$;
   var log_count = 1;
-  var wordMapHttp = {
-    'list-grid-switch': 'auiaQNyn',
-    'list-switched-on': 'ksbXZm',
-    'grid-switched-on': 'tch6W25',
-    'list-switch': 'lrbo9a',
-    'grid-switch': 'xh6poL',
-    'checkbox': 'EOGexf',  //ok
-    'chekbox-grid': 'cEefyz',
-    'col-item': 'Qxyfvg',
-    'check': 'fydGNC',
-    'checked': 'EzubGg',
-    'list-view': 'vdAfKMb',
-    'item-active': 'yu5x45',
-    'grid-view': 'JKvHJMb',
-    'bar-search': 'OFaPaO',
-    //'default-dom':'etr9DPv',
-    //'bar':'ccjr9DVe',
-    'list-tools': 'QDDOQB'
-  };
+  var wordMapHttp = {};
   $(function () {
     wordMapHttp['default-dom'] = ($('.icon-upload').parent().parent().parent().parent().parent().attr('class'));
     wordMapHttp['bar'] = ($('.icon-upload').parent().parent().parent().parent().attr('class'));
   });
   var wordMapHttps = {
+    'list': 'zJMtAEb',
+    'grid': 'fyQgAEb',
     'list-grid-switch': 'auiaQNyn',
     'list-switched-on': 'ewXm1e',
     'grid-switched-on': 'kxhkX2Em',
@@ -59,7 +43,7 @@
     'checked': 'EzubGg',
     'chekbox-grid': 'cEefyz',
     'list-view': 'vdAfKMb',
-    'item-active': 'yu5x45',
+    'item-active': 'jddPyQ',
     'grid-view': 'JKvHJMb',
     'bar-search': 'OFaPaO',
     //'default-dom':'qkk3LED',
@@ -147,7 +131,6 @@
 
       if (currentPage == 'search')
         searchKey = getSearchKey();
-
       refreshListGridStatus();
       refreshFileList();
       refreshSelectList();
@@ -173,7 +156,7 @@
 
     //获取当前的视图模式
     function getListGridStatus() {
-      if ($('.grid-switched-on').length > 0) {
+      if ($('.' + wordMap['list']).is(':hidden')) {
         return 'grid'
       } else {
         return 'list'
@@ -196,7 +179,7 @@
         if (getCurrentPage() == 'all') {
           if (currentPage == getCurrentPage()) {
             if (currentPath == getPath()) {
-              return;
+
             } else {
               currentPath = getPath();
               refreshFileList();
@@ -211,7 +194,7 @@
         } else if (getCurrentPage() == 'category') {
           if (currentPage == getCurrentPage()) {
             if (currentCategory == getCategory()) {
-              return;
+
             } else {
               currentPage = getCurrentPage();
               currentCategory = getCategory();
@@ -227,7 +210,7 @@
         } else if (getCurrentPage() == 'search') {
           if (currentPage == getCurrentPage()) {
             if (searchKey == getSearchKey()) {
-              return;
+
             } else {
               currentPage = getCurrentPage();
               searchKey = getSearchKey();
@@ -264,21 +247,21 @@
         $checkbox = $('.' + wordMap['chekbox-grid']);
       }
 
-      //console.log($checkbox);
       $checkbox.each(function (index, element) {
         $(element).bind('click', function (e) {
           var $parent = $(this).parent();
           var filename;
+          var isActive;
 
           if (list_grid_status == 'list') {
             filename = $('div.file-name div.text a', $parent).attr('title');
+            isActive = $parent.hasClass(wordMap['item-active']);
           } else if (list_grid_status == 'grid') {
-            filename = $('div.file-name a', $parent).attr('title');
+            filename = $('div.file-name a', $(this)).attr('title');
+            isActive = !$(this).hasClass(wordMap['item-active'])
           }
-          //if($parent.hasClass('item-active')){
-          //if($parent.hasClass('prWzXA')){
-          //console.log(fileList);
-          if ($parent.hasClass(wordMap['item-active'])) {
+
+          if (isActive) {
             slog('取消选中文件：' + filename);
             for (var i = 0; i < selectFileList.length; i++) {
               if (selectFileList[i].filename == filename) {
@@ -287,7 +270,6 @@
             }
           } else {
             slog('选中文件:' + filename);
-            //console.log(fileList);
             $.each(fileList, function (index, element) {
               if (element.server_filename == filename) {
                 var obj = {
@@ -354,8 +336,6 @@
 
     //单个文件选中，点击文件不是点击选中框，会只选中该文件
     function registerFileSelect() {
-      //var $dd = $('div.list-view dd');
-      //var $dd = $('div.vdAfKMb dd');
       var $dd = $('div.' + wordMap['list-view'] + ' dd');
       $dd.each(function (index, element) {
         $(element).bind('click', function (e) {
@@ -502,7 +482,8 @@
       $outerlinkbutton_link_button.click(linkClick);
       $outerlinkbutton_batchlink_button.click(batchClick);
 
-      $dropdownbutton_span.append($directbutton).append($apibutton).append($outerlinkbutton);
+      //$dropdownbutton_span.append($directbutton).append($apibutton).append($outerlinkbutton);
+      $dropdownbutton_span.append($apibutton).append($outerlinkbutton);
       $dropdownbutton.append($dropdownbutton_a).append($dropdownbutton_span);
 
       $dropdownbutton.hover(function () {
@@ -685,8 +666,8 @@
               {url: httpslink, rank: 2}
             ]
           };
-          httplink = httplink.replace('250528', '266719');
-          httpslink = httpslink.replace('250528', '266719');
+          httplink = httplink.replace('266719', '266719');
+          httpslink = httpslink.replace('266719', '266719');
           linkList.urls.push({url: httplink, rank: 3});
           linkList.urls.push({url: httpslink, rank: 4});
           tip = '显示模拟APP获取的链接(使用百度云ID)，可以使用右键迅雷或IDM下载，复制到下载工具需要传递cookie';
@@ -896,7 +877,7 @@
         showempty: 0,
         web: 1,
         channel: 'chunlei',
-        appid: 250528
+        appid: 266719
       };
 
       $.ajax({
@@ -927,7 +908,7 @@
         showempty: 0,
         web: 1,
         channel: 'chunlei',
-        appid: 250528
+        appid: 266719
       };
       $.ajax({
         url: listUrl,
@@ -956,7 +937,7 @@
         num: 100,
         key: searchKey,
         channel: 'chunlei',
-        app_id: 250528,
+        app_id: 266719,
         bdstoken: bdstoken,
         logid: logid,
         clienttype: 0
@@ -1008,7 +989,7 @@
         type: type,
         channel: 'chunlei',
         web: 1,
-        app_id: 250528,
+        app_id: 266719,
         bdstoken: bdstoken,
         logid: logid,
         clienttype: 0
@@ -1026,7 +1007,7 @@
     }
 
     function getDownloadLinkWithRESTAPIBaidu(path) {
-      var link = restAPIUrl + 'file?method=download&app_id=250528&path=' + encodeURIComponent(path);
+      var link = restAPIUrl + 'file?method=download&app_id=266719&path=' + encodeURIComponent(path);
       return link;
     }
 
@@ -1037,7 +1018,7 @@
 
     function getDownloadLinkWithClientAPI(path) {
       var result;
-      var url = clientAPIUrl + 'file?method=locatedownload&app_id=250528&ver=4.0&path=' + encodeURIComponent(path);
+      var url = clientAPIUrl + 'file?method=locatedownload&app_id=266719&ver=4.0&path=' + encodeURIComponent(path);
       $.ajax({
         url: url,
         method: 'POST',
@@ -1129,7 +1110,7 @@
       channel = 'chunlei';
       clienttype = 0;
       web = 1;
-      app_id = 250528;
+      app_id = 266719;
       logid = getLogID();
       encrypt = 0;
       product = 'share';
@@ -1250,7 +1231,7 @@
       window.addEventListener('hashchange', function (e) {
         list_grid_status = getListGridStatus();
         if (currentPath == getPath()) {
-          return;
+
         } else {
           currentPath = getPath();
           refreshFileList();
@@ -1284,16 +1265,24 @@
     function registerCheckbox() {
       //var $checkbox = $('span.checkbox');
       var $checkbox = $('span.' + wordMap['checkbox']);
+      if (list_grid_status == 'grid') {
+        $checkbox = $('.' + wordMap['chekbox-grid']);
+      }
       $checkbox.each(function (index, element) {
         $(element).bind('click', function (e) {
           var $parent = $(this).parent();
           var filename;
+          var isActive;
+
           if (list_grid_status == 'list') {
             filename = $('div.file-name div.text a', $parent).attr('title');
+            isActive = $(this).parents('dd').hasClass('JS-item-active')
           } else if (list_grid_status == 'grid') {
-            filename = $('div.file-name a', $parent).attr('title');
+            filename = $('div.file-name a', $(this)).attr('title');
+            isActive = !$(this).hasClass('JS-item-active')
           }
-          if ($parent.hasClass('item-active')) {
+
+          if (isActive) {
             slog('取消选中文件：' + filename);
             for (var i = 0; i < selectFileList.length; i++) {
               if (selectFileList[i].filename == filename) {
@@ -1301,7 +1290,7 @@
               }
             }
           } else {
-            slog('选中文件：' + filename);
+            slog('选中文件: ' + filename);
             $.each(fileList, function (index, element) {
               if (element.server_filename == filename) {
                 var obj = {
@@ -1479,7 +1468,7 @@
         vcodeDialog.open(vcode);
       } else if (downloadLink.errno == 112) {
         alert('页面过期，请刷新重试');
-        return;
+
       } else if (downloadLink.errno === 0) {
         var link;
         if (selectFileList.length == 1 && selectFileList[0].isdir === 0)
@@ -1490,7 +1479,7 @@
         execDownload(link);
       } else {
         alert('获取下载链接失败！');
-        return;
+
       }
     }
 
@@ -1581,7 +1570,7 @@
         }
       } else {
         alert('发生错误！');
-        return;
+
       }
     }
 
@@ -1612,7 +1601,7 @@
         vcodeDialog.open(vcode);
       } else if (downloadLink.errno == 112) {
         alert('页面过期，请刷新重试');
-        return;
+
       } else if (downloadLink.errno === 0) {
         var link;
         if (selectFileList.length == 1 && selectFileList[0].isdir === 0)
@@ -1645,7 +1634,7 @@
         dialog.open({title: '下载链接', type: 'link', list: linkList, tip: tip});
       } else {
         alert('获取下载链接失败！');
-        return;
+
       }
     }
 
@@ -1844,7 +1833,7 @@
       });
 
       var $dialog_button = $('<div class="dialog-button" style="display:none"></div>');
-      var $dialog_button_div = $('<div style="display:table;margin:auto"></div>')
+      var $dialog_button_div = $('<div style="display:table;margin:auto"></div>');
       var $dialog_copy_button = $('<button id="dialog-copy-button" style="display:none;width: 100px; margin: 5px 0 10px 0; cursor: pointer; background: #3b8cff; border: none; height: 30px; color: #fff; border-radius: 3px;">复制</button>');
       var $dialog_edit_button = $('<button id="dialog-edit-button" style="display:none">编辑</button>');
       var $dialog_exit_button = $('<button id="dialog-exit-button" style="display:none">退出</button>');
@@ -2001,11 +1990,11 @@
 
       shadow.show();
       dialog.show();
-    }
+    };
 
     this.close = function () {
       dialogControl();
-    }
+    };
 
     function dialogControl() {
       $('div.dialog-body', dialog).children().remove();
@@ -2077,10 +2066,10 @@
         $('#dialog-img').attr('src', vcode.img);
       dialog.show();
       shadow.show();
-    }
+    };
     this.close = function () {
       dialogControl();
-    }
+    };
     dialog = createDialog();
     shadow = $('div.dialog-shadow');
 

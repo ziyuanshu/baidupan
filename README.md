@@ -34,17 +34,17 @@
 
 推荐使用 IDM 进行下载 ([IDM 下载地址](http://internetdownloadmanager.com/download.html))，使用IDM的同学可以先去IDM安装目录找到IDMGCExt.crx，拖到Chrome或该内核浏览器中安装插件。
 
-![IDM](https://i.loli.net/2018/12/25/5c21a66c8c8bc.gif )
+![IDM](http://ww1.sinaimg.cn/large/4db689e3ly1g0akkblkx1g20pu0f911b.gif )
 
 Tips1: **下载前请先登录百度网盘**，否则无法获取链接。
 
 Tips2: **被限制线程的同学请先将文件保存至‘我的网盘’，转到我的网盘选择要下载的文件，选择‘api下载’**
-![演示](https://i.loli.net/2019/02/01/5c53e71955874.gif) 
+![演示](http://ww1.sinaimg.cn/large/4db689e3ly1g0akknlv8gg215q0li4qp.gif) 
 
 ### 捐赠
 如果您觉得脚本对您有帮助，请通过支付宝或微信，扫描二维码，捐赠 X元，^_^，谢谢！
   
-![支持我](https://i.loli.net/2018/08/25/5b80ba335f515.png) ![支持我](https://i.loli.net/2018/08/25/5b80ba336b6bf.png)
+![支持我](http://ww1.sinaimg.cn/large/4db689e3ly1g0ae1oc3o4j205k05yweg.jpg) ![支持我](http://ww1.sinaimg.cn/large/4db689e3ly1g0ae1ogfjbj205k05yjrl.jpg)
 
 ### 免责声明 
 本脚本仅在浏览器端运行, 源码公开可见, 仅做研究使用, 不得用于非法获利, 如产生法律纠纷与本人无关!!!

@@ -666,8 +666,8 @@
               {url: httpslink, rank: 2}
             ]
           };
-          httplink = httplink.replace('266719', '266719');
-          httpslink = httpslink.replace('266719', '266719');
+          httplink = httplink.replace('250528', '266719');
+          httpslink = httpslink.replace('250528', '266719');
           linkList.urls.push({url: httplink, rank: 3});
           linkList.urls.push({url: httpslink, rank: 4});
           tip = '显示模拟APP获取的链接(使用百度云ID)，可以使用右键迅雷或IDM下载，复制到下载工具需要传递cookie';
@@ -877,7 +877,7 @@
         showempty: 0,
         web: 1,
         channel: 'chunlei',
-        appid: 266719
+        appid: 250528
       };
 
       $.ajax({
@@ -908,7 +908,7 @@
         showempty: 0,
         web: 1,
         channel: 'chunlei',
-        appid: 266719
+        appid: 250528
       };
       $.ajax({
         url: listUrl,
@@ -937,7 +937,7 @@
         num: 100,
         key: searchKey,
         channel: 'chunlei',
-        app_id: 266719,
+        app_id: 250258,
         bdstoken: bdstoken,
         logid: logid,
         clienttype: 0
@@ -989,7 +989,7 @@
         type: type,
         channel: 'chunlei',
         web: 1,
-        app_id: 266719,
+        app_id: 250528,
         bdstoken: bdstoken,
         logid: logid,
         clienttype: 0
@@ -1007,18 +1007,18 @@
     }
 
     function getDownloadLinkWithRESTAPIBaidu(path) {
-      var link = restAPIUrl + 'file?method=download&app_id=266719&path=' + encodeURIComponent(path);
+      var link = restAPIUrl + 'file?method=download&app_id=250528&path=' + encodeURIComponent(path);
       return link;
     }
 
     function getDownloadLinkWithRESTAPIES(path) {
-      var link = restAPIUrl + 'file?method=download&app_id=266719&path=' + encodeURIComponent(path);
+      var link = restAPIUrl + 'file?method=download&app_id=250528&path=' + encodeURIComponent(path);
       return link;
     }
 
     function getDownloadLinkWithClientAPI(path) {
       var result;
-      var url = clientAPIUrl + 'file?method=locatedownload&app_id=266719&ver=4.0&path=' + encodeURIComponent(path);
+      var url = clientAPIUrl + 'file?method=locatedownload&app_id=250528&ver=4.0&path=' + encodeURIComponent(path);
       $.ajax({
         url: url,
         method: 'POST',
@@ -1110,7 +1110,7 @@
       channel = 'chunlei';
       clienttype = 0;
       web = 1;
-      app_id = 266719;
+      app_id = 250528;
       logid = getLogID();
       encrypt = 0;
       product = 'share';

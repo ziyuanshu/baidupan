@@ -1,9 +1,9 @@
 // ==UserScript==
 // @name              百度网盘直接下载助手 直链加速版
 // @namespace         https://github.com/syhyz1990/baiduyun
-// @version           2.0.0
+// @version           2.0.1
 // @icon              https://www.baidu.com/favicon.ico
-// @description       2019-02-01 满血复活，告别限速（详见Tips2）。支持IDM，迅雷下载，请先安装chrome插件
+// @description       百度网盘高速下载 支持IDM  [2019-02-20] 修复我的网盘API下载返回403的问题
 // @author            syhyz1990 <https://github.com/syhyz1990/baiduyun/issues>
 // @supportURL        https://github.com/syhyz1990/baiduyun
 // @contributionURL   https://i.loli.net/2018/08/25/5b80ba335f515.png
@@ -666,8 +666,8 @@
               {url: httpslink, rank: 2}
             ]
           };
-          httplink = httplink.replace('250528', '266719');
-          httpslink = httpslink.replace('250528', '266719');
+          httplink = httplink.replace('250528', '265486');
+          httpslink = httpslink.replace('250528', '265486');
           linkList.urls.push({url: httplink, rank: 3});
           linkList.urls.push({url: httpslink, rank: 4});
           tip = '显示模拟APP获取的链接(使用百度云ID)，可以使用右键迅雷或IDM下载，复制到下载工具需要传递cookie';
@@ -877,7 +877,7 @@
         showempty: 0,
         web: 1,
         channel: 'chunlei',
-        appid: 250528
+        appid: 265486
       };
 
       $.ajax({
@@ -908,7 +908,7 @@
         showempty: 0,
         web: 1,
         channel: 'chunlei',
-        appid: 250528
+        appid: 265486
       };
       $.ajax({
         url: listUrl,
@@ -989,7 +989,7 @@
         type: type,
         channel: 'chunlei',
         web: 1,
-        app_id: 250528,
+        app_id: 265486,
         bdstoken: bdstoken,
         logid: logid,
         clienttype: 0
@@ -1007,18 +1007,18 @@
     }
 
     function getDownloadLinkWithRESTAPIBaidu(path) {
-      var link = restAPIUrl + 'file?method=download&app_id=250528&path=' + encodeURIComponent(path);
+      var link = restAPIUrl + 'file?method=download&app_id=265486&path=' + encodeURIComponent(path);
       return link;
     }
 
     function getDownloadLinkWithRESTAPIES(path) {
-      var link = restAPIUrl + 'file?method=download&app_id=250528&path=' + encodeURIComponent(path);
+      var link = restAPIUrl + 'file?method=download&app_id=265486&path=' + encodeURIComponent(path);
       return link;
     }
 
     function getDownloadLinkWithClientAPI(path) {
       var result;
-      var url = clientAPIUrl + 'file?method=locatedownload&app_id=250528&ver=4.0&path=' + encodeURIComponent(path);
+      var url = clientAPIUrl + 'file?method=locatedownload&app_id=265486&ver=4.0&path=' + encodeURIComponent(path);
       $.ajax({
         url: url,
         method: 'POST',
@@ -1110,7 +1110,7 @@
       channel = 'chunlei';
       clienttype = 0;
       web = 1;
-      app_id = 250528;
+      app_id = 265486;
       logid = getLogID();
       encrypt = 0;
       product = 'share';

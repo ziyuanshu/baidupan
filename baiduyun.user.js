@@ -6,7 +6,7 @@
 // @description       百度网盘高速下载 支持IDM  [2019-02-20] 修复我的网盘API下载返回403的问题
 // @author            syhyz1990 <https://github.com/syhyz1990/baiduyun/issues>
 // @supportURL        https://github.com/syhyz1990/baiduyun
-// @contributionURL   https://i.loli.net/2018/08/25/5b80ba335f515.png
+// @contributionURL   http://ww1.sinaimg.cn/large/4db689e3ly1g0d4k7kbm5j20dt07n754.jpg
 // @match             *://pan.baidu.com/disk/home*
 // @match             *://yun.baidu.com/disk/home*
 // @match             *://pan.baidu.com/s/*
@@ -666,8 +666,8 @@
               {url: httpslink, rank: 2}
             ]
           };
-          httplink = httplink.replace('250528', '265486');
-          httpslink = httpslink.replace('250528', '265486');
+          httplink = httplink.replace('265486', '309847');
+          httpslink = httpslink.replace('265486', '309847');
           linkList.urls.push({url: httplink, rank: 3});
           linkList.urls.push({url: httpslink, rank: 4});
           tip = '显示模拟APP获取的链接(使用百度云ID)，可以使用右键迅雷或IDM下载，复制到下载工具需要传递cookie';

@@ -1,5 +1,5 @@
 # 百度网盘直接下载助手 直链加速版
-![TamperMonkey v4.5](https://img.shields.io/badge/TamperMonkey-v4.5-brightgreen.svg) ![Chrome x64 v60.4](https://img.shields.io/badge/Chrome%20x64-v63.0-brightgreen.svg) ![Safari v11.0.3](https://img.shields.io/badge/Safari%20-v11.0.3-brightgreen.svg)
+![TamperMonkey v4.5](https://img.shields.io/badge/TamperMonkey-v4.7-brightgreen.svg) ![Chrome x64 v60.4](https://img.shields.io/badge/Chrome%20x64-v72.0-brightgreen.svg) ![Safari v11.0.3](https://img.shields.io/badge/Safari%20-v12.0-brightgreen.svg)
 ### 安装地址
 [百度网盘直接下载助手 直链加速版](https://greasyfork.org/zh-CN/scripts/39504)
 
@@ -39,7 +39,10 @@
 Tips1: **下载前请先登录百度网盘**，否则无法获取链接。
 
 Tips2: **被限制线程的同学请先将文件保存至‘我的网盘’，转到我的网盘选择要下载的文件，选择‘api下载’**
+
 ![演示](https://ww1.sinaimg.cn/large/4db689e3ly1g0akknlv8gg215q0li4qp.gif) 
+
+务必等IDM获取到文件名和文件大小后再点击开始下载
 
 ### 捐赠
 如果您觉得脚本对您有帮助，请通过支付宝或微信，扫描二维码，捐赠 X元，^_^，谢谢！
@@ -47,8 +50,8 @@ Tips2: **被限制线程的同学请先将文件保存至‘我的网盘’，�
 ![支持我](https://ww1.sinaimg.cn/large/4db689e3ly1g0ae1oc3o4j205k05yweg.jpg) ![支持我](https://ww1.sinaimg.cn/large/4db689e3ly1g0ae1ogfjbj205k05yjrl.jpg)
 
 ### 免责声明 
-本脚本仅在浏览器端运行, 源码公开可见, 仅做研究使用, 不得用于非法获利, 如产生法律纠纷与本人无关!!!
+本脚本仅在浏览器端运行, 源码公开可见, 仅做研究使用, 不得用于非法获利, 如产生法律纠纷与脚本作者无关!!!
 
 ### 脚本反馈
-**qq群: ([809233376](https://jq.qq.com/?_wv=1027&k=5topn6c))**
+**QQ群交流: （[809233376](https://jq.qq.com/?_wv=1027&k=5topn6c)）**
 

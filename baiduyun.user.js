@@ -1,10 +1,10 @@
 // ==UserScript==
 // @name              百度网盘直接下载助手 直链加速版
 // @namespace         https://github.com/syhyz1990/baiduyun
-// @version           2.0.1
+// @version           2.0.2
 // @icon              https://www.baidu.com/favicon.ico
 // @description       百度网盘高速下载 支持IDM  [2019-02-20] 修复我的网盘API下载返回403的问题
-// @author            syhyz1990 <https://github.com/syhyz1990/baiduyun/issues>
+// @author            syhyz1990
 // @supportURL        https://github.com/syhyz1990/baiduyun
 // @contributionURL   http://ww1.sinaimg.cn/large/4db689e3ly1g0d4k7kbm5j20dt07n754.jpg
 // @match             *://pan.baidu.com/disk/home*
@@ -24,12 +24,7 @@
 
   var $ = $ || window.$;
   var log_count = 1;
-  var wordMapHttp = {};
-  $(function () {
-    wordMapHttp['default-dom'] = ($('.icon-upload').parent().parent().parent().parent().parent().attr('class'));
-    wordMapHttp['bar'] = ($('.icon-upload').parent().parent().parent().parent().attr('class'));
-  });
-  var wordMapHttps = {
+  var wordMap = {
     'list': 'zJMtAEb',
     'grid': 'fyQgAEb',
     'list-grid-switch': 'auiaQNyn',
@@ -43,27 +38,15 @@
     'checked': 'EzubGg',
     'chekbox-grid': 'cEefyz',
     'list-view': 'vdAfKMb',
-    'item-active': 'jddPyQ',
+    'item-active': 'olZ9vJ',
     'grid-view': 'JKvHJMb',
     'bar-search': 'OFaPaO',
-    //'default-dom':'qkk3LED',
-    //'bar':'cfj3L8W',
     'list-tools': 'QDDOQB'
   };
-  var wordMap = location.protocol == 'http:' ? wordMapHttp : wordMapHttps;
-
-  //console.log(wordMap);
-
-  //替换网址为高级下载链接 默认不替换 http不用传
-  function replaceDownloadLink(link, http) {
-    var http = http || false;
-    //是否强制将https替换为http
-    if (http) {
-      return link.replace('https://d.pcs.baidu.com', 'http://c.pcs.baidu.com');
-    } else {
-      return link.replace('d.pcs.baidu.com', 'c.pcs.baidu.com');
-    }
-  }
+  $(function () {
+    wordMap['default-dom'] = ($('.icon-upload').parent().parent().parent().parent().parent().attr('class'));
+    wordMap['bar'] = ($('.icon-upload').parent().parent().parent().parent().attr('class'));
+  });
 
   function slog(c1, c2, c3) {
     c1 = c1 ? c1 : '';
@@ -111,7 +94,6 @@
       addButton();
       createIframe();
       dialog = new Dialog({addCopy: true});
-
       slog('网盘直接下载助手加载成功！');
     };
 
@@ -125,10 +107,8 @@
 
       if (currentPage == 'all')
         currentPath = getPath();
-
       if (currentPage == 'category')
         currentCategory = getCategory();
-
       if (currentPage == 'search')
         searchKey = getSearchKey();
       refreshListGridStatus();
@@ -178,9 +158,7 @@
 
         if (getCurrentPage() == 'all') {
           if (currentPage == getCurrentPage()) {
-            if (currentPath == getPath()) {
-
-            } else {
+            if (currentPath != getPath()) {
               currentPath = getPath();
               refreshFileList();
               refreshSelectList();
@@ -193,9 +171,7 @@
           }
         } else if (getCurrentPage() == 'category') {
           if (currentPage == getCurrentPage()) {
-            if (currentCategory == getCategory()) {
-
-            } else {
+            if (currentCategory != getCategory()) {
               currentPage = getCurrentPage();
               currentCategory = getCategory();
               refreshFileList();
@@ -209,9 +185,7 @@
           }
         } else if (getCurrentPage() == 'search') {
           if (currentPage == getCurrentPage()) {
-            if (searchKey == getSearchKey()) {
-
-            } else {
+            if (searchKey != getSearchKey()) {
               currentPage = getCurrentPage();
               searchKey = getSearchKey();
               refreshFileList();
@@ -297,14 +271,10 @@
 
     //全选框
     function registerAllCheckbox() {
-      //var $checkbox = $('div.col-item.check');
-      //var $checkbox = $('div.Qxyfvg.fydGNC');
       var $checkbox = $('div.' + wordMap['col-item'] + '.' + wordMap['check']);
       $checkbox.each(function (index, element) {
         $(element).bind('click', function (e) {
           var $parent = $(this).parent();
-          //if($parent.hasClass('checked')){
-          //if($parent.hasClass('EzubGg')){
           if ($parent.hasClass(wordMap['checked'])) {
             slog('取消全选');
             selectFileList = [];
@@ -326,8 +296,6 @@
     }
 
     function unregisterAllCheckbox() {
-      //var $checkbox = $('div.col-item.check');
-      //var $checkbox = $('div.Qxyfvg.fydGNC');
       var $checkbox = $('div.' + wordMap['col-item'] + '.' + wordMap['check']);
       $checkbox.each(function (index, element) {
         $(element).unbind('click');
@@ -359,8 +327,6 @@
               });
             } else {
               selectFileList = [];
-              //var $dd_select = $('div.list-view dd.item-active');
-              //var $dd_select = $('div.vdAfKMb dd.prWzXA');
               var $dd_select = $('div.' + wordMap['list-view'] + ' dd.' + wordMap['item-active']);
               $.each($dd_select, function (index, element) {
                 var filename = $('div.file-name div.text a', $(element)).attr('title');
@@ -384,8 +350,6 @@
     }
 
     function unregisterFileSelect() {
-      //var $dd = $('div.list-view dd');
-      //var $dd = $('div.vdAfKMb dd');
       var $dd = $('div.' + wordMap['list-view'] + ' dd');
       $dd.each(function (index, element) {
         $(element).unbind('click');
@@ -407,12 +371,6 @@
         registerFileSelect();
       });
 
-      //var list_view = document.querySelector('.list-view');
-      //var grid_view = document.querySelector('.grid-view');
-
-      //var list_view = document.querySelector('.vdAfKMb');
-      //var grid_view = document.querySelector('.JKvHJMb');
-
       var list_view = document.querySelector('.' + wordMap['list-view']);
       var grid_view = document.querySelector('.' + wordMap['grid-view']);
 
@@ -423,8 +381,6 @@
 
     //添加助手按钮
     function addButton() {
-      //$('div.bar-search').css('width','18%');//修改搜索框的宽度，避免遮挡
-      //$('div.OFaPaO').css('width','18%');
       $('div.' + wordMap['bar-search']).css('width', '18%');
       var $dropdownbutton = $('<span class="g-dropdown-button"></span>');
       var $dropdownbutton_a = $('<a class="g-button" href="javascript:void(0);"><span class="g-button-right"><em class="icon icon-download" title="百度网盘下载助手"></em><span class="text" style="width: auto;">下载助手</span></span></a>');
@@ -496,7 +452,6 @@
 
     // 我的网盘 - 下载
     function downloadClick(event) {
-      //console.log('downloadClick');
       slog('选中文件列表：', selectFileList);
       var id = event.target.id;
       var downloadLink;
@@ -511,7 +466,6 @@
             downloadType = 'batch';
           else if (selectFileList[0].isdir === 0)
             downloadType = 'dlink';
-          //downloadType = selectFileList[0].isdir==1?'batch':(selectFileList[0].isdir===0?'dlink':'batch');
         } else if (selectFileList.length > 1) {
           downloadType = 'batch';
         }
@@ -548,7 +502,7 @@
           return;
         } else {
           if (selectFileList[0].isdir == 1) {
-            alert("该方法不支持目录下载！");
+            alert("该方法不支持目录下载！请使用批量下载");
             return;
           }
         }
@@ -619,9 +573,7 @@
           return;
         }
         var httplink = downloadLink.replace(/^([A-Za-z]+):/, 'http:');
-        //httplink = replaceDownloadLink(httplink);
         var httpslink = downloadLink.replace(/^([A-Za-z]+):/, 'https:');
-        //httpslink = replaceDownloadLink(httpslink);
         var filename = '';
         $.each(selectFileList, function (index, element) {
           if (selectFileList.length == 1)
@@ -647,7 +599,7 @@
           alert("获取选中文件失败，请刷新重试！");
           return;
         } else if (selectFileList.length > 1) {
-          alert("该方法不支持多文件下载！");
+          alert("该方法不支持多文件下载！请使用批量下载");
           return;
         } else {
           if (selectFileList[0].isdir == 1) {
@@ -700,7 +652,6 @@
           });
         }
       }
-      //dialog.open({title:'下载链接',type:'link',list:linkList,tip:tip});
     }
 
     // 我的网盘 - 批量下载
@@ -726,7 +677,7 @@
         dialog.open({title: '批量链接', type: 'batch', list: batchLinkList, tip: tip, showcopy: true});
       } else if (id.indexOf('api') != -1) {
         batchLinkList = getAPIBatchLink(linkType);
-        tip = '显示所有选中文件的API下载链接，不显示文件夹';
+        tip = '显示所有选中文件的API下载链接，直接复制链接无效，请安装IDM或迅雷Chrome插件';
         if (batchLinkList.length === 0) {
           alert('没有链接可以显示，API链接不要全部选中文件夹！');
           return;
@@ -751,8 +702,6 @@
           showall: true
         });
       }
-
-      //dialog.open({title:'批量链接',type:'batch',list:batchLinkList,tip:tip,showcopy:true});
     }
 
     function getDirectBatchLink(linkType) {
@@ -771,7 +720,6 @@
           else if (downloadType == 'batch')
             downloadLink = result.dlink;
           downloadLink = downloadLink.replace(/^([A-Za-z]+):/, linkType);
-          //downloadLink = replaceDownloadLink(downloadLink);
         } else {
           downloadLink = 'error';
         }
@@ -801,13 +749,10 @@
           return;
         result = getDownloadLinkWithClientAPI(element.path);
         if (result.errno == 0) {
-          //downloadLink = result.urls[0].url;
           list.push({filename: element.filename, links: result.urls});
         } else {
-          //downloadLink = 'error';
           list.push({filename: element.filename, links: [{rank: 1, url: 'error'}]});
         }
-        //list.push({filename:element.filename,downloadlink:downloadLink});
       });
       return list;
     }
@@ -1007,11 +952,6 @@
     }
 
     function getDownloadLinkWithRESTAPIBaidu(path) {
-      var link = restAPIUrl + 'file?method=download&app_id=265486&path=' + encodeURIComponent(path);
-      return link;
-    }
-
-    function getDownloadLinkWithRESTAPIES(path) {
       var link = restAPIUrl + 'file?method=download&app_id=265486&path=' + encodeURIComponent(path);
       return link;
     }
@@ -1641,7 +1581,7 @@
     //获取下载链接
     function getDownloadLink() {
       if (bdstoken === null) {
-        alert('脚本作者提示 : 百度升级, 请先登录百度云盘才能正常获取');
+        alert('提示 : 登录百度网盘后才能正常使用脚本哦!!!');
         return '';
       } else {
         var result;
@@ -1834,7 +1774,7 @@
 
       var $dialog_button = $('<div class="dialog-button" style="display:none"></div>');
       var $dialog_button_div = $('<div style="display:table;margin:auto"></div>');
-      var $dialog_copy_button = $('<button id="dialog-copy-button" style="display:none;width: 100px; margin: 5px 0 10px 0; cursor: pointer; background: #3b8cff; border: none; height: 30px; color: #fff; border-radius: 3px;">复制</button>');
+      var $dialog_copy_button = $('<button id="dialog-copy-button" style="display:none;width: 100px; margin: 5px 0 10px 0; cursor: pointer; background: #ff4941; border: none; height: 30px; color: #fff; border-radius: 3px;">直接复制无效</button>');
       var $dialog_edit_button = $('<button id="dialog-edit-button" style="display:none">编辑</button>');
       var $dialog_exit_button = $('<button id="dialog-exit-button" style="display:none">退出</button>');
 

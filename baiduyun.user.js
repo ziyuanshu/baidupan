@@ -7,7 +7,6 @@
 // @author            syhyz1990
 // @license           MIT
 // @supportURL        https://github.com/syhyz1990/baiduyun
-// @contributionURL   http://ww1.sinaimg.cn/large/4db689e3ly1g0d4k7kbm5j20dt07n754.jpg
 // @match             *://pan.baidu.com/disk/home*
 // @match             *://yun.baidu.com/disk/home*
 // @match             *://pan.baidu.com/s/*

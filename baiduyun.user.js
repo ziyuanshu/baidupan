@@ -1,10 +1,11 @@
 // ==UserScript==
 // @name              百度网盘直接下载助手 直链加速版
 // @namespace         https://github.com/syhyz1990/baiduyun
-// @version           2.0.2
+// @version           2.0.3
 // @icon              https://www.baidu.com/favicon.ico
-// @description       百度网盘高速下载 支持IDM  [2019-02-20] 修复我的网盘API下载返回403的问题
+// @description       获取百度网盘高速下载地址 支持IDM,FDM,迅雷下载
 // @author            syhyz1990
+// @license           MIT
 // @supportURL        https://github.com/syhyz1990/baiduyun
 // @contributionURL   http://ww1.sinaimg.cn/large/4db689e3ly1g0d4k7kbm5j20dt07n754.jpg
 // @match             *://pan.baidu.com/disk/home*
@@ -38,7 +39,7 @@
     'checked': 'EzubGg',
     'chekbox-grid': 'cEefyz',
     'list-view': 'vdAfKMb',
-    'item-active': 'olZ9vJ',
+    'item-active': 'wf4n1E',
     'grid-view': 'JKvHJMb',
     'bar-search': 'OFaPaO',
     'list-tools': 'QDDOQB'
@@ -592,7 +593,7 @@
             {url: httpslink, rank: 2}
           ]
         };
-        tip = '显示模拟百度网盘网页获取的链接，可以使用右键迅雷或IDM下载，复制到下载工具需要传递cookie，多文件打包下载的链接可以直接复制使用';
+        tip = '显示模拟百度网盘网页获取的链接，可以使用右键迅雷或IDM下载，多文件打包(限300k)下载的链接可以直接复制使用';
         dialog.open({title: '下载链接', type: 'link', list: linkList, tip: tip});
       } else {
         if (selectFileList.length === 0) {
@@ -618,8 +619,8 @@
               {url: httpslink, rank: 2}
             ]
           };
-          httplink = httplink.replace('265486', '309847');
-          httpslink = httpslink.replace('265486', '309847');
+          httplink = httplink.replace('265486', '290150');
+          httpslink = httpslink.replace('265486', '290150');
           linkList.urls.push({url: httplink, rank: 3});
           linkList.urls.push({url: httpslink, rank: 4});
           tip = '显示模拟APP获取的链接(使用百度云ID)，可以使用右键迅雷或IDM下载，复制到下载工具需要传递cookie';

@@ -1,7 +1,9 @@
 # 百度网盘直接下载助手 直链加速版
 ![TamperMonkey v4.5](https://img.shields.io/badge/TamperMonkey-v4.8-brightgreen.svg) ![Chrome x64 v60.4](https://img.shields.io/badge/Chrome%20x64-v72.0-brightgreen.svg) ![Safari v11.0.3](https://img.shields.io/badge/Safari%20-v12.0-brightgreen.svg)
 ### 安装地址
-[百度网盘直接下载助手 直链加速版](https://greasyfork.org/zh-CN/scripts/39504)
+[安装地址1](https://greasyfork.org/zh-CN/scripts/39504)
+
+[安装地址2](https://openuserjs.org/scripts/syhyz1990/%E7%99%BE%E5%BA%A6%E7%BD%91%E7%9B%98%E7%9B%B4%E6%8E%A5%E4%B8%8B%E8%BD%BD%E5%8A%A9%E6%89%8B_%E7%9B%B4%E9%93%BE%E5%8A%A0%E9%80%9F%E7%89%88)
 
 
 ### 更新日志
@@ -49,7 +51,7 @@ Tips2: **被限制线程的同学请先将文件保存至‘我的网盘’，�
 
 
 ### 捐赠
-如果您觉得脚本对您有帮助，请通过支付宝或微信，扫描二维码，捐赠 X元，^_^，谢谢！
+如果您觉得脚本对您有帮助，您可以通过支付宝或微信，扫描二维码，捐赠 X元，^_^，谢谢！
  
  
  ![支持我](https://ww1.sinaimg.cn/large/4db689e3ly1g0ae1ogfjbj205k05yjrl.jpg) ![支持我](https://ww1.sinaimg.cn/large/4db689e3ly1g0ae1oc3o4j205k05yweg.jpg)

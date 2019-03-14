@@ -1,9 +1,9 @@
 // ==UserScript==
 // @name              百度网盘直接下载助手 直链加速版
 // @namespace         https://github.com/syhyz1990/baiduyun
-// @version           2.0.3
+// @version           2.1.0
 // @icon              https://www.baidu.com/favicon.ico
-// @description       获取百度网盘高速下载地址 支持IDM,FDM,迅雷下载
+// @description       获取百度网盘高速下载地址 支持IDM,FDM,迅雷下载 支持直链加速
 // @author            syhyz1990
 // @license           MIT
 // @supportURL        https://github.com/syhyz1990/baiduyun
@@ -14,17 +14,18 @@
 // @match             *://pan.baidu.com/share/link*
 // @match             *://yun.baidu.com/share/link*
 // @require           https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js
-// @run-at            document-end
+// @run-at            document-idle
 // @grant             unsafeWindow
+// @grant             GM_xmlhttpRequest
+// @grant             GM_download
 // @grant             GM_setClipboard
 // ==/UserScript==
 
 (function () {
   'use strict';
 
-  var $ = $ || window.$;
   var log_count = 1;
-  var wordMap = {
+  var classMap = {
     'list': 'zJMtAEb',
     'grid': 'fyQgAEb',
     'list-grid-switch': 'auiaQNyn',
@@ -41,11 +42,11 @@
     'item-active': 'wf4n1E',
     'grid-view': 'JKvHJMb',
     'bar-search': 'OFaPaO',
-    'list-tools': 'QDDOQB'
+    'list-tools': 'tcuLAu',
   };
   $(function () {
-    wordMap['default-dom'] = ($('.icon-upload').parent().parent().parent().parent().parent().attr('class'));
-    wordMap['bar'] = ($('.icon-upload').parent().parent().parent().parent().attr('class'));
+    classMap['default-dom'] = ($('.icon-upload').parent().parent().parent().parent().parent().attr('class'));
+    classMap['bar'] = ($('.icon-upload').parent().parent().parent().parent().attr('class'));
   });
 
   function slog(c1, c2, c3) {
@@ -136,7 +137,7 @@
 
     //获取当前的视图模式
     function getListGridStatus() {
-      if ($('.' + wordMap['list']).is(':hidden')) {
+      if ($('.' + classMap['list']).is(':hidden')) {
         return 'grid'
       } else {
         return 'list'
@@ -216,9 +217,9 @@
 
     //文件选择框
     function registerCheckbox() {
-      var $checkbox = $('span.' + wordMap['checkbox']);
+      var $checkbox = $('span.' + classMap['checkbox']);
       if (list_grid_status == 'grid') {
-        $checkbox = $('.' + wordMap['chekbox-grid']);
+        $checkbox = $('.' + classMap['chekbox-grid']);
       }
 
       $checkbox.each(function (index, element) {
@@ -229,10 +230,10 @@
 
           if (list_grid_status == 'list') {
             filename = $('div.file-name div.text a', $parent).attr('title');
-            isActive = $parent.hasClass(wordMap['item-active']);
+            isActive = $parent.hasClass(classMap['item-active']);
           } else if (list_grid_status == 'grid') {
             filename = $('div.file-name a', $(this)).attr('title');
-            isActive = !$(this).hasClass(wordMap['item-active'])
+            isActive = !$(this).hasClass(classMap['item-active'])
           }
 
           if (isActive) {
@@ -261,9 +262,7 @@
     }
 
     function unregisterCheckbox() {
-      //var $checkbox = $('span.checkbox');
-      //var $checkbox = $('span.EOGexf');
-      var $checkbox = $('span.' + wordMap['checkbox']);
+      var $checkbox = $('span.' + classMap['checkbox']);
       $checkbox.each(function (index, element) {
         $(element).unbind('click');
       });
@@ -271,11 +270,11 @@
 
     //全选框
     function registerAllCheckbox() {
-      var $checkbox = $('div.' + wordMap['col-item'] + '.' + wordMap['check']);
+      var $checkbox = $('div.' + classMap['col-item'] + '.' + classMap['check']);
       $checkbox.each(function (index, element) {
         $(element).bind('click', function (e) {
           var $parent = $(this).parent();
-          if ($parent.hasClass(wordMap['checked'])) {
+          if ($parent.hasClass(classMap['checked'])) {
             slog('取消全选');
             selectFileList = [];
           } else {
@@ -296,7 +295,7 @@
     }
 
     function unregisterAllCheckbox() {
-      var $checkbox = $('div.' + wordMap['col-item'] + '.' + wordMap['check']);
+      var $checkbox = $('div.' + classMap['col-item'] + '.' + classMap['check']);
       $checkbox.each(function (index, element) {
         $(element).unbind('click');
       });
@@ -304,7 +303,7 @@
 
     //单个文件选中，点击文件不是点击选中框，会只选中该文件
     function registerFileSelect() {
-      var $dd = $('div.' + wordMap['list-view'] + ' dd');
+      var $dd = $('div.' + classMap['list-view'] + ' dd');
       $dd.each(function (index, element) {
         $(element).bind('click', function (e) {
           var nodeName = e.target.nodeName.toLowerCase();
@@ -327,7 +326,7 @@
               });
             } else {
               selectFileList = [];
-              var $dd_select = $('div.' + wordMap['list-view'] + ' dd.' + wordMap['item-active']);
+              var $dd_select = $('div.' + classMap['list-view'] + ' dd.' + classMap['item-active']);
               $.each($dd_select, function (index, element) {
                 var filename = $('div.file-name div.text a', $(element)).attr('title');
                 slog('选中文件：' + filename);
@@ -350,7 +349,7 @@
     }
 
     function unregisterFileSelect() {
-      var $dd = $('div.' + wordMap['list-view'] + ' dd');
+      var $dd = $('div.' + classMap['list-view'] + ' dd');
       $dd.each(function (index, element) {
         $(element).unbind('click');
       });
@@ -371,19 +370,18 @@
         registerFileSelect();
       });
 
-      var list_view = document.querySelector('.' + wordMap['list-view']);
-      var grid_view = document.querySelector('.' + wordMap['grid-view']);
+      var list_view = document.querySelector('.' + classMap['list-view']);
+      var grid_view = document.querySelector('.' + classMap['grid-view']);
 
-      //console.log(list_view);
       observer.observe(list_view, options);
       observer.observe(grid_view, options);
     }
 
     //添加助手按钮
     function addButton() {
-      $('div.' + wordMap['bar-search']).css('width', '18%');
+      $('div.' + classMap['bar-search']).css('width', '18%');
       var $dropdownbutton = $('<span class="g-dropdown-button"></span>');
-      var $dropdownbutton_a = $('<a class="g-button" href="javascript:void(0);"><span class="g-button-right"><em class="icon icon-download" title="百度网盘下载助手"></em><span class="text" style="width: auto;">下载助手</span></span></a>');
+      var $dropdownbutton_a = $('<a class="g-button g-button-blue" href="javascript:void(0);"><span class="g-button-right"><em class="icon icon-download" title="百度网盘下载助手"></em><span class="text" style="width: auto;">下载助手</span></span></a>');
       var $dropdownbutton_span = $('<span class="menu" style="width:96px"></span>');
 
       var $directbutton = $('<span class="g-button-menu" style="display:block"></span>');
@@ -422,32 +420,31 @@
       $apibutton_batchhttplink_button.click(batchClick);
       $apibutton_batchhttpslink_button.click(batchClick);
 
-      var $outerlinkbutton = $('<span class="g-button-menu" style="display:none"></span>');  //改为block显示外链下载
+
+      var $outerlinkbutton = $('<span class="g-button-menu" style="display:block"></span>');
       var $outerlinkbutton_span = $('<span class="g-dropdown-button g-dropdown-button-second" menulevel="2"></span>');
       var $outerlinkbutton_a = $('<a class="g-button" href="javascript:void(0);"><span class="g-button-right"><span class="text" style="width:auto">外链下载</span></span></a>');
       var $outerlinkbutton_menu = $('<span class="menu" style="width:120px;left:79px"></span>');
-      var $outerlinkbutton_download_button = $('<a id="download-outerlink" class="g-button-menu" href="javascript:void(0);">下载</a>');
       var $outerlinkbutton_link_button = $('<a id="link-outerlink" class="g-button-menu" href="javascript:void(0);">显示链接</a>');
       var $outerlinkbutton_batchlink_button = $('<a id="batchlink-outerlink" class="g-button-menu" href="javascript:void(0);">批量链接</a>');
-      $outerlinkbutton_menu.append($outerlinkbutton_download_button).append($outerlinkbutton_link_button).append($outerlinkbutton_batchlink_button);
+      $outerlinkbutton_menu.append($outerlinkbutton_link_button).append($outerlinkbutton_batchlink_button);
       $outerlinkbutton.append($outerlinkbutton_span.append($outerlinkbutton_a).append($outerlinkbutton_menu));
       $outerlinkbutton.hover(function () {
         $outerlinkbutton_span.toggleClass('button-open');
       });
-      $outerlinkbutton_download_button.click(downloadClick);
       $outerlinkbutton_link_button.click(linkClick);
       $outerlinkbutton_batchlink_button.click(batchClick);
 
+      var $github = $('<iframe src="https://ghbtns.com/github-btn.html?user=syhyz1990&repo=baiduyun&type=star&count=true" frameborder="0" scrolling="0" style="height: 20px;max-width: 120px;padding: 0 5px;box-sizing: border-box;margin-top: 5px;"></iframe>');
       //$dropdownbutton_span.append($directbutton).append($apibutton).append($outerlinkbutton);
-      $dropdownbutton_span.append($apibutton).append($outerlinkbutton);
+      $dropdownbutton_span.append($apibutton).append($outerlinkbutton).append($github);
       $dropdownbutton.append($dropdownbutton_a).append($dropdownbutton_span);
 
       $dropdownbutton.hover(function () {
         $dropdownbutton.toggleClass('button-open');
       });
 
-      $('div.' + wordMap['default-dom'] + ' div.' + wordMap['bar'] + ' div.' + wordMap['list-tools']).prepend($dropdownbutton);
-      $('div.' + wordMap['list-tools']).prepend($dropdownbutton)
+      $('.' + classMap['list-tools']).append($dropdownbutton)
     }
 
     // 我的网盘 - 下载
@@ -508,20 +505,6 @@
         }
         if (id == 'download-api') {
           downloadLink = getDownloadLinkWithRESTAPIBaidu(selectFileList[0].path);
-        } else if (id == 'download-outerlink') {
-          var result = getDownloadLinkWithClientAPI(selectFileList[0].path);
-          if (result.errno == 0) {
-            downloadLink = result.urls[0].url;
-          } else if (result.errno == 1) {
-            alert('文件不存在！');
-            return;
-          } else if (result.errno == 2) {
-            alert('文件不存在或者已被百度和谐，无法下载！');
-            return;
-          } else {
-            alert('发生错误！');
-            return;
-          }
         }
       }
       execDownload(downloadLink);
@@ -625,30 +608,31 @@
           tip = '显示模拟APP获取的链接(使用百度云ID)，可以使用右键迅雷或IDM下载，复制到下载工具需要传递cookie';
           dialog.open({title: '下载链接', type: 'link', list: linkList, tip: tip});
         } else if (id.indexOf('outerlink') != -1) {
-          var result = getDownloadLinkWithClientAPI(selectFileList[0].path);
-          if (result.errno == 0) {
-            linkList = {
-              filename: selectFileList[0].filename,
-              urls: result.urls
-            };
-          } else if (result.errno == 1) {
-            alert('文件不存在！');
-            return;
-          } else if (result.errno == 2) {
-            alert('文件不存在或者已被百度和谐，无法下载！');
-            return;
-          } else {
-            alert('发生错误！');
-            return;
-          }
-          tip = '显示模拟百度网盘客户端获取的链接，可以直接复制到下载工具使用，不需要cookie';
-          dialog.open({
-            title: '下载链接',
-            type: 'link',
-            list: linkList,
-            tip: tip,
-            showcopy: true,
-            showedit: true
+          getDownloadLinkWithClientAPI(selectFileList[0].path, function (result) {
+            if (result.errno == 0) {
+              linkList = {
+                filename: selectFileList[0].filename,
+                urls: result.urls
+              };
+            } else if (result.errno == 1) {
+              alert('文件不存在！');
+              return;
+            } else if (result.errno == 2) {
+              alert('文件不存在或者已被百度和谐，无法下载！');
+              return;
+            } else {
+              alert('发生错误！');
+              return;
+            }
+            tip = '显示模拟百度网盘客户端获取的链接，获取百度网盘多镜像下载地址 ，左键点击下载 ，推荐最后一个地址';
+            dialog.open({
+              title: '下载链接',
+              type: 'GMlink',
+              list: linkList,
+              tip: tip,
+              showcopy: false,
+              showedit: false
+            });
           });
         }
       }
@@ -684,23 +668,25 @@
         }
         dialog.open({title: '批量链接', type: 'batch', list: batchLinkList, tip: tip, showcopy: true});
       } else if (id.indexOf('outerlink') != -1) {
-        batchLinkListAll = getOuterlinkBatchLinkAll();
-        batchLinkList = getOuterlinkBatchLinkFirst(batchLinkListAll);
-        tip = '显示所有选中文件的外部下载链接，不显示文件夹';
-        if (batchLinkList.length === 0) {
-          alert('没有链接可以显示，API链接不要全部选中文件夹！');
-          return;
-        }
+        getOuterlinkBatchLinkAll(function(batchLinkListAll){
+          batchLinkList = getOuterlinkBatchLinkFirst(batchLinkListAll);
+          tip = '显示模拟百度网盘客户端获取的链接，获取百度网盘多镜像下载地址 ，左键点击下载 ，推荐最后一个地址';
+          if (batchLinkList.length === 0) {
+            alert('没有链接可以显示，API链接不要全部选中文件夹！');
+            return;
+          }
 
-        dialog.open({
-          title: '批量链接',
-          type: 'batch',
-          list: batchLinkList,
-          tip: tip,
-          showcopy: true,
-          alllist: batchLinkListAll,
-          showall: true
+          dialog.open({
+            title: '批量链接',
+            type: 'GMbatch',
+            list: batchLinkList,
+            tip: tip,
+            showcopy: true,
+            alllist: batchLinkListAll,
+            showall: true
+          });
         });
+
       }
     }
 
@@ -741,20 +727,20 @@
       return list;
     }
 
-    function getOuterlinkBatchLinkAll() {
+    function getOuterlinkBatchLinkAll(cb) {
       var list = [];
       $.each(selectFileList, function (index, element) {
-        var result;
         if (element.isdir == 1)
           return;
-        result = getDownloadLinkWithClientAPI(element.path);
-        if (result.errno == 0) {
-          list.push({filename: element.filename, links: result.urls});
-        } else {
-          list.push({filename: element.filename, links: [{rank: 1, url: 'error'}]});
-        }
+        getDownloadLinkWithClientAPI(element.path,function (result) {
+          if (result.errno == 0) {
+            list.push({filename: element.filename, links: result.urls});
+          } else {
+            list.push({filename: element.filename, links: [{rank: 1, url: 'error'}]});
+          }
+          cb(list)
+        });
       });
-      return list;
     }
 
     function getOuterlinkBatchLinkFirst(list) {
@@ -956,26 +942,42 @@
       return link;
     }
 
-    function getDownloadLinkWithClientAPI(path) {
+    function getDownloadLinkWithClientAPI(path, cb) {
       var result;
       var url = clientAPIUrl + 'file?method=locatedownload&app_id=265486&ver=4.0&path=' + encodeURIComponent(path);
-      $.ajax({
+
+      GM_xmlhttpRequest({
+        method: "POST",
         url: url,
-        method: 'POST',
-        xhrFields: {
-          withCredentials: true
+        headers: {
+          "User-Agent": "netdisk;6.7.1.9;PC;PC-Windows;10.0.17763;WindowsBaiduYunGuanJia",
         },
-        async: false,
-        success: function (response) {
-          result = JSON.parse(response);
-        },
-        statusCode: {
-          404: function (response) {
-            result = response;
+        onload: function (res) {
+          if (res.status === 200) {
+            result = JSON.parse(res.responseText);
+            if (result.error_code == undefined) {
+              if (result.urls == undefined) {
+                result.errno = 2;
+              } else {
+                $.each(result.urls, function (index, element) {
+                  result.urls[index].url = element.url.replace('\\', '');
+                });
+                result.errno = 0;
+              }
+            } else if (result.error_code == 31066) {
+              result.errno = 1;
+            } else {
+              result.errno = -1;
+            }
+          } else {
+            result = {};
+            result.errno = -1;
           }
+          cb(result)
+
         }
       });
-      if (result) {
+      /*if (result) {
         if (result.error_code == undefined) {
           if (result.urls == undefined) {
             result.errno = 2;
@@ -994,7 +996,7 @@
         result = {};
         result.errno = -1;
       }
-      return result;
+      return result;*/
     }
 
     function execDownload(link) {
@@ -1130,14 +1132,16 @@
       } else
         $('div.slide-show-right').css('width', '500px');
       var $dropdownbutton = $('<span class="g-dropdown-button"></span>');
-      var $dropdownbutton_a = $('<a class="g-button" data-button-id="b200" data-button-index="200" href="javascript:void(0);"></a>');
+      var $dropdownbutton_a = $('<a class="g-button g-button-blue" data-button-id="b200" data-button-index="200" href="javascript:void(0);"></a>');
       var $dropdownbutton_a_span = $('<span class="g-button-right"><em class="icon icon-download" title="百度网盘下载助手"></em><span class="text" style="width: auto;">下载助手</span></span>');
       var $dropdownbutton_span = $('<span class="menu" style="width:auto;z-index:41"></span>');
 
       var $downloadButton = $('<a data-menu-id="b-menu207" class="g-button-menu" href="javascript:void(0);">直接下载</a>');
       var $linkButton = $('<a data-menu-id="b-menu208" class="g-button-menu" href="javascript:void(0);">显示链接</a>');
 
-      $dropdownbutton_span.append($downloadButton).append($linkButton);
+      var $github = $('<iframe src="https://ghbtns.com/github-btn.html?user=syhyz1990&repo=baiduyun&type=star&count=true" frameborder="0" scrolling="0" style="height: 20px;max-width: 100px;padding: 0 8px;box-sizing: border-box;margin-top: 5px;"></iframe>');
+
+      $dropdownbutton_span.append($downloadButton).append($linkButton).append($github);
       $dropdownbutton_a.append($dropdownbutton_a_span);
       $dropdownbutton.append($dropdownbutton_a).append($dropdownbutton_span);
 
@@ -1204,9 +1208,9 @@
     //监视文件选择框
     function registerCheckbox() {
       //var $checkbox = $('span.checkbox');
-      var $checkbox = $('span.' + wordMap['checkbox']);
+      var $checkbox = $('span.' + classMap['checkbox']);
       if (list_grid_status == 'grid') {
-        $checkbox = $('.' + wordMap['chekbox-grid']);
+        $checkbox = $('.' + classMap['chekbox-grid']);
       }
       $checkbox.each(function (index, element) {
         $(element).bind('click', function (e) {
@@ -1249,7 +1253,7 @@
 
     function unregisterCheckbox() {
       //var $checkbox = $('span.checkbox');
-      var $checkbox = $('span.' + wordMap['checkbox']);
+      var $checkbox = $('span.' + classMap['checkbox']);
       $checkbox.each(function (index, element) {
         $(element).unbind('click');
       });
@@ -1258,12 +1262,12 @@
     //监视全选框
     function registerAllCheckbox() {
       //var $checkbox = $('div.col-item.check');
-      var $checkbox = $('div.' + wordMap['col-item'] + '.' + wordMap['check']);
+      var $checkbox = $('div.' + classMap['col-item'] + '.' + classMap['check']);
       $checkbox.each(function (index, element) {
         $(element).bind('click', function (e) {
           var $parent = $(this).parent();
           //if($parent.hasClass('checked')){
-          if ($parent.hasClass(wordMap['checked'])) {
+          if ($parent.hasClass(classMap['checked'])) {
             slog('取消全选');
             selectFileList = [];
           } else {
@@ -1285,7 +1289,7 @@
 
     function unregisterAllCheckbox() {
       //var $checkbox = $('div.col-item.check');
-      var $checkbox = $('div.' + wordMap['col-item'] + '.' + wordMap['check']);
+      var $checkbox = $('div.' + classMap['col-item'] + '.' + classMap['check']);
       $checkbox.each(function (index, element) {
         $(element).unbind('click');
       });
@@ -1295,7 +1299,7 @@
     function registerFileSelect() {
       //console.log('registerFileSelect');
       //var $dd = $('div.list-view dd');
-      var $dd = $('div.' + wordMap['list-view'] + ' dd');
+      var $dd = $('div.' + classMap['list-view'] + ' dd');
       $dd.each(function (index, element) {
         $(element).bind('click', function (e) {
           var nodeName = e.target.nodeName.toLowerCase();
@@ -1321,7 +1325,7 @@
 
     function unregisterFileSelect() {
       //var $dd = $('div.list-view dd');
-      var $dd = $('div.' + wordMap['list-view'] + ' dd');
+      var $dd = $('div.' + classMap['list-view'] + ' dd');
       $dd.each(function (index, element) {
         $(element).unbind('click');
       });
@@ -1344,8 +1348,8 @@
       //var list_view = document.querySelector('.list-view');
       //var grid_view = document.querySelector('.grid-view');
 
-      var list_view = document.querySelector('.' + wordMap['list-view']);
-      var grid_view = document.querySelector('.' + wordMap['grid-view']);
+      var list_view = document.querySelector('.' + classMap['list-view']);
+      var grid_view = document.querySelector('.' + classMap['grid-view']);
 
       observer.observe(list_view, options);
       observer.observe(grid_view, options);
@@ -1774,7 +1778,7 @@
 
       var $dialog_button = $('<div class="dialog-button" style="display:none"></div>');
       var $dialog_button_div = $('<div style="display:table;margin:auto"></div>');
-      var $dialog_copy_button = $('<button id="dialog-copy-button" style="display:none;width: 100px; margin: 5px 0 10px 0; cursor: pointer; background: #ff4941; border: none; height: 30px; color: #fff; border-radius: 3px;">直接复制无效</button>');
+      var $dialog_copy_button = $('<button id="dialog-copy-button" style="display:none;width: 100px; margin: 5px 0 10px 0; cursor: pointer; background: #cc3235; border: none; height: 30px; color: #fff; border-radius: 3px;">直接复制无效</button>');
       var $dialog_edit_button = $('<button id="dialog-edit-button" style="display:none">编辑</button>');
       var $dialog_exit_button = $('<button id="dialog-exit-button" style="display:none">退出</button>');
 
@@ -1843,16 +1847,33 @@
     }
 
     this.open = function (params) {
+      $('body').on('click', '.GMlink', function () {
+        var link = $(this)[0].innerText;
+
+        GM_download({
+          url: link,
+          name: '非IDM下载请自己改后缀名.zip',
+          headers: {
+            "User-Agent": "netdisk;6.7.1.9;PC;PC-Windows;10.0.17763;WindowsBaiduYunGuanJia",
+          }
+        })
+      });
+
       showParams = params;
       linkList = [];
-      if (params.type == 'link') {
+      if (params.type == 'link' || params.type == 'GMlink') {
         linkList = params.list.urls;
         $('div.dialog-header h3 span.dialog-title', dialog).text(params.title + "：" + params.list.filename);
         $.each(params.list.urls, function (index, element) {
-          var $div = $('<div><div style="width:30px;float:left">' + element.rank + ':</div><div style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis"><a href="' + element.url + '">' + element.url + '</a></div></div>');
+          if (params.type == 'GMlink') {
+            var $div = $('<div><div style="width:30px;float:left">' + element.rank + ':</div><div style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis"><a class="GMlink" href="javascript:;">' + element.url + '</a></div></div>');
+          } else{
+            var $div = $('<div><div style="width:30px;float:left">' + element.rank + ':</div><div style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis"><a href="' + element.url + '">' + element.url + '</a></div></div>');
+          }
+
           $('div.dialog-body', dialog).append($div);
         });
-      } else if (params.type == 'batch') {
+      } else if (params.type == 'batch' || params.type=='GMbatch') {
         linkList = params.list;
         $('div.dialog-header h3 span.dialog-title', dialog).text(params.title);
         if (params.showall) {
@@ -1866,7 +1887,12 @@
             $.each(params.alllist[index].links, function (n, item) {
               if (element.downloadlink == item.url)
                 return;
-              var $item = $('<div class="item-ex" style="display:none;overflow:hidden;text-overflow:ellipsis"><a href="' + item.url + '">' + item.url + '</a></div>');
+              if (params.type == 'GMbatch') {
+                var $item = $('<div class="item-ex" style="display:none;overflow:hidden;text-overflow:ellipsis"><a class="GMlink" href="javascript:;">' + item.url + '</a></div>');
+              } else{
+                var $item = $('<div class="item-ex" style="display:none;overflow:hidden;text-overflow:ellipsis"><a href="' + item.url + '">' + item.url + '</a></div>');
+              }
+
               $item_link_div.append($item);
             });
             var $item_ex = $('<div style="width:15px;float:left;cursor:pointer;text-align:center;font-size:16px"><span>+</span></div>');

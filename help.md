@@ -4,7 +4,7 @@
 本教程基于脚本 [百度网盘直接下载助手 直链加速版](https://greasyfork.org/zh-CN/scripts/39504)
 
 ### 如何安装脚本
-### 1. 安装脚本管理器 Tampermonkey 或暴力猴
+**1. 安装脚本管理器 Tampermonkey 或暴力猴**
 
 |  浏览器 |  安装地址 |
 | ------------ | ------------ |
@@ -21,7 +21,7 @@
 
 ![](http://ww1.sinaimg.cn/large/4db689e3ly1g15iix9j24j20qf0130sq.jpg)
 
-### 2. 安装 百度网盘直接下载助手 直链加速版
+**2. 安装 百度网盘直接下载助手 直链加速版**
 [安装地址1](https://greasyfork.org/zh-CN/scripts/39504) 或 [安装地址2](https://openuserjs.org/scripts/syhyz1990/%E7%99%BE%E5%BA%A6%E7%BD%91%E7%9B%98%E7%9B%B4%E6%8E%A5%E4%B8%8B%E8%BD%BD%E5%8A%A9%E6%89%8B_%E7%9B%B4%E9%93%BE%E5%8A%A0%E9%80%9F%E7%89%88)
 
 点击安装此脚本
@@ -36,7 +36,7 @@
 
 ![](http://ww1.sinaimg.cn/large/4db689e3ly1g15iwtanyxj20yx01g3ym.jpg)
 
-### 3. 安装 Internet Download Manager(IDM)下载器
+**3. 安装 Internet Download Manager(IDM)下载器**
 
 下载地址 : http://internetdownloadmanager.com/download.html
 
@@ -49,7 +49,7 @@
 
 ### 脚本安装成功界面
 
-### 1. 我的网盘页面
+**1. 我的网盘页面**
 
 ![](http://ww1.sinaimg.cn/large/4db689e3ly1g15j96ogr7j211y0gcwgw.jpg)
 
@@ -58,7 +58,7 @@
 |  API下载 |  ![](http://ww1.sinaimg.cn/large/4db689e3ly1g15jnpa1s8j20ku061aar.jpg) |
 |  外链下载 |  ![](http://ww1.sinaimg.cn/large/4db689e3ly1g15jqtg41wj20ko059t94.jpg) |
 
-### 2. 网盘分享页面
+**2. 网盘分享页面**
 
 ![](http://ww1.sinaimg.cn/large/4db689e3ly1g15jd6ghowj211y0gcta2.jpg)
 
@@ -69,11 +69,11 @@
 
 ### 脚本功能演示
 
-### 1. 我的网盘页面
+**1. 我的网盘页面**
 
 ![](http://ww1.sinaimg.cn/large/4db689e3ly1g15k4dcp6yg20zg0gce81.gif)
 
-### 2. 网盘分享页面
+**2. 网盘分享页面**
 
 ![](http://ww1.sinaimg.cn/large/4db689e3ly1g15ka0b327g20zg0gce6t.gif)
 
@@ -88,18 +88,23 @@
 ### 常见问题
 
 **Q: 安装脚本后没显示[下载助手]按钮**
+
 A: 请检查浏览器是否安装tampermonkey或暴力猴 , 并启用脚本 .
 
 **Q: 链接复制到IDM中提示403**
+
 A: 直接复制链接到迅雷或idm中无效
 
 **Q: Chrome浏览器无法安装crx扩展**
+
 A: 请尝试此方法http://www.internetdownloadmanager.com/register/new_faq/chrome_extension2.html
 
 **Q: 无法调用IDM下载**
+
 A: 确保IDM和IDM浏览器扩展正确安装 , 或换用其他浏览器
 
 **Q: 下载速度很慢 , 只有几百K**
+
 A: 账号被百度限速 , 可以开百度会员解封 , 配合脚本可达到满速 . 也可换用其他账号
 
 ### 捐赠

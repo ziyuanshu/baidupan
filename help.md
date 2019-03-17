@@ -1,9 +1,10 @@
 # 脚本使用说明
+![TamperMonkey v4.5](https://img.shields.io/badge/TamperMonkey-v4.8-brightgreen.svg) ![Chrome x64 v60.4](https://img.shields.io/badge/Chrome%20x64-v73.0-brightgreen.svg) ![Safari v11.0.3](https://img.shields.io/badge/Safari%20-v12.0-brightgreen.svg)
 
 本教程基于脚本 [百度网盘直接下载助手 直链加速版](https://greasyfork.org/zh-CN/scripts/39504)
 
 ### 如何安装脚本
-#### 1. 安装脚本管理器 Tampermonkey 或暴力猴
+### 1. 安装脚本管理器 Tampermonkey 或暴力猴
 
 |  浏览器 |  安装地址 |
 | ------------ | ------------ |
@@ -20,7 +21,7 @@
 
 ![](http://ww1.sinaimg.cn/large/4db689e3ly1g15iix9j24j20qf0130sq.jpg)
 
-#### 2. 安装 百度网盘直接下载助手 直链加速版
+### 2. 安装 百度网盘直接下载助手 直链加速版
 [安装地址1](https://greasyfork.org/zh-CN/scripts/39504) 或 [安装地址2](https://openuserjs.org/scripts/syhyz1990/%E7%99%BE%E5%BA%A6%E7%BD%91%E7%9B%98%E7%9B%B4%E6%8E%A5%E4%B8%8B%E8%BD%BD%E5%8A%A9%E6%89%8B_%E7%9B%B4%E9%93%BE%E5%8A%A0%E9%80%9F%E7%89%88)
 
 点击安装此脚本
@@ -35,7 +36,7 @@
 
 ![](http://ww1.sinaimg.cn/large/4db689e3ly1g15iwtanyxj20yx01g3ym.jpg)
 
-#### 3. 安装 Internet Download Manager(IDM)下载器
+### 3. 安装 Internet Download Manager(IDM)下载器
 
 下载地址 : http://internetdownloadmanager.com/download.html
 
@@ -48,7 +49,7 @@
 
 ### 脚本安装成功界面
 
-#### 1. 我的网盘页面
+### 1. 我的网盘页面
 
 ![](http://ww1.sinaimg.cn/large/4db689e3ly1g15j96ogr7j211y0gcwgw.jpg)
 
@@ -57,7 +58,7 @@
 |  API下载 |  ![](http://ww1.sinaimg.cn/large/4db689e3ly1g15jnpa1s8j20ku061aar.jpg) |
 |  外链下载 |  ![](http://ww1.sinaimg.cn/large/4db689e3ly1g15jqtg41wj20ko059t94.jpg) |
 
-#### 2. 网盘分享页面
+### 2. 网盘分享页面
 
 ![](http://ww1.sinaimg.cn/large/4db689e3ly1g15jd6ghowj211y0gcta2.jpg)
 
@@ -68,11 +69,11 @@
 
 ### 脚本功能演示
 
-#### 1. 我的网盘页面
+### 1. 我的网盘页面
 
 ![](http://ww1.sinaimg.cn/large/4db689e3ly1g15k4dcp6yg20zg0gce81.gif)
 
-#### 2. 网盘分享页面
+### 2. 网盘分享页面
 
 ![](http://ww1.sinaimg.cn/large/4db689e3ly1g15ka0b327g20zg0gce6t.gif)
 

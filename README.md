@@ -43,15 +43,11 @@
 
 ### 使用必读
 
-推荐使用 IDM 进行下载 ([IDM 下载地址](http://internetdownloadmanager.com/download.html))，使用IDM的同学可以先去IDM安装目录找到IDMGCExt.crx，拖到Chrome或该内核浏览器中安装插件。
+[脚本使用说明](https://github.com/syhyz1990/baiduyun/blob/master/help.md)
+
+### 速度测试
 
 ![IDM](https://ww1.sinaimg.cn/large/4db689e3ly1g0akkblkx1g20pu0f911b.gif)
-
-Tips1: **下载前请先登录百度网盘**，否则无法获取链接。
-
-Tips2: **被限制线程的同学请先将文件保存至‘我的网盘’，转到我的网盘选择要下载的文件，选择‘api下载’，务必等IDM获取到文件名和文件大小后再点击开始下载**
-
-![演示](https://ww1.sinaimg.cn/large/4db689e3ly1g0akknlv8gg215q0li4qp.gif) 
 
 ### 捐赠
 如果您觉得脚本对您有帮助，您可以通过支付宝或微信，扫描二维码，捐赠 X元，^_^，谢谢！

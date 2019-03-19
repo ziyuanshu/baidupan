@@ -67,5 +67,5 @@ Tips2: **被限制线程的同学请先将文件保存至‘我的网盘’，�
 **QQ交流群: （[点击加群](https://jq.qq.com/?_wv=1027&k=5oM5GMv)）**
 
 ### 脚本推荐
-[百度网盘直接下载助手 直链加速版](https://greasyfork.org/zh-CN/scripts/39504)
+[VIP视频解析助手](https://greasyfork.org/zh-CN/scripts/380568)
 

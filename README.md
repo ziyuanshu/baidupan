@@ -45,7 +45,7 @@
 
 推荐使用 IDM 进行下载 ([IDM 下载地址](http://internetdownloadmanager.com/download.html))，使用IDM的同学可以先去IDM安装目录找到IDMGCExt.crx，拖到Chrome或该内核浏览器中安装插件。
 
-![IDM](https://ww1.sinaimg.cn/large/4db689e3ly1g0akkblkx1g20pu0f911b.gif )
+![IDM](https://ww1.sinaimg.cn/large/4db689e3ly1g0akkblkx1g20pu0f911b.gif)
 
 Tips1: **下载前请先登录百度网盘**，否则无法获取链接。
 
@@ -53,12 +53,10 @@ Tips2: **被限制线程的同学请先将文件保存至‘我的网盘’，�
 
 ![演示](https://ww1.sinaimg.cn/large/4db689e3ly1g0akknlv8gg215q0li4qp.gif) 
 
-
 ### 捐赠
 如果您觉得脚本对您有帮助，您可以通过支付宝或微信，扫描二维码，捐赠 X元，^_^，谢谢！
  
- 
- ![支持我](https://ww1.sinaimg.cn/large/4db689e3ly1g0ae1ogfjbj205k05yjrl.jpg) ![支持我](https://ww1.sinaimg.cn/large/4db689e3ly1g0ae1oc3o4j205k05yweg.jpg)
+![支持我](https://ww1.sinaimg.cn/large/4db689e3ly1g0ae1ogfjbj205k05yjrl.jpg) ![支持我](https://ww1.sinaimg.cn/large/4db689e3ly1g0ae1oc3o4j205k05yweg.jpg)
 
 ### 免责声明 
 本脚本仅在浏览器端运行，源码公开可见，仅做研究使用，不得用于非法获利， 如产生法律纠纷与脚本作者无关!!!

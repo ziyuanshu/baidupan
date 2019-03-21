@@ -80,6 +80,7 @@
 ### 注意事项
 
 **1. 直接复制链接到迅雷或idm中无效**
+
 **2. 弹出idm新建任务对话框 , 等获取到文件名和文件大小后方可开始下载**
 
 ![](http://ww1.sinaimg.cn/large/4db689e3ly1g15kiwmrnfj20g006lgm5.jpg)
@@ -112,4 +113,4 @@ A: 账号被百度限速 , 可以开百度会员解封 , 配合脚本可达到�
 ### 捐赠
 本脚本不收取任何费用 , 如果您觉得本脚本对您有帮助，您可以通过支付宝或微信，扫描二维码，捐赠 X元，^_^，谢谢！
 
- ![支持我](https://ww1.sinaimg.cn/large/4db689e3ly1g0ae1ogfjbj205k05yjrl.jpg) ![支持我](https://ww1.sinaimg.cn/large/4db689e3ly1g0ae1oc3o4j205k05yweg.jpg)
+ ![微信](https://ww1.sinaimg.cn/large/4db689e3ly1g0ae1ogfjbj205k05yjrl.jpg) ![支付宝](https://ww1.sinaimg.cn/large/4db689e3ly1g0ae1oc3o4j205k05yweg.jpg) ![领支付宝红包](https://ww1.sinaimg.cn/large/4db689e3ly1g1aj9cf6wuj205k05ymxi.jpg)

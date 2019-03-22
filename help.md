@@ -102,7 +102,7 @@ A: 直接复制链接到迅雷或idm中无效
 
 A: 请按照下列方法安装
 
-![](![](https://ww1.sinaimg.cn/large/4db689e3ly1g1bochg39lg20vd0manpd.gif))
+![](http://ww1.sinaimg.cn/large/4db689e3ly1g1bochg39lg20vd0manpd.gif)
 
 **Q: 无法调用IDM下载**
 

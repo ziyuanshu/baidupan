@@ -42,7 +42,7 @@
 
 ![](http://ww1.sinaimg.cn/large/4db689e3ly1g15jfiw03yj20p80ej3zq.jpg)
 
-安装成功后将安装目录里的 **IDMGCExt.crx** 拖动到浏览器中进行安装 , 成功后浏览器扩展栏中会出现 IDM 图标
+安装成功后将安装目录里的 **IDMGCExt.crx** 拖动到浏览器中进行安装 , 成功后浏览器扩展栏中会出现 IDM 图标 , **成功后重启浏览器**  (Chrome浏览器请使用开发者模式安装)
 
 ![](http://ww1.sinaimg.cn/large/4db689e3ly1g15j5c5mg4j20p0013t8p.jpg)
 
@@ -100,7 +100,9 @@ A: 直接复制链接到迅雷或idm中无效
 
 **Q: Chrome浏览器无法安装crx扩展**
 
-A: 请尝试此方法http://www.internetdownloadmanager.com/register/new_faq/chrome_extension2.html
+A: 请按照下列方法安装
+
+![](http://ww1.sinaimg.cn/large/4db689e3ly1g1bo43p0bug20vd0mab0o.gif)
 
 **Q: 无法调用IDM下载**
 
@@ -109,6 +111,10 @@ A: 确保IDM和IDM浏览器扩展正确安装 , 或换用其他浏览器
 **Q: 下载速度很慢 , 只有几百K**
 
 A: 账号被百度限速 , 可以开百度会员解封 , 配合脚本可达到满速 . 也可换用其他账号
+
+**Q: 如何使用批量下载**
+
+A: 浏览器一次只能下载单个文件 , 多个文件请使用批量链接, 弹出IDM下载窗口进行操作 , 批量复制链接无效
 
 ### 捐赠
 本脚本不收取任何费用 , 如果您觉得本脚本对您有帮助，您可以通过支付宝或微信，扫描二维码，捐赠 X元，^_^，谢谢！

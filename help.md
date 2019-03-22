@@ -19,48 +19,48 @@
 
 安装成功后浏览器扩展栏将出现
 
-![](http://ww1.sinaimg.cn/large/4db689e3ly1g15iix9j24j20qf0130sq.jpg)
+![](https://ww1.sinaimg.cn/large/4db689e3ly1g15iix9j24j20qf0130sq.jpg)
 
 **2. 安装 百度网盘直接下载助手 直链加速版**
 [安装地址1](https://greasyfork.org/zh-CN/scripts/39504) 或 [安装地址2](https://openuserjs.org/scripts/syhyz1990/%E7%99%BE%E5%BA%A6%E7%BD%91%E7%9B%98%E7%9B%B4%E6%8E%A5%E4%B8%8B%E8%BD%BD%E5%8A%A9%E6%89%8B_%E7%9B%B4%E9%93%BE%E5%8A%A0%E9%80%9F%E7%89%88)
 
 点击安装此脚本
 
-![](http://ww1.sinaimg.cn/large/4db689e3ly1g15isj5ld3j20pf0ddju4.jpg)
+![](https://ww1.sinaimg.cn/large/4db689e3ly1g15isj5ld3j20pf0ddju4.jpg)
 
 点击安装
 
-![](http://ww1.sinaimg.cn/large/4db689e3ly1g15ixn2kexj20qs0di0wg.jpg)
+![](https://ww1.sinaimg.cn/large/4db689e3ly1g15ixn2kexj20qs0di0wg.jpg)
 
 安装成功后脚本列表中会出现
 
-![](http://ww1.sinaimg.cn/large/4db689e3ly1g15iwtanyxj20yx01g3ym.jpg)
+![](https://ww1.sinaimg.cn/large/4db689e3ly1g15iwtanyxj20yx01g3ym.jpg)
 
 **3. 安装 Internet Download Manager(IDM)下载器**
 
 下载地址 : http://internetdownloadmanager.com/download.html
 
-![](http://ww1.sinaimg.cn/large/4db689e3ly1g15jfiw03yj20p80ej3zq.jpg)
+![](https://ww1.sinaimg.cn/large/4db689e3ly1g15jfiw03yj20p80ej3zq.jpg)
 
 安装成功后将安装目录里的 **IDMGCExt.crx** 拖动到浏览器中进行安装 , 成功后浏览器扩展栏中会出现 IDM 图标 , **成功后重启浏览器**  (Chrome浏览器请使用开发者模式安装)
 
-![](http://ww1.sinaimg.cn/large/4db689e3ly1g15j5c5mg4j20p0013t8p.jpg)
+![](https://ww1.sinaimg.cn/large/4db689e3ly1g15j5c5mg4j20p0013t8p.jpg)
 
 
 ### 脚本安装成功界面
 
 **1. 我的网盘页面**
 
-![](http://ww1.sinaimg.cn/large/4db689e3ly1g15j96ogr7j211y0gcwgw.jpg)
+![](https://ww1.sinaimg.cn/large/4db689e3ly1g15j96ogr7j211y0gcwgw.jpg)
 
 |  功能按钮说明 |  示例 |
 | ------------ | ------------ |
-|  API下载 |  ![](http://ww1.sinaimg.cn/large/4db689e3ly1g15jnpa1s8j20ku061aar.jpg) |
-|  外链下载 |  ![](http://ww1.sinaimg.cn/large/4db689e3ly1g15jqtg41wj20ko059t94.jpg) |
+|  API下载 |  ![](https://ww1.sinaimg.cn/large/4db689e3ly1g15jnpa1s8j20ku061aar.jpg) |
+|  外链下载 |  ![](https://ww1.sinaimg.cn/large/4db689e3ly1g15jqtg41wj20ko059t94.jpg) |
 
 **2. 网盘分享页面**
 
-![](http://ww1.sinaimg.cn/large/4db689e3ly1g15jd6ghowj211y0gcta2.jpg)
+![](https://ww1.sinaimg.cn/large/4db689e3ly1g15jd6ghowj211y0gcta2.jpg)
 
 |  功能按钮说明 |  示例 |
 | ------------ | ------------ |
@@ -71,11 +71,11 @@
 
 **1. 我的网盘页面**
 
-![](http://ww1.sinaimg.cn/large/4db689e3ly1g15k4dcp6yg20zg0gce81.gif)
+![](https://ww1.sinaimg.cn/large/4db689e3ly1g15k4dcp6yg20zg0gce81.gif)
 
 **2. 网盘分享页面**
 
-![](http://ww1.sinaimg.cn/large/4db689e3ly1g15ka0b327g20zg0gce6t.gif)
+![](https://ww1.sinaimg.cn/large/4db689e3ly1g15ka0b327g20zg0gce6t.gif)
 
 ### 注意事项
 
@@ -83,7 +83,7 @@
 
 **2. 弹出idm新建任务对话框 , 等获取到文件名和文件大小后方可开始下载**
 
-![](http://ww1.sinaimg.cn/large/4db689e3ly1g15kiwmrnfj20g006lgm5.jpg)
+![](https://ww1.sinaimg.cn/large/4db689e3ly1g15kiwmrnfj20g006lgm5.jpg)
 
 
 ### 常见问题
@@ -102,7 +102,7 @@ A: 直接复制链接到迅雷或idm中无效
 
 A: 请按照下列方法安装
 
-![](http://ww1.sinaimg.cn/large/4db689e3ly1g1bo43p0bug20vd0mab0o.gif)
+![](![](https://ww1.sinaimg.cn/large/4db689e3ly1g1bochg39lg20vd0manpd.gif))
 
 **Q: 无法调用IDM下载**
 

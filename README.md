@@ -1,12 +1,18 @@
 # 百度网盘直接下载助手 直链加速版
 ![TamperMonkey v4.5](https://img.shields.io/badge/TamperMonkey-v4.8-brightgreen.svg) ![Chrome x64 v60.4](https://img.shields.io/badge/Chrome%20x64-v73.0-brightgreen.svg) ![Safari v11.0.3](https://img.shields.io/badge/Safari%20-v12.0-brightgreen.svg)
+
+### 使用必读
+
+[脚本使用说明](https://github.com/syhyz1990/baiduyun/blob/master/help.md)
+
 ### 安装地址
 [安装地址1](https://greasyfork.org/zh-CN/scripts/39504)
 
 [安装地址2](https://openuserjs.org/scripts/syhyz1990/%E7%99%BE%E5%BA%A6%E7%BD%91%E7%9B%98%E7%9B%B4%E6%8E%A5%E4%B8%8B%E8%BD%BD%E5%8A%A9%E6%89%8B_%E7%9B%B4%E9%93%BE%E5%8A%A0%E9%80%9F%E7%89%88)
 
-
 ### 更新日志
+**2019-03-25** : v2.1.2 修复批量链接获取重复的问题，提升脚本稳定性
+
 **2019-03-15** : v2.1.1 修复路径无法点击的问题
 
 **2019-03-14** : v2.1.0 我的网盘新增外链下载，免插件模拟百度网盘客户端获取多个下载地址
@@ -40,10 +46,6 @@
 ### 插件功能
 
 - 无需安装百度网盘客户端获取下载链接
-
-### 使用必读
-
-[脚本使用说明](https://github.com/syhyz1990/baiduyun/blob/master/help.md)
 
 ### 速度测试
 

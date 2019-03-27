@@ -60,8 +60,6 @@
 本脚本仅在浏览器端运行，源码公开可见，仅做研究使用，不得用于非法获利， 如产生法律纠纷与脚本作者无关!!!
 
 ### 脚本反馈
-**QQ交流群: （[点击加群](https://jq.qq.com/?_wv=1027&k=5oM5GMv)）**
-
+**QQ交流群: （[点击加群](https://jq.qq.com/?_wv=1027&k=5NjiSSC)）**
 ### 脚本推荐
 [VIP视频解析助手](https://greasyfork.org/zh-CN/scripts/380568)
-

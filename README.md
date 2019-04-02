@@ -8,7 +8,7 @@
 ### 安装地址
 [安装地址1](https://greasyfork.org/zh-CN/scripts/39504)
 
-[安装地址2](https://openuserjs.org/scripts/syhyz1990/%E7%99%BE%E5%BA%A6%E7%BD%91%E7%9B%98%E7%9B%B4%E6%8E%A5%E4%B8%8B%E8%BD%BD%E5%8A%A9%E6%89%8B_%E7%9B%B4%E9%93%BE%E5%8A%A0%E9%80%9F%E7%89%88)
+[安装地址2](https://openuserjs.org/scripts/syhyz1990/百度网盘直链下载助手)
 
 ### 更新日志
 **2019-04-02** : v2.2.0 正式更名为百度网盘直链下载助手，添加了部分提示

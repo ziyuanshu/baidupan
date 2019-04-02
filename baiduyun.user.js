@@ -1,9 +1,9 @@
 // ==UserScript==
-// @name              百度网盘直接下载助手 直链加速版
+// @name              百度网盘直链下载助手
 // @namespace         https://github.com/syhyz1990/baiduyun
-// @version           2.1.2
+// @version           2.2.0
 // @icon              https://www.baidu.com/favicon.ico
-// @description       获取百度网盘高速下载地址 支持IDM,FDM,迅雷下载 支持直链加速
+// @description       【百度网盘直接下载助手 直链加速版】正式更名为【百度网盘直链下载助手】免客户端一键获取百度网盘文件真实下载地址，支持使用IDM，迅雷等下载工具下载
 // @author            syhyz1990
 // @license           MIT
 // @supportURL        https://github.com/syhyz1990/baiduyun
@@ -43,6 +43,13 @@
     'bar-search': 'OFaPaO',
     'list-tools': 'tcuLAu',
   };
+  var errorMsg = {
+    'dir': '暂时不支持文件夹下载，请勾选文件后使用【批量链接】或【显示链接】按钮',
+    'unlogin': '提示 : 登录百度网盘后才能正常使用脚本哦!!!',
+    'fail': '获取下载链接失败！',
+    'unselected' : '获取选中文件失败，请F5刷新重试！',
+    'morethan2' : '该方法不支持多文件下载！'
+  }
   $(function () {
     classMap['default-dom'] = ($('.icon-upload').parent().parent().parent().parent().parent().attr('class'));
     classMap['bar'] = ($('.icon-upload').parent().parent().parent().parent().attr('class'));
@@ -92,7 +99,7 @@
       addButton();
       createIframe();
       dialog = new Dialog({addCopy: true});
-      slog('网盘直接下载助手加载成功！');
+      slog('百度网盘直接下载助手 直链加速版加载成功！');
     };
 
     function initParams() {
@@ -378,7 +385,7 @@
     function addButton() {
       $('div.' + classMap['bar-search']).css('width', '18%');
       var $dropdownbutton = $('<span class="g-dropdown-button"></span>');
-      var $dropdownbutton_a = $('<a class="g-button g-button-blue" href="javascript:void(0);"><span class="g-button-right"><em class="icon icon-download" title="百度网盘下载助手"></em><span class="text" style="width: 60px;">下载助手</span></span></a>');
+      var $dropdownbutton_a = $('<a class="g-button g-button-blue" href="javascript:void(0);"><span class="g-button-right"><em class="icon icon-speed" title="百度网盘下载助手"></em><span class="text" style="width: 60px;">下载助手</span></span></a>');
       var $dropdownbutton_span = $('<span class="menu" style="width:104px"></span>');
 
       var $directbutton = $('<span class="g-button-menu" style="display:block"></span>');
@@ -403,7 +410,7 @@
       var $apibutton_span = $('<span class="g-dropdown-button g-dropdown-button-second" menulevel="2"></span>');
       var $apibutton_a = $('<a class="g-button" href="javascript:void(0);"><span class="g-button-right"><span class="text" style="width:auto">API下载</span></span></a>');
       var $apibutton_menu = $('<span class="menu" style="width:120px;left:77px"></span>');
-      var $apibutton_download_button = $('<a id="download-api" class="g-button-menu" href="javascript:void(0);">下载</a>');
+      var $apibutton_download_button = $('<a id="download-api" class="g-button-menu" href="javascript:void(0);">直接下载</a>');
       var $apibutton_link_button = $('<a id="httplink-api" class="g-button-menu" href="javascript:void(0);">显示链接</a>');
       var $apibutton_batchhttplink_button = $('<a id="batchhttplink-api" class="g-button-menu" href="javascript:void(0);">批量链接(HTTP)</a>');
       var $apibutton_batchhttpslink_button = $('<a id="batchhttpslink-api" class="g-button-menu" href="javascript:void(0);">批量链接(HTTPS)</a>');
@@ -454,7 +461,7 @@
       if (id == 'download-direct') {
         var downloadType;
         if (selectFileList.length === 0) {
-          alert("获取选中文件失败，请刷新重试！");
+          alert(errorMsg.unselected);
           return;
         } else if (selectFileList.length == 1) {
           if (selectFileList[0].isdir === 1)
@@ -493,11 +500,11 @@
           alert("获取选中文件失败，请刷新重试！");
           return;
         } else if (selectFileList.length > 1) {
-          alert("该方法不支持多文件下载！");
+          alert(errorMsg.morethan2);
           return;
         } else {
           if (selectFileList[0].isdir == 1) {
-            alert("该方法不支持目录下载！请使用批量下载");
+            alert(errorMsg.dir);
             return;
           }
         }
@@ -518,7 +525,7 @@
         var downloadType;
         var downloadLink;
         if (selectFileList.length === 0) {
-          alert("获取选中文件失败，请刷新重试！");
+          alert(errorMsg.unselected);
           return;
         } else if (selectFileList.length == 1) {
           if (selectFileList[0].isdir === 1)
@@ -576,14 +583,14 @@
         dialog.open({title: '下载链接', type: 'link', list: linkList, tip: tip});
       } else {
         if (selectFileList.length === 0) {
-          alert("获取选中文件失败，请刷新重试！");
+          alert(errorMsg.unselected);
           return;
         } else if (selectFileList.length > 1) {
-          alert("该方法不支持多文件下载！请使用批量下载");
+          alert(errorMsg.morethan2);
           return;
         } else {
           if (selectFileList[0].isdir == 1) {
-            alert("该方法不支持目录下载！");
+            alert(errorMsg.dir);
             return;
           }
         }
@@ -639,7 +646,7 @@
     function batchClick(event) {
       slog('选中文件列表：', selectFileList);
       if (selectFileList.length === 0) {
-        alert('获取选中文件失败，请刷新重试！');
+        alert(errorMsg.unselected);
         return;
       }
       var id = event.target.id;
@@ -682,7 +689,6 @@
             showall: true
           });
         });
-
       }
     }
 
@@ -727,15 +733,15 @@
       $.each(selectFileList, function (index, element) {
         if (element.isdir == 1)
           return;
-          getDownloadLinkWithClientAPI(element.path, function (result) {
-            var list = [];
-            if (result.errno == 0) {
-              list.push({filename: element.filename, links: result.urls});
-            } else {
-              list.push({filename: element.filename, links: [{rank: 1, url: 'error'}]});
-            }
-            cb(list)
-          });
+        getDownloadLinkWithClientAPI(element.path, function (result) {
+          var list = [];
+          if (result.errno == 0) {
+            list.push({filename: element.filename, links: result.urls});
+          } else {
+            list.push({filename: element.filename, links: [{rank: 1, url: 'error'}]});
+          }
+          cb(list)
+        });
       });
     }
 
@@ -1107,7 +1113,7 @@
         $('div.slide-show-right').css('width', '500px');
       var $dropdownbutton = $('<span class="g-dropdown-button"></span>');
       var $dropdownbutton_a = $('<a class="g-button g-button-blue" data-button-id="b200" data-button-index="200" href="javascript:void(0);"></a>');
-      var $dropdownbutton_a_span = $('<span class="g-button-right"><em class="icon icon-download" title="百度网盘下载助手"></em><span class="text" style="width: 60px;">下载助手</span></span>');
+      var $dropdownbutton_a_span = $('<span class="g-button-right"><em class="icon icon-speed" title="百度网盘下载助手"></em><span class="text" style="width: 60px;">下载助手</span></span>');
       var $dropdownbutton_span = $('<span class="menu" style="width:auto;z-index:41"></span>');
 
       var $downloadButton = $('<a data-menu-id="b-menu207" class="g-button-menu" href="javascript:void(0);">直接下载</a>');
@@ -1359,11 +1365,13 @@
     function downloadButtonClick() {
       slog('选中文件列表：', selectFileList);
       if (selectFileList.length === 0) {
-        alert('获取文件ID失败，请重试');
+        alert(errorMsg.unselected);
         return;
       }
       buttonTarget = 'download';
       var downloadLink = getDownloadLink();
+
+      if (downloadLink === undefined) return;
 
       if (downloadLink.errno == -20) {
         vcode = getVCode();
@@ -1377,13 +1385,14 @@
 
       } else if (downloadLink.errno === 0) {
         var link;
+        console.log(selectFileList)
         if (selectFileList.length == 1 && selectFileList[0].isdir === 0)
           link = downloadLink.list[0].dlink;
         else
           link = downloadLink.dlink;
         execDownload(link);
       } else {
-        alert('获取下载链接失败！');
+        alert(errorMsg.fail);
 
       }
     }
@@ -1489,11 +1498,13 @@
     function linkButtonClick() {
       slog('选中文件列表：', selectFileList);
       if (selectFileList.length === 0) {
-        alert('没有选中文件，请重试');
+        alert(errorMsg.unselected);
         return;
       }
       buttonTarget = 'link';
       var downloadLink = getDownloadLink();
+
+      if (downloadLink === undefined) return;
 
       if (downloadLink.errno == -20) {
         vcode = getVCode();
@@ -1535,15 +1546,14 @@
         var tip = "显示获取的链接，可以使用右键迅雷或IDM下载，复制无用，需要传递cookie";
         dialog.open({title: '下载链接', type: 'link', list: linkList, tip: tip});
       } else {
-        alert('获取下载链接失败！');
-
+        alert(errorMsg.fail);
       }
     }
 
     //获取下载链接
     function getDownloadLink() {
       if (bdstoken === null) {
-        alert('提示 : 登录百度网盘后才能正常使用脚本哦!!!');
+        alert(errorMsg.unlogin);
         return '';
       } else {
         var result;
@@ -1562,7 +1572,8 @@
             params.extra = extra;
           }
           if (selectFileList[0].isdir == 1 || selectFileList.length > 1) {
-            params.type = 'batch';
+            return alert(errorMsg.dir);
+            //params.type = 'batch';
           }
           $.ajax({
             url: url,

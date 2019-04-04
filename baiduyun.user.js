@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name              百度网盘直链下载助手
 // @namespace         https://github.com/syhyz1990/baiduyun
-// @version           2.2.0
+// @version           2.2.1
 // @icon              https://www.baidu.com/favicon.ico
 // @description       【百度网盘直接下载助手 直链加速版】正式更名为【百度网盘直链下载助手】免客户端一键获取百度网盘文件真实下载地址，支持使用IDM，迅雷等下载工具下载
 // @author            syhyz1990
@@ -38,7 +38,7 @@
     'checked': 'EzubGg',
     'chekbox-grid': 'cEefyz',
     'list-view': 'vdAfKMb',
-    'item-active': 'wf4n1E',
+    'item-active': 'umpEM2v',
     'grid-view': 'JKvHJMb',
     'bar-search': 'OFaPaO',
     'list-tools': 'tcuLAu',
@@ -605,10 +605,10 @@
               {url: httpslink, rank: 2}
             ]
           };
-          httplink = httplink.replace('265486', '290150');
-          httpslink = httpslink.replace('265486', '290150');
-          linkList.urls.push({url: httplink, rank: 3});
-          linkList.urls.push({url: httpslink, rank: 4});
+
+          //httplink = httplink.replace('265486', '469475');
+          //httpslink = httpslink.replace('265486', '469475');
+          //linkList.urls.push({url: httpslink, rank: 4});
           tip = '显示模拟APP获取的链接(使用百度云ID)，可以右键使用迅雷或IDM下载，直接复制链接无效';
           dialog.open({title: '下载链接', type: 'link', list: linkList, tip: tip});
         } else if (id.indexOf('outerlink') != -1) {

@@ -15,6 +15,12 @@
 
 ![](https://ws1.sinaimg.cn/large/4db689e3ly1g1wjtedipyj206n01bweb.jpg)
 
+没有出现蚂蚁图标怎么办？（已出现的略过）
+
+找到安装目录里的【antCH】目录下的【antCH.crx】拖动到浏览器扩展界面进行安装
+
+![](https://ws1.sinaimg.cn/large/4db689e3ly1g1wkmyqjp9j20in056glj.jpg)
+
 软件安装成功后界面如图
 
 ![](https://ww1.sinaimg.cn/large/4db689e3ly1g1wjl7pr6hj20mz0d5gmk.jpg)

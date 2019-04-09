@@ -1,4 +1,4 @@
-# 突破百度网盘限速教程
+# [原创]突破百度网盘限速教程
 ![TamperMonkey v4.5](https://img.shields.io/badge/TamperMonkey-v4.8-brightgreen.svg) ![Chrome x64 v60.4](https://img.shields.io/badge/Chrome%20x64-v73.0-brightgreen.svg) ![Safari v11.0.3](https://img.shields.io/badge/Safari%20-v12.0-brightgreen.svg)
 
 本教程基于脚本 [百度网盘直链下载助手](https://greasyfork.org/zh-CN/scripts/39504)
@@ -34,6 +34,10 @@
 此时会调用ADM进行下载，**一定要等文件名出来以后再点击下载按钮**
 
 ![](https://ws1.sinaimg.cn/large/4db689e3ly1g1wk2edhpqj20e60abmyb.jpg)
+
+### 3. 实测下载速度
+
+![](https://ws1.sinaimg.cn/large/4db689e3ly1g1wki00366j20e30dh76h.jpg)
 
 ### 捐赠
 本脚本不收取任何费用 , 如果您觉得本脚本对您有帮助，您可以通过支付宝或微信，扫描二维码，捐赠 X元，也可以扫下支付宝二维码红包（免费的），^_^，谢谢！

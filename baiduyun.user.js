@@ -160,9 +160,12 @@
     //监视点击分享按钮
     function registerShareClick() {
       $(document).on('click', '[title="分享"]', function () {
-        setInterval(function () {
+        var inv = setInterval(function () {
           if ($('#share-method-public').length === 0) {
             $(".share-method-line").parent().append('<div class="share-method-line"><input type="radio" id="share-method-public" name="share-method" value="public" checked><span class="icon radio-icon icon-radio-non"></span><label for="share-method-public"><b>公开分享</b><span>任何人访问链接即可查看，下载！</span></div>');
+          } else {
+            clearInterval(inv);
+            $(document).off('click', '[title="分享"]');
           }
         }, 100);
       });

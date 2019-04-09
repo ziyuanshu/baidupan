@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name              百度网盘直链下载助手
 // @namespace         https://github.com/syhyz1990/baiduyun
-// @version           2.2.1
+// @version           2.2.2
 // @icon              https://www.baidu.com/favicon.ico
 // @description       【百度网盘直接下载助手 直链加速版】正式更名为【百度网盘直链下载助手】免客户端一键获取百度网盘文件真实下载地址，支持使用IDM，迅雷等下载工具下载
 // @author            syhyz1990
@@ -38,7 +38,7 @@
     'checked': 'EzubGg',
     'chekbox-grid': 'cEefyz',
     'list-view': 'vdAfKMb',
-    'item-active': 'umpEM2v',
+    'item-active': 'obcPb8q',
     'grid-view': 'JKvHJMb',
     'bar-search': 'OFaPaO',
     'list-tools': 'tcuLAu',
@@ -47,8 +47,8 @@
     'dir': '暂时不支持文件夹下载，请勾选文件后使用【批量链接】或【显示链接】按钮',
     'unlogin': '提示 : 登录百度网盘后才能正常使用脚本哦!!!',
     'fail': '获取下载链接失败！',
-    'unselected' : '获取选中文件失败，请F5刷新重试！',
-    'morethan2' : '该方法不支持多文件下载！'
+    'unselected': '获取选中文件失败，请F5刷新重试！',
+    'morethan2': '该方法不支持多文件下载！'
   }
   $(function () {
     classMap['default-dom'] = ($('.icon-upload').parent().parent().parent().parent().parent().attr('class'));
@@ -154,6 +154,18 @@
       registerCheckbox();
       registerAllCheckbox();
       registerFileSelect();
+      registerShareClick();
+    }
+
+    //监视点击分享按钮
+    function registerShareClick() {
+      $(document).on('click', '[title="分享"]', function () {
+        setInterval(function () {
+          if ($('#share-method-public').length === 0) {
+            $(".share-method-line").parent().append('<div class="share-method-line"><input type="radio" id="share-method-public" name="share-method" value="public" checked><span class="icon radio-icon icon-radio-non"></span><label for="share-method-public"><b>公开分享</b><span>任何人访问链接即可查看，下载！</span></div>');
+          }
+        }, 100);
+      });
     }
 
     //监视地址栏#标签的变化

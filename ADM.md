@@ -27,9 +27,9 @@
 
 点击设置按钮，修改配置参数
 
-![](https://ws1.sinaimg.cn/large/4db689e3ly1g1wjndmnwxj20iu0fe77e.jpg)
+![](https://ws1.sinaimg.cn/large/4db689e3ly1g1xcx96ocmj20iu0fetby.jpg)
 
-![](https://ws1.sinaimg.cn/large/4db689e3ly1g1wjo0j7nsj20iu0fejuh.jpg)
+![](https://ws1.sinaimg.cn/large/4db689e3ly1g1xcyc3sa4j20iu0fe41o.jpg)
 
 ### 2. 使用脚本下载
 

@@ -90,7 +90,9 @@
 
 **Q: 安装脚本后没显示[下载助手]按钮**
 
-A1: 请检查浏览器是否已安装tampermonkey或暴力猴 , 并启用脚本
+A1: 请检查浏览器是否已安装tampermonkey或暴力猴 , 并启用脚本，Tampermonkey请安装4.7以上版本，如下图所示
+
+![](https://ws1.sinaimg.cn/large/4db689e3ly1g1xczrzk7tj209209cmxj.jpg)
 
 A2: 国产双核浏览器请切换内核为高速(极速)模式
 

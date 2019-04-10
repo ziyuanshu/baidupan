@@ -27,7 +27,7 @@
 
 点击设置按钮，修改配置参数
 
-![](https://ws1.sinaimg.cn/large/4db689e3ly1g1xcx96ocmj20iu0fetby.jpg)
+![](https://ws1.sinaimg.cn/large/4db689e3ly1g1xeohud5tj20iu0feadg.jpg)
 
 ![](https://ws1.sinaimg.cn/large/4db689e3ly1g1xcyc3sa4j20iu0fe41o.jpg)
 

@@ -5,7 +5,7 @@
 
 ### 1. 安装 Ant Download Manager 
 
-[下载地址](https://open-1252026789.cos.ap-beijing.myqcloud.com/Ant%20Download%20Manager.zip)
+[下载地址](https://www.antdownloadmanager.com/cgi/download.cgi)
 
 安装过程程序会自动安装Chrome，Firefox，Edge插件，安装结束后重启浏览器，再浏览器扩展管理中启用插件
 

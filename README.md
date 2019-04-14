@@ -41,4 +41,4 @@
 [VIP视频解析助手](https://greasyfork.org/zh-CN/scripts/380568)：免VIP观看腾讯，爱奇艺，优酷会员，芒果TV视频
 
 ### 脚本反馈
-**QQ交流群: （[点击加群](https://jq.qq.com/?_wv=1027&k=5NjiSSC)）**
+**QQ交流群: （[点击加群](https://jq.qq.com/?_wv=1027&k=5NY9Yrb)）**

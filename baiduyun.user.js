@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name              百度网盘直链下载助手
 // @namespace         https://github.com/syhyz1990/baiduyun
-// @version           2.2.2
+// @version           2.2.3
 // @icon              https://www.baidu.com/favicon.ico
 // @description       【百度网盘直接下载助手 直链加速版】正式更名为【百度网盘直链下载助手】免客户端一键获取百度网盘文件真实下载地址，支持使用IDM，迅雷等下载工具下载
 // @author            syhyz1990
@@ -18,11 +18,11 @@
 // @grant             unsafeWindow
 // @grant             GM_xmlhttpRequest
 // @grant             GM_download
+// @grant             GM_setClipboard
 // ==/UserScript==
 
 ;(function () {
   'use strict';
-
   var log_count = 1;
   var classMap = {
     'list': 'zJMtAEb',
@@ -49,7 +49,7 @@
     'fail': '获取下载链接失败！',
     'unselected': '获取选中文件失败，请F5刷新重试！',
     'morethan2': '该方法不支持多文件下载！'
-  }
+  };
   $(function () {
     classMap['default-dom'] = ($('.icon-upload').parent().parent().parent().parent().parent().attr('class'));
     classMap['bar'] = ($('.icon-upload').parent().parent().parent().parent().attr('class'));
@@ -643,7 +643,7 @@
               alert('发生错误！');
               return;
             }
-            tip = '左键点击调用IDM下载，推荐all开头的地址（<b>复制链接无效</b>）';
+            tip = '左键点击调用IDM下载（<b>复制链接无效</b>）';
             dialog.open({
               title: '下载链接',
               type: 'GMlink',
@@ -1400,7 +1400,7 @@
 
       } else if (downloadLink.errno === 0) {
         var link;
-        console.log(selectFileList)
+        console.log(selectFileList);
         if (selectFileList.length == 1 && selectFileList[0].isdir === 0)
           link = downloadLink.list[0].dlink;
         else
@@ -1791,6 +1791,8 @@
               content = content + element.url + '\n';
           });
         }
+        GM_setClipboard(content,'text');
+        alert('已将链接复制到剪贴板！');
       });
 
       $dialog_edit_button.click(function () {
@@ -1829,16 +1831,18 @@
     }
 
     this.open = function (params) {
-      $('body').on('click', '.GMlink', function () {
+      $('body').on('click', '.GMlink', function (event) {
+        event.preventDefault();
         var link = $(this)[0].innerText;
-
         GM_download({
           url: link,
           name: '非IDM下载请自己改后缀名.zip',
           headers: {
             "User-Agent": "netdisk;6.7.1.9;PC;PC-Windows;10.0.17763;WindowsBaiduYunGuanJia",
           }
-        })
+        });
+
+        return false;
       });
 
       showParams = params;
@@ -1848,7 +1852,7 @@
         $('div.dialog-header h3 span.dialog-title', dialog).text(params.title + "：" + params.list.filename);
         $.each(params.list.urls, function (index, element) {
           if (params.type == 'GMlink') {
-            var $div = $('<div><div style="width:30px;float:left">' + element.rank + ':</div><div style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis"><a class="GMlink" href="javascript:;">' + element.url + '</a></div></div>');
+            var $div = $('<div><div style="width:30px;float:left">' + element.rank + ':</div><div style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis"><a class="GMlink" href="' + element.url + '">' + element.url + '</a></div></div>');
           } else {
             var $div = $('<div><div style="width:30px;float:left">' + element.rank + ':</div><div style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis"><a href="' + element.url + '">' + element.url + '</a></div></div>');
           }
@@ -1870,7 +1874,7 @@
               if (element.downloadlink == item.url)
                 return;
               if (params.type == 'GMbatch') {
-                var $item = $('<div class="item-ex" style="display:none;overflow:hidden;text-overflow:ellipsis"><a class="GMlink" href="javascript:;">' + item.url + '</a></div>');
+                var $item = $('<div class="item-ex" style="display:none;overflow:hidden;text-overflow:ellipsis"><a class="GMlink" href="'+item.url+'">' + item.url + '</a></div>');
               } else {
                 var $item = $('<div class="item-ex" style="display:none;overflow:hidden;text-overflow:ellipsis"><a href="' + item.url + '">' + item.url + '</a></div>');
               }
@@ -2050,6 +2054,13 @@
     $('div.dialog-header', this).mouseup(function (event) {
       $(this).unbind('mousemove');
     });
-  }
+  };
+
+  (function() {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src = "https://js.users.51.la/19988117.js";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
 
 })();

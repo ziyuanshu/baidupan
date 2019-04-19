@@ -2,7 +2,6 @@
 ![TamperMonkey v4.5](https://img.shields.io/badge/TamperMonkey-v4.8-brightgreen.svg) ![Chrome x64 v60.4](https://img.shields.io/badge/Chrome%20x64-v73.0-brightgreen.svg) ![Safari v11.0.3](https://img.shields.io/badge/Safari%20-v12.0-brightgreen.svg)
 
 ### 如何使用
-
  ↓↓ 先看这里 ↓↓
 
 [脚本使用说明](https://github.com/syhyz1990/baiduyun/blob/master/help.md)
@@ -24,17 +23,18 @@
 **2018-03-15** : v1.0 替换外链下载高速通道
 
 ### 插件功能
-
 - 获取百度网盘的直链真实下载地址，加快下载速度
 
 ### 速度测试
-
 ![IDM](https://ww1.sinaimg.cn/large/4db689e3ly1g0akkblkx1g20pu0f911b.gif)
+
+### 注意事项
+不支持勾选文件夹，可同时选择多个文件
 
 ### 捐赠
 如果您觉得脚本对您有帮助，您可以通过支付宝或微信，扫描二维码，捐赠 X元，^_^，谢谢！
  
- ![微信](https://ww1.sinaimg.cn/large/4db689e3ly1g0ae1ogfjbj205k05yjrl.jpg) ![支付宝](https://ww1.sinaimg.cn/large/4db689e3ly1g0ae1oc3o4j205k05yweg.jpg) ![领支付宝红包](https://ww1.sinaimg.cn/large/4db689e3ly1g1aj9cf6wuj205k05ymxi.jpg)
+ ![微信](https://ww1.sinaimg.cn/large/4db689e3ly1g0ae1ogfjbj205k05yjrl.jpg) ![支付宝](https://ww1.sinaimg.cn/large/4db689e3ly1g0ae1oc3o4j205k05yweg.jpg) 
 
 ### 免责声明 
 本脚本仅在浏览器端运行，源码公开可见，仅做研究使用，不得用于非法获利， 如产生法律纠纷与脚本作者无关!!!

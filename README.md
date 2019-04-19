@@ -7,6 +7,11 @@
 
 [脚本使用说明](https://github.com/syhyz1990/baiduyun/blob/master/help.md)
 
+### 安装地址
+[安装地址1](https://greasyfork.org/zh-CN/scripts/39504)
+
+[安装地址2](https://openuserjs.org/scripts/syhyz1990/百度网盘直链下载助手)
+
 ### 更新日志
 **2019-04-19** : v2.2.4 显示链接支持多个文件勾选获取链接，不支持勾选文件夹，修正了低版本火狐下的一个Bug
 
@@ -17,11 +22,6 @@
 ..................
 
 **2018-03-15** : v1.0 替换外链下载高速通道
-
-### 安装地址
-[安装地址1](https://greasyfork.org/zh-CN/scripts/39504)
-
-[安装地址2](https://openuserjs.org/scripts/syhyz1990/百度网盘直链下载助手)
 
 ### 插件功能
 

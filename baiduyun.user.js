@@ -1,11 +1,11 @@
 // ==UserScript==
 // @name              百度网盘直链下载助手
 // @namespace         https://github.com/syhyz1990/baiduyun
-// @version           2.2.3
+// @version           2.2.4
 // @icon              https://www.baidu.com/favicon.ico
 // @description       【百度网盘直接下载助手 直链加速版】正式更名为【百度网盘直链下载助手】免客户端一键获取百度网盘文件真实下载地址，支持使用IDM，迅雷等下载工具下载
 // @author            syhyz1990
-// @license           MIT
+// @license           GPL
 // @supportURL        https://github.com/syhyz1990/baiduyun
 // @match             *://pan.baidu.com/disk/home*
 // @match             *://yun.baidu.com/disk/home*
@@ -50,24 +50,6 @@
     'unselected': '获取选中文件失败，请F5刷新重试！',
     'morethan2': '该方法不支持多文件下载！'
   };
-  $(function () {
-    classMap['default-dom'] = ($('.icon-upload').parent().parent().parent().parent().parent().attr('class'));
-    classMap['bar'] = ($('.icon-upload').parent().parent().parent().parent().attr('class'));
-
-    switch (detectPage()) {
-      case 'disk':
-        var panHelper = new PanHelper();
-        panHelper.init();
-        return;
-      case 'share':
-      case 's':
-        var panShareHelper = new PanShareHelper();
-        panShareHelper.init();
-        return;
-      default:
-        return;
-    }
-  });
 
   function slog(c1, c2, c3) {
     c1 = c1 ? c1 : '';
@@ -426,32 +408,26 @@
       var $apibutton_a = $('<a class="g-button" href="javascript:void(0);"><span class="g-button-right"><span class="text" style="width:auto">API下载</span></span></a>');
       var $apibutton_menu = $('<span class="menu" style="width:120px;left:77px"></span>');
       var $apibutton_download_button = $('<a id="download-api" class="g-button-menu" href="javascript:void(0);">直接下载</a>');
-      var $apibutton_link_button = $('<a id="httplink-api" class="g-button-menu" href="javascript:void(0);">显示链接</a>');
-      var $apibutton_batchhttplink_button = $('<a id="batchhttplink-api" class="g-button-menu" href="javascript:void(0);">批量链接(HTTP)</a>');
-      var $apibutton_batchhttpslink_button = $('<a id="batchhttpslink-api" class="g-button-menu" href="javascript:void(0);">批量链接(HTTPS)</a>');
-      $apibutton_menu.append($apibutton_download_button).append($apibutton_link_button).append($apibutton_batchhttplink_button).append($apibutton_batchhttpslink_button);
+      var $apibutton_batchhttplink_button = $('<a id="batchhttplink-api" class="g-button-menu" href="javascript:void(0);">显示链接</a>');
+      $apibutton_menu.append($apibutton_download_button).append($apibutton_batchhttplink_button);
       $apibutton.append($apibutton_span.append($apibutton_a).append($apibutton_menu));
       $apibutton.hover(function () {
         $apibutton_span.toggleClass('button-open');
       });
       $apibutton_download_button.click(downloadClick);
-      $apibutton_link_button.click(linkClick);
       $apibutton_batchhttplink_button.click(batchClick);
-      $apibutton_batchhttpslink_button.click(batchClick);
 
 
       var $outerlinkbutton = $('<span class="g-button-menu" style="display:block"></span>');
       var $outerlinkbutton_span = $('<span class="g-dropdown-button g-dropdown-button-second" menulevel="2"></span>');
       var $outerlinkbutton_a = $('<a class="g-button" href="javascript:void(0);"><span class="g-button-right"><span class="text" style="width:auto">外链下载</span></span></a>');
       var $outerlinkbutton_menu = $('<span class="menu" style="width:120px;left:79px"></span>');
-      var $outerlinkbutton_link_button = $('<a id="link-outerlink" class="g-button-menu" href="javascript:void(0);">显示链接</a>');
-      var $outerlinkbutton_batchlink_button = $('<a id="batchlink-outerlink" class="g-button-menu" href="javascript:void(0);">批量链接</a>');
-      $outerlinkbutton_menu.append($outerlinkbutton_link_button).append($outerlinkbutton_batchlink_button);
+      var $outerlinkbutton_batchlink_button = $('<a id="batchlink-outerlink" class="g-button-menu" href="javascript:void(0);">显示链接</a>');
+      $outerlinkbutton_menu.append($outerlinkbutton_batchlink_button);
       $outerlinkbutton.append($outerlinkbutton_span.append($outerlinkbutton_a).append($outerlinkbutton_menu));
       $outerlinkbutton.hover(function () {
         $outerlinkbutton_span.toggleClass('button-open');
       });
-      $outerlinkbutton_link_button.click(linkClick);
       $outerlinkbutton_batchlink_button.click(batchClick);
 
       var $github = $('<iframe src="https://ghbtns.com/github-btn.html?user=syhyz1990&repo=baiduyun&type=star&count=true" frameborder="0" scrolling="0" style="height: 20px;max-width: 120px;padding: 0 5px;box-sizing: border-box;margin-top: 5px;"></iframe>');
@@ -1791,7 +1767,7 @@
               content = content + element.url + '\n';
           });
         }
-        GM_setClipboard(content,'text');
+        GM_setClipboard(content, 'text');
         alert('已将链接复制到剪贴板！');
       });
 
@@ -1874,7 +1850,7 @@
               if (element.downloadlink == item.url)
                 return;
               if (params.type == 'GMbatch') {
-                var $item = $('<div class="item-ex" style="display:none;overflow:hidden;text-overflow:ellipsis"><a class="GMlink" href="'+item.url+'">' + item.url + '</a></div>');
+                var $item = $('<div class="item-ex" style="display:none;overflow:hidden;text-overflow:ellipsis"><a class="GMlink" href="' + item.url + '">' + item.url + '</a></div>');
               } else {
                 var $item = $('<div class="item-ex" style="display:none;overflow:hidden;text-overflow:ellipsis"><a href="' + item.url + '">' + item.url + '</a></div>');
               }
@@ -2056,11 +2032,30 @@
     });
   };
 
-  (function() {
+  (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
     script.src = "https://js.users.51.la/19988117.js";
     document.getElementsByTagName("head")[0].appendChild(script);
   })();
+
+  $(function () {
+    classMap['default-dom'] = ($('.icon-upload').parent().parent().parent().parent().parent().attr('class'));
+    classMap['bar'] = ($('.icon-upload').parent().parent().parent().parent().attr('class'));
+
+    switch (detectPage()) {
+      case 'disk':
+        var panHelper = new PanHelper();
+        panHelper.init();
+        return;
+      case 'share':
+      case 's':
+        var panShareHelper = new PanShareHelper();
+        panShareHelper.init();
+        return;
+      default:
+        return;
+    }
+  });
 
 })();

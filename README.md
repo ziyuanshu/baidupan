@@ -1,7 +1,9 @@
 # 百度网盘直链下载助手
 ![TamperMonkey v4.5](https://img.shields.io/badge/TamperMonkey-v4.8-brightgreen.svg) ![Chrome x64 v60.4](https://img.shields.io/badge/Chrome%20x64-v73.0-brightgreen.svg) ![Safari v11.0.3](https://img.shields.io/badge/Safari%20-v12.0-brightgreen.svg)
 
-### 使用必读
+### 如何使用
+
+**!!! 不要直接点上面的安装 !!!** 
 
 [脚本使用说明](https://github.com/syhyz1990/baiduyun/blob/master/help.md)
 
@@ -11,7 +13,7 @@
 [安装地址2](https://openuserjs.org/scripts/syhyz1990/百度网盘直链下载助手)
 
 ### 更新日志
-**2019-04-08** : v2.2.2 修复选择文件有时失效的问题，增加一个小彩蛋
+**2019-04-19** : v2.2.4 显示链接支持多个文件勾选获取链接，不支持勾选文件夹，修正了低版本火狐下的一个Bug
 
 **2019-04-04** : v2.2.1 修复选择文件有时失效的问题
 
@@ -36,9 +38,6 @@
 
 ### 免责声明 
 本脚本仅在浏览器端运行，源码公开可见，仅做研究使用，不得用于非法获利， 如产生法律纠纷与脚本作者无关!!!
-
-### 脚本推荐
-[VIP视频解析助手](https://greasyfork.org/zh-CN/scripts/380568)：免VIP观看腾讯，爱奇艺，优酷会员，芒果TV视频
 
 ### 脚本反馈
 **QQ交流群: （[点击加群](https://jq.qq.com/?_wv=1027&k=5NY9Yrb)）**

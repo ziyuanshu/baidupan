@@ -3,8 +3,11 @@
 
 本教程基于脚本 [百度网盘直链下载助手](https://greasyfork.org/zh-CN/scripts/39504)
 
-### 如何安装脚本
-**1. 安装脚本管理器 Tampermonkey 或暴力猴**
+### 安装教程
+
+#### 一、安装脚本管理器（必须）
+
+**前往浏览器扩展中心安装 Tampermonkey 或暴力猴**
 
 |  浏览器 |  安装地址 |
 | ------------ | ------------ |
@@ -21,7 +24,8 @@
 
 ![](https://ww1.sinaimg.cn/large/4db689e3ly1g15iix9j24j20qf0130sq.jpg)
 
-**2. 安装 百度网盘直链下载助手**
+#### 二、安装百度网盘直链下载助手（必须）
+
 [安装地址1](https://greasyfork.org/zh-CN/scripts/39504) 或 [安装地址2](https://openuserjs.org/scripts/syhyz1990/百度网盘直链下载助手)
 
 点击安装此脚本
@@ -36,20 +40,22 @@
 
 ![](https://ww1.sinaimg.cn/large/4db689e3ly1g15iwtanyxj20yx01g3ym.jpg)
 
-**3. 安装 Internet Download Manager(IDM)下载器**
+#### 三、安装 Internet Download Manager（可选）
+
+不安装此软件可使用浏览器自带的下载功能下载，如需提高下载速度，需要安装此软件
 
 下载地址 : http://internetdownloadmanager.com/download.html
 
 ![](https://ww1.sinaimg.cn/large/4db689e3ly1g15jfiw03yj20p80ej3zq.jpg)
 
-安装成功后将安装目录里的 **IDMGCExt.crx** 拖动到浏览器中进行安装 , 成功后浏览器扩展栏中会出现 IDM 图标 , **成功后重启浏览器**  (Chrome浏览器请使用开发者模式安装)
+软件安装成功后将安装目录里的 **IDMGCExt.crx** 拖动到浏览器的扩展页面中进行安装 , 成功后浏览器扩展栏中会出现 IDM 图标 , **成功后重启浏览器**  (Chrome浏览器请使用开发者模式安装)
 
 ![](https://ww1.sinaimg.cn/large/4db689e3ly1g15j5c5mg4j20p0013t8p.jpg)
 
 
 ### 脚本安装成功界面
 
-**1. 我的网盘页面**
+#### 我的网盘页面 
 
 ![](https://ww1.sinaimg.cn/large/4db689e3ly1g15j96ogr7j211y0gcwgw.jpg)
 
@@ -58,7 +64,7 @@
 |  API下载 |  ![](https://ww1.sinaimg.cn/large/4db689e3ly1g15jnpa1s8j20ku061aar.jpg) |
 |  外链下载 |  ![](https://ww1.sinaimg.cn/large/4db689e3ly1g15jqtg41wj20ko059t94.jpg) |
 
-**2. 网盘分享页面**
+#### 网盘分享页面 
 
 ![](https://ww1.sinaimg.cn/large/4db689e3ly1g15jd6ghowj211y0gcta2.jpg)
 
@@ -69,11 +75,11 @@
 
 ### 脚本功能演示
 
-**1. 我的网盘页面**
+#### 我的网盘页面
 
 ![](https://ww1.sinaimg.cn/large/4db689e3ly1g15k4dcp6yg20zg0gce81.gif)
 
-**2. 网盘分享页面**
+#### 网盘分享页面 
 
 ![](https://ww1.sinaimg.cn/large/4db689e3ly1g15ka0b327g20zg0gce6t.gif)
 
@@ -106,17 +112,17 @@ A: 直接复制链接到迅雷或idm中无效
 
 **Q: Chrome浏览器无法安装crx扩展**
 
-A: 请按照下列方法安装
+A: 请按照下列方法安装（适合于Chrome73以下版本）
 
 ![](http://ww1.sinaimg.cn/large/4db689e3ly1g1bochg39lg20vd0manpd.gif)
 
 **Q: 无法调用IDM下载**
 
-A: 确保IDM和IDM浏览器扩展正确安装 , 或换用其他浏览器
+A: 确保IDM和IDM浏览器扩展正确安装 , 或换用其他浏览器（推荐360或QQ，简单快捷）
 
 **Q: 下载速度很慢 , 只有几百K**
 
-A: 账号被百度限速 , 参见 [解决方法](https://github.com/syhyz1990/baiduyun/blob/master/ADM.md)
+A: 账号被百度限速 , 参见 [解决方法](https://github.com/syhyz1990/baiduyun/blob/master/ADM.md) 或购买 [百度网盘会员](https://pan.baidu.com/buy/center)
 
 **Q: 如何使用批量下载**
 

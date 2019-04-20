@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name              百度网盘直链下载助手
 // @namespace         https://github.com/syhyz1990/baiduyun
-// @version           2.2.4
+// @version           2.2.5
 // @icon              https://www.baidu.com/favicon.ico
 // @description       【百度网盘直接下载助手 直链加速版】正式更名为【百度网盘直链下载助手】免客户端一键获取百度网盘文件真实下载地址，支持使用IDM，迅雷等下载工具下载
 // @author            syhyz1990
@@ -44,11 +44,11 @@
     'list-tools': 'tcuLAu',
   };
   var errorMsg = {
-    'dir': '暂时不支持文件夹下载，请勾选文件后使用【批量链接】或【显示链接】按钮',
-    'unlogin': '提示 : 登录百度网盘后才能正常使用脚本哦!!!',
-    'fail': '获取下载链接失败！',
-    'unselected': '获取选中文件失败，请F5刷新重试！',
-    'morethan2': '该方法不支持多文件下载！'
+    'dir': '不支持整个文件夹下载，可进入文件夹内获取文件链接下载',
+    'unlogin': '提示 : 必须登录百度网盘后才能正常使用脚本哦!!!',
+    'fail': '获取下载链接失败！请刷新后重试！',
+    'unselected': '未选中文件，请刷新后重试！',
+    'morethan2': '多个文件请点击【显示链接】'
   };
 
   function slog(c1, c2, c3) {
@@ -655,7 +655,7 @@
         dialog.open({title: '批量链接', type: 'batch', list: batchLinkList, tip: tip, showcopy: true});
       } else if (id.indexOf('api') != -1) {
         batchLinkList = getAPIBatchLink(linkType);
-        tip = '显示所有选中文件的API下载链接，直接复制链接无效，请安装IDM或迅雷Chrome插件';
+        tip = '直接复制链接无效，请安装 IDM 及浏览器扩展后使用（<a href="https://github.com/syhyz1990/baiduyun/blob/master/help.md" target="_blank">脚本使用说明</a>）';
         if (batchLinkList.length === 0) {
           alert('没有链接可以显示，API链接不要全部选中文件夹！');
           return;
@@ -1359,6 +1359,13 @@
         alert(errorMsg.unselected);
         return;
       }
+      if (selectFileList.length > 1 ) {
+        return alert(errorMsg.morethan2);
+      }
+
+      if (selectFileList[0].isdir == 1) {
+        return alert(errorMsg.dir);
+      }
       buttonTarget = 'download';
       var downloadLink = getDownloadLink();
 
@@ -1375,12 +1382,7 @@
         alert('页面过期，请刷新重试');
 
       } else if (downloadLink.errno === 0) {
-        var link;
-        console.log(selectFileList);
-        if (selectFileList.length == 1 && selectFileList[0].isdir === 0)
-          link = downloadLink.list[0].dlink;
-        else
-          link = downloadLink.dlink;
+        var link = downloadLink.list[0].dlink;
         execDownload(link);
       } else {
         alert(errorMsg.fail);
@@ -1443,33 +1445,15 @@
         vcodeDialog.open();
       } else if (result.errno === 0) {
         vcodeDialog.close();
-        var link;
-        if (selectFileList.length == 1 && selectFileList[0].isdir === 0)
-          link = result.list[0].dlink;
-        else
-          link = result.dlink;
         if (buttonTarget == 'download') {
+          if (result.list.length > 1 || result.list[0].isdir == 1 ) {
+            return alert(errorMsg.morethan2);
+          }
+          var link =  result.list[0].dlink;
           execDownload(link);
         } else if (buttonTarget == 'link') {
-          var filename = '';
-          $.each(selectFileList, function (index, element) {
-            if (selectFileList.length == 1)
-              filename = element.filename;
-            else {
-              if (index == 0)
-                filename = element.filename;
-              else
-                filename = filename + ',' + element.filename;
-            }
-          });
-          var linkList = {
-            filename: filename,
-            urls: [
-              {url: link, rank: 1}
-            ]
-          };
-          var tip = "显示获取的链接，可以右键使用迅雷或IDM下载，直接复制链接无效";
-          dialog.open({title: '下载链接', type: 'link', list: linkList, tip: tip});
+          var tip = '直接复制链接无效，请安装 IDM 及浏览器扩展后使用（<a href="https://github.com/syhyz1990/baiduyun/blob/master/help.md" target="_blank">脚本使用说明</a>）';
+          dialog.open({title: '下载链接（仅显示文件链接）', type: 'shareLink', list: result.list, tip: tip});
         }
       } else {
         alert('发生错误！');
@@ -1489,9 +1473,12 @@
     function linkButtonClick() {
       slog('选中文件列表：', selectFileList);
       if (selectFileList.length === 0) {
-        alert(errorMsg.unselected);
-        return;
+        return alert(errorMsg.unselected);
       }
+      if (selectFileList[0].isdir == 1) {
+        return alert(errorMsg.dir);
+      }
+
       buttonTarget = 'link';
       var downloadLink = getDownloadLink();
 
@@ -1500,42 +1487,14 @@
       if (downloadLink.errno == -20) {
         vcode = getVCode();
         if (!vcode || vcode.errno !== 0) {
-          alert('获取验证码失败！');
-          return;
+          return alert('获取验证码失败！');
         }
         vcodeDialog.open(vcode);
       } else if (downloadLink.errno == 112) {
-        alert('页面过期，请刷新重试');
-
+        return alert('页面过期，请刷新重试');
       } else if (downloadLink.errno === 0) {
-        var link;
-        if (selectFileList.length == 1 && selectFileList[0].isdir === 0)
-          link = downloadLink.list[0].dlink;
-        else
-          link = downloadLink.dlink;
-        if (selectFileList.length == 1)
-          $('#dialog-downloadlink').attr('href', link).text(link);
-        else
-          $('#dialog-downloadlink').attr('href', link).text(link);
-        var filename = '';
-        $.each(selectFileList, function (index, element) {
-          if (selectFileList.length == 1)
-            filename = element.filename;
-          else {
-            if (index == 0)
-              filename = element.filename;
-            else
-              filename = filename + ',' + element.filename;
-          }
-        });
-        var linkList = {
-          filename: filename,
-          urls: [
-            {url: link, rank: 1}
-          ]
-        };
         var tip = "显示获取的链接，可以使用右键迅雷或IDM下载，复制无用，需要传递cookie";
-        dialog.open({title: '下载链接', type: 'link', list: linkList, tip: tip});
+        dialog.open({title: '下载链接（仅显示文件链接）', type: 'shareLink', list: downloadLink.list, tip: tip});
       } else {
         alert(errorMsg.fail);
       }
@@ -1562,10 +1521,9 @@
           if (shareType == 'secret') {
             params.extra = extra;
           }
-          if (selectFileList[0].isdir == 1 || selectFileList.length > 1) {
-            return alert(errorMsg.dir);
-            //params.type = 'batch';
-          }
+          /*if (selectFileList[0].isdir == 1 || selectFileList.length > 1) {
+            params.type = 'batch';
+          }*/
           $.ajax({
             url: url,
             method: 'POST',
@@ -1598,9 +1556,9 @@
         if (shareType == 'secret') {
           params.extra = extra;
         }
-        if (selectFileList[0].isdir == 1 || selectFileList.length > 1) {
+        /*if (selectFileList[0].isdir == 1 || selectFileList.length > 1) {
           params.type = 'batch';
-        }
+        }*/
         $.ajax({
           url: url,
           method: 'POST',
@@ -1835,7 +1793,8 @@
 
           $('div.dialog-body', dialog).append($div);
         });
-      } else if (params.type == 'batch' || params.type == 'GMbatch') {
+      }
+      if (params.type == 'batch' || params.type == 'GMbatch') {
         linkList = params.list;
         $('div.dialog-header h3 span.dialog-title', dialog).text(params.title);
         if (params.showall) {
@@ -1878,6 +1837,15 @@
             $('div.dialog-body', dialog).append($div);
           });
         }
+      }
+      if (params.type == 'shareLink') {
+        linkList = params.list;
+        $('div.dialog-header h3 span.dialog-title', dialog).text(params.title);
+        $.each(params.list, function (index, element) {
+          if (element.isdir == 1) return;
+          var $div = $('<div style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap"><div style="width:100px;float:left;overflow:hidden;text-overflow:ellipsis" title="' + element.server_filename + '">' + element.server_filename + '</div><span>：</span><a href="' + element.dlink + '">' + element.dlink + '</a></div>');
+          $('div.dialog-body', dialog).append($div);
+        });
       }
 
       if (params.tip) {

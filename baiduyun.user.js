@@ -38,7 +38,7 @@
     'checked': 'EzubGg',
     'chekbox-grid': 'cEefyz',
     'list-view': 'vdAfKMb',
-    'item-active': 'obcPb8q',
+    'item-active': 'rmpwzRWe',
     'grid-view': 'JKvHJMb',
     'bar-search': 'OFaPaO',
     'list-tools': 'tcuLAu',

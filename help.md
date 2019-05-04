@@ -61,8 +61,8 @@
 
 |  功能按钮说明 |  示例 |
 | ------------ | ------------ |
-|  API下载 |  ![](https://ww1.sinaimg.cn/large/4db689e3ly1g15jnpa1s8j20ku061aar.jpg) |
-|  外链下载 |  ![](https://ww1.sinaimg.cn/large/4db689e3ly1g15jqtg41wj20ko059t94.jpg) |
+|  API下载 |  ![](https://ws1.sinaimg.cn/large/4db689e3ly1g2p2j8u4pgj20g70570tb.jpg) |
+|  外链下载 |  ![](https://ws1.sinaimg.cn/large/4db689e3ly1g2p2jhqgitj20g6057q3d.jpg) |
 
 #### 网盘分享页面 
 

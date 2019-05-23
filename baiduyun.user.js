@@ -655,7 +655,7 @@
         dialog.open({title: '批量链接', type: 'batch', list: batchLinkList, tip: tip, showcopy: true});
       } else if (id.indexOf('api') != -1) {
         batchLinkList = getAPIBatchLink(linkType);
-        tip = '直接复制链接无效，请安装 IDM 及浏览器扩展后使用（<a href="https://github.com/syhyz1990/baiduyun/blob/master/help.md" target="_blank">脚本使用说明</a>）';
+        tip = '直接复制链接无效，请安装 IDM 及浏览器扩展后使用（<a href="https://github.com/syhyz1990/baiduyun/wiki" target="_blank">脚本使用说明</a>）';
         if (batchLinkList.length === 0) {
           alert('没有链接可以显示，API链接不要全部选中文件夹！');
           return;
@@ -1452,7 +1452,7 @@
           var link =  result.list[0].dlink;
           execDownload(link);
         } else if (buttonTarget == 'link') {
-          var tip = '直接复制链接无效，请安装 IDM 及浏览器扩展后使用（<a href="https://github.com/syhyz1990/baiduyun/blob/master/help.md" target="_blank">脚本使用说明</a>）';
+          var tip = '直接复制链接无效，请安装 IDM 及浏览器扩展后使用（<a href="https://github.com/syhyz1990/baiduyun/wiki" target="_blank">脚本使用说明</a>）';
           dialog.open({title: '下载链接（仅显示文件链接）', type: 'shareLink', list: result.list, tip: tip});
         }
       } else {

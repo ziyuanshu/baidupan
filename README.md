@@ -2,7 +2,7 @@
 ![TamperMonkey v4.8](https://img.shields.io/badge/tamperMonkey-v4.8-brightgreen.svg) ![Chrome x64 v60.4](https://img.shields.io/badge/chrome%20x64-v73.0-brightgreen.svg) ![Safari v11.0.3](https://img.shields.io/badge/safari%20-v12.0-brightgreen.svg) ![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20Mac%20%7C%20Android-blue.svg) [![Github](https://img.shields.io/badge/GitHub-5k+-yellow.svg?style=social&logo=github)](https://github.com/syhyz1990/baiduyun)
 
 
-本脚本适用于多平台支持安装 Tampermonkey 或 暴力猴扩展的浏览器，如Chrome，360，QQ，UC等。
+👉 本脚本适用于多平台支持安装 Tampermonkey 或 暴力猴扩展的浏览器，如Chrome，360，QQ，UC等。
 
 支持百度网盘PC端网页获取分享链接下载地址和我的网盘下载地址。安装后会在对应界面出现【下载助手】按钮, 配合多线程下载工具达到提速的效果。
 

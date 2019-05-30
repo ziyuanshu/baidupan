@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name              百度网盘直链下载助手
 // @namespace         https://github.com/syhyz1990/baiduyun
-// @version           2.2.8
+// @version           2.2.9
 // @icon              https://www.baidu.com/favicon.ico
 // @description       【百度网盘直接下载助手 直链加速版】正式更名为【百度网盘直链下载助手】免客户端一键获取百度网盘文件真实下载地址，支持使用IDM，迅雷等下载工具下载
 // @author            syhyz1990
@@ -597,8 +597,8 @@
             ]
           };
 
-          //httplink = httplink.replace('250528', '469475');
-          //httpslink = httpslink.replace('250528', '469475');
+          //httplink = httplink.replace('498065', '469475');
+          //httpslink = httpslink.replace('498065', '469475');
           //linkList.urls.push({url: httpslink, rank: 4});
           tip = '显示模拟APP获取的链接(使用百度云ID)，可以右键使用迅雷或IDM下载，直接复制链接无效';
           dialog.open({title: '下载链接', type: 'link', list: linkList, tip: tip});
@@ -800,7 +800,7 @@
         showempty: 0,
         web: 1,
         channel: 'chunlei',
-        appid: 250528
+        appid: 498065
       };
 
       $.ajax({
@@ -831,7 +831,7 @@
         showempty: 0,
         web: 1,
         channel: 'chunlei',
-        appid: 250528
+        appid: 498065
       };
       $.ajax({
         url: listUrl,
@@ -912,7 +912,7 @@
         type: type,
         channel: 'chunlei',
         web: 1,
-        app_id: 250528,
+        app_id: 498065,
         bdstoken: bdstoken,
         logid: logid,
         clienttype: 0
@@ -930,13 +930,13 @@
     }
 
     function getDownloadLinkWithRESTAPIBaidu(path) {
-      var link = restAPIUrl + 'file?method=download&app_id=250528&path=' + encodeURIComponent(path);
+      var link = restAPIUrl + 'file?method=download&path=' + encodeURIComponent(path) + '&random='+ Math.random()+ '&app_id=498065';
       return link;
     }
 
     function getDownloadLinkWithClientAPI(path, cb) {
       var result;
-      var url = clientAPIUrl + 'file?method=locatedownload&app_id=250528&ver=4.0&path=' + encodeURIComponent(path);
+      var url = clientAPIUrl + 'file?method=locatedownload&app_id=498065&ver=4.0&path=' + encodeURIComponent(path);
 
       GM_xmlhttpRequest({
         method: "POST",
@@ -1023,7 +1023,7 @@
       channel = 'chunlei';
       clienttype = 0;
       web = 1;
-      app_id = 250528;
+      app_id = 498065;
       logid = getLogID();
       encrypt = 0;
       product = 'share';

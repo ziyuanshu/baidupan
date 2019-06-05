@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name              百度网盘直链下载助手
 // @namespace         https://github.com/syhyz1990/baiduyun
-// @version           2.2.9
+// @version           2.3.0
 // @icon              https://www.baidu.com/favicon.ico
 // @description       【百度网盘直接下载助手 直链加速版】正式更名为【百度网盘直链下载助手】免客户端一键获取百度网盘文件真实下载地址，支持使用IDM，迅雷等下载工具下载
 // @author            syhyz1990
@@ -930,7 +930,7 @@
     }
 
     function getDownloadLinkWithRESTAPIBaidu(path) {
-      var link = restAPIUrl + 'file?method=download&path=' + encodeURIComponent(path) + '&random='+ Math.random()+ '&app_id=498065';
+      var link = restAPIUrl + 'file?method=download&path=' + encodeURIComponent(path) + '&random=' + Math.random() + '&app_id=498065';
       return link;
     }
 
@@ -1120,8 +1120,14 @@
         $dropdownbutton.toggleClass('button-open');
       });
 
-      $downloadButton.click(downloadButtonClick);
-      $linkButton.click(linkButtonClick);
+      $downloadButton.click(function () {
+        alert('温馨提示 : 百度接口限制, 请先保存到自己网盘 , 去网盘中使用下载助手!!!')
+      });
+      $linkButton.click(function () {
+        alert('温馨提示 : 百度接口限制, 请先保存到自己网盘 , 去网盘中使用下载助手!!!')
+      });
+      //$downloadButton.click(downloadButtonClick);
+      //$linkButton.click(linkButtonClick);
 
       $('div.module-share-top-bar div.bar div.x-button-box').append($dropdownbutton);
     }
@@ -1359,7 +1365,7 @@
         alert(errorMsg.unselected);
         return;
       }
-      if (selectFileList.length > 1 ) {
+      if (selectFileList.length > 1) {
         return alert(errorMsg.morethan2);
       }
 
@@ -1446,10 +1452,10 @@
       } else if (result.errno === 0) {
         vcodeDialog.close();
         if (buttonTarget == 'download') {
-          if (result.list.length > 1 || result.list[0].isdir == 1 ) {
+          if (result.list.length > 1 || result.list[0].isdir == 1) {
             return alert(errorMsg.morethan2);
           }
-          var link =  result.list[0].dlink;
+          var link = result.list[0].dlink;
           execDownload(link);
         } else if (buttonTarget == 'link') {
           var tip = '直接复制链接无效，请安装 IDM 及浏览器扩展后使用（<a href="https://github.com/syhyz1990/baiduyun/wiki" target="_blank">脚本使用说明</a>）';

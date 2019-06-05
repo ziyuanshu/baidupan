@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name              百度网盘直链下载助手
 // @namespace         https://github.com/syhyz1990/baiduyun
-// @version           2.3.0
+// @version           2.4.0
 // @icon              https://www.baidu.com/favicon.ico
 // @description       【百度网盘直接下载助手 直链加速版】正式更名为【百度网盘直链下载助手】免客户端一键获取百度网盘文件真实下载地址，支持使用IDM，迅雷等下载工具下载
 // @author            syhyz1990
@@ -19,6 +19,8 @@
 // @grant             GM_xmlhttpRequest
 // @grant             GM_download
 // @grant             GM_setClipboard
+// @grant             GM_setValue
+// @grant             GM_getValue
 // ==/UserScript==
 
 ;(function () {
@@ -50,6 +52,8 @@
     'unselected': '未选中文件，请刷新后重试！',
     'morethan2': '多个文件请点击【显示链接】'
   };
+
+  var secretCode = GM_getValue('secretCode') ? GM_getValue('secretCode') : '498065';
 
   function slog(c1, c2, c3) {
     c1 = c1 ? c1 : '';
@@ -409,14 +413,15 @@
       var $apibutton_menu = $('<span class="menu" style="width:120px;left:77px"></span>');
       var $apibutton_download_button = $('<a id="download-api" class="g-button-menu" href="javascript:void(0);">直接下载</a>');
       var $apibutton_batchhttplink_button = $('<a id="batchhttplink-api" class="g-button-menu" href="javascript:void(0);">显示链接</a>');
-      $apibutton_menu.append($apibutton_download_button).append($apibutton_batchhttplink_button);
+      var $setting_button = $('<a id="appid-setting" class="g-button-menu" href="javascript:void(0);">脚本配置</a>');
+      $apibutton_menu.append($apibutton_download_button).append($apibutton_batchhttplink_button).append($setting_button);
       $apibutton.append($apibutton_span.append($apibutton_a).append($apibutton_menu));
       $apibutton.hover(function () {
         $apibutton_span.toggleClass('button-open');
       });
       $apibutton_download_button.click(downloadClick);
       $apibutton_batchhttplink_button.click(batchClick);
-
+      $setting_button.click(setSetting);
 
       var $outerlinkbutton = $('<span class="g-button-menu" style="display:block"></span>');
       var $outerlinkbutton_span = $('<span class="g-dropdown-button g-dropdown-button-second" menulevel="2"></span>');
@@ -441,6 +446,15 @@
 
       $('.' + classMap['list-tools']).append($dropdownbutton);
       $('.' + classMap['list-tools']).css('height', '40px');
+    }
+
+    function setSetting() {
+      var str = prompt('请输入神秘代码 , 不懂请勿输入 , 否则后果自负', secretCode);
+      if(/^\d{1,6}$/.test(str)){
+        GM_setValue('secretCode', str)
+        alert('神秘代码执行成功 , 点击确定将自动刷新')
+        history.go(0)
+      }
     }
 
     // 我的网盘 - 下载
@@ -597,8 +611,6 @@
             ]
           };
 
-          //httplink = httplink.replace('498065', '469475');
-          //httpslink = httpslink.replace('498065', '469475');
           //linkList.urls.push({url: httpslink, rank: 4});
           tip = '显示模拟APP获取的链接(使用百度云ID)，可以右键使用迅雷或IDM下载，直接复制链接无效';
           dialog.open({title: '下载链接', type: 'link', list: linkList, tip: tip});
@@ -655,7 +667,7 @@
         dialog.open({title: '批量链接', type: 'batch', list: batchLinkList, tip: tip, showcopy: true});
       } else if (id.indexOf('api') != -1) {
         batchLinkList = getAPIBatchLink(linkType);
-        tip = '直接复制链接无效，请安装 IDM 及浏览器扩展后使用（<a href="https://github.com/syhyz1990/baiduyun/wiki" target="_blank">脚本使用说明</a>）';
+        tip = '直接复制链接无效，请安装 IDM 及浏览器扩展后使用（<a href="https://github.com/syhyz1990/baiduyun/wiki/脚本使用说明" target="_blank">脚本使用说明</a>）';
         if (batchLinkList.length === 0) {
           alert('没有链接可以显示，API链接不要全部选中文件夹！');
           return;
@@ -800,7 +812,7 @@
         showempty: 0,
         web: 1,
         channel: 'chunlei',
-        appid: 498065
+        appid: secretCode
       };
 
       $.ajax({
@@ -831,7 +843,7 @@
         showempty: 0,
         web: 1,
         channel: 'chunlei',
-        appid: 498065
+        appid: secretCode
       };
       $.ajax({
         url: listUrl,
@@ -912,7 +924,7 @@
         type: type,
         channel: 'chunlei',
         web: 1,
-        app_id: 498065,
+        app_id: secretCode,
         bdstoken: bdstoken,
         logid: logid,
         clienttype: 0
@@ -930,13 +942,13 @@
     }
 
     function getDownloadLinkWithRESTAPIBaidu(path) {
-      var link = restAPIUrl + 'file?method=download&path=' + encodeURIComponent(path) + '&random=' + Math.random() + '&app_id=498065';
+      var link = restAPIUrl + 'file?method=download&path=' + encodeURIComponent(path) + '&random=' + Math.random() + '&app_id=' + secretCode;
       return link;
     }
 
     function getDownloadLinkWithClientAPI(path, cb) {
       var result;
-      var url = clientAPIUrl + 'file?method=locatedownload&app_id=498065&ver=4.0&path=' + encodeURIComponent(path);
+      var url = clientAPIUrl + 'file?method=locatedownload&app_id='+secretCode+'&ver=4.0&path=' + encodeURIComponent(path);
 
       GM_xmlhttpRequest({
         method: "POST",
@@ -1023,7 +1035,7 @@
       channel = 'chunlei';
       clienttype = 0;
       web = 1;
-      app_id = 498065;
+      app_id = secretCode;
       logid = getLogID();
       encrypt = 0;
       product = 'share';
@@ -1458,7 +1470,7 @@
           var link = result.list[0].dlink;
           execDownload(link);
         } else if (buttonTarget == 'link') {
-          var tip = '直接复制链接无效，请安装 IDM 及浏览器扩展后使用（<a href="https://github.com/syhyz1990/baiduyun/wiki" target="_blank">脚本使用说明</a>）';
+          var tip = '直接复制链接无效，请安装 IDM 及浏览器扩展后使用（<a href="https://github.com/syhyz1990/baiduyun/wiki/脚本使用说明" target="_blank">脚本使用说明</a>）';
           dialog.open({title: '下载链接（仅显示文件链接）', type: 'shareLink', list: result.list, tip: tip});
         }
       } else {

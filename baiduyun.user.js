@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name              百度网盘直链下载助手
 // @namespace         https://github.com/syhyz1990/baiduyun
-// @version           2.4.0
+// @version           2.4.1
 // @icon              https://www.baidu.com/favicon.ico
 // @description       【百度网盘直接下载助手 直链加速版】正式更名为【百度网盘直链下载助手】免客户端一键获取百度网盘文件真实下载地址，支持使用IDM，迅雷等下载工具下载
 // @author            syhyz1990
@@ -21,6 +21,7 @@
 // @grant             GM_setClipboard
 // @grant             GM_setValue
 // @grant             GM_getValue
+// @grant             GM_openInTab
 // ==/UserScript==
 
 ;(function () {
@@ -1035,7 +1036,7 @@
       channel = 'chunlei';
       clienttype = 0;
       web = 1;
-      app_id = secretCode;
+      app_id = 250528;
       logid = getLogID();
       encrypt = 0;
       product = 'share';
@@ -1121,10 +1122,11 @@
 
       var $downloadButton = $('<a data-menu-id="b-menu207" class="g-button-menu" href="javascript:void(0);">直接下载</a>');
       var $linkButton = $('<a data-menu-id="b-menu208" class="g-button-menu" href="javascript:void(0);">显示链接</a>');
+      var $outlinkButton = $('<a data-menu-id="b-menu209" class="g-button-menu" href="javascript:void(0);">高速下载(beta)</a>');
 
       var $github = $('<iframe src="https://ghbtns.com/github-btn.html?user=syhyz1990&repo=baiduyun&type=star&count=true" frameborder="0" scrolling="0" style="height: 20px;max-width: 108px;padding: 0 5px;box-sizing: border-box;margin-top: 5px;"></iframe>');
 
-      $dropdownbutton_span.append($downloadButton).append($linkButton).append($github);
+      $dropdownbutton_span.append($downloadButton).append($linkButton).append($outlinkButton).append($github);
       $dropdownbutton_a.append($dropdownbutton_a_span);
       $dropdownbutton.append($dropdownbutton_a).append($dropdownbutton_span);
 
@@ -1138,10 +1140,17 @@
       $linkButton.click(function () {
         alert('温馨提示 : 百度接口限制, 请先保存到自己网盘 , 去网盘中使用下载助手!!!')
       });
-      //$downloadButton.click(downloadButtonClick);
-      //$linkButton.click(linkButtonClick);
+      /*$downloadButton.click(downloadButtonClick);
+      $linkButton.click(linkButtonClick);*/
+      $outlinkButton.click(outlinkButtonClick)
 
       $('div.module-share-top-bar div.bar div.x-button-box').append($dropdownbutton);
+    }
+
+    function outlinkButtonClick() {
+      var link = location.href;
+      link = link.replace('baidu.com','baiduwp.com');
+      GM_openInTab(link, { active: true });
     }
 
     function createIframe() {
@@ -1786,12 +1795,16 @@
       $('body').on('click', '.GMlink', function (event) {
         event.preventDefault();
         var link = $(this)[0].innerText;
+        console.log(link)
         GM_download({
           url: link,
           name: '非IDM下载请自己改后缀名.zip',
           headers: {
             "User-Agent": "netdisk;6.7.1.9;PC;PC-Windows;10.0.17763;WindowsBaiduYunGuanJia",
-          }
+          },
+          onprogress: function (e) {
+            console.log(JSON.stringify(e))
+          },
         });
 
         return false;

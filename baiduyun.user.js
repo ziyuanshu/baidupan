@@ -1577,7 +1577,7 @@
       } else if (downloadLink.errno == 112) {
         return alert('页面过期，请刷新重试')
       } else if (downloadLink.errno === 0) {
-        let tip = "获取链接暂时无法复制下载，仅供预览，请使用Aria2c链接"
+        let tip = "若IDM下载失败，请使用Aria2c链接或将文件保存至网盘后使用API下载"
         dialog.open({title: '下载链接（仅显示文件链接）', type: 'shareLink', list: downloadLink.list, tip: tip})
       } else {
         alert(errorMsg.fail)

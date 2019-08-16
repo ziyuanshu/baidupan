@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name              百度网盘直链下载助手
 // @namespace         https://github.com/syhyz1990/baiduyun
-// @version           2.5.1
+// @version           2.5.2
 // @icon              https://www.baidu.com/favicon.ico
 // @description       【百度网盘直接下载助手 直链加速版】正式更名为【百度网盘直链下载助手】免客户端一键获取百度网盘文件真实下载地址，支持使用IDM，迅雷，Aria2c协议等下载工具下载
 // @author            syhyz1990
@@ -52,7 +52,7 @@
     'dir': '不支持整个文件夹下载，可进入文件夹内获取文件链接下载',
     'unlogin': '提示 : 必须登录百度网盘后才能正常使用脚本哦!!!',
     'fail': '获取下载链接失败！请刷新后重试！',
-    'unselected': '未选中文件，请刷新后重试！',
+    'unselected': '未选中文件，请勿勾选文件夹，否则刷新后重试！',
     'morethan2': '多个文件请点击【显示链接】'
   };
 
@@ -158,7 +158,7 @@
 
     this.createSideBar = function () {
       let sidebar = $('.' + classMap['sidebar']);
-      let sideImg = $(`<img src="https://baidupan.cdn.bcebos.com/baidu.png?t=${Math.random()}" style="margin: 0 auto; position: absolute; left: 0; right: 0; bottom: 100px;">`);
+      let sideImg = $(`<a href="http://qr23.cn/CViQu9" target="_blank"><img src="https://baidupan.cdn.bcebos.com/baidu.png?t=${Math.random()}" style="margin: 0 auto; position: absolute; left: 0; right: 0; bottom: 100px;"></a>`);
       sidebar.append(sideImg);
     };
 
@@ -1123,8 +1123,14 @@
     }
 
     this.createSideBar = function () {
-      let sidebar = $('.bd-aside');
-      let sidetemp = $(`<img src="https://baidupan.cdn.bcebos.com/baidu_share.png?t=${Math.random()}" style="margin: 0 auto; position: absolute; left: 0; right: 0; bottom: 100px;">`);
+      let sidebar,sidetemp
+      if ($('.bd-aside').length > 0) {
+        sidebar = $('.bd-aside')
+        sidetemp = $(`<a href="http://qr23.cn/A0FehH" target="_blank"><img src="https://baidupan.cdn.bcebos.com/baidu_share.png?t=${Math.random()}" style="margin: 0 auto; position: absolute; left: 0; right: 0; bottom: 100px;"></a>`);
+      } else{
+        sidebar = $('.module-aside')
+        sidetemp = $(`<a href="http://qr23.cn/A0FehH" target="_blank"><img src="https://baidupan.cdn.bcebos.com/baidu_share.png?t=${Math.random()}" style="margin: 10px"></a>`);
+      }
       sidebar.append(sidetemp);
     };
 
@@ -1141,8 +1147,8 @@
       let $dropdownbutton_a_span = $('<span class="g-button-right"><em class="icon icon-speed" title="百度网盘下载助手"></em><span class="text" style="width: 60px;">下载助手</span></span>');
       let $dropdownbutton_span = $('<span class="menu" style="width:auto;z-index:41"></span>');
 
-      let $downloadButton = $('<a data-menu-id="b-menu207" class="g-button-menu" href="javascript:void(0);">直接下载</a>');
-      let $linkButton = $('<a data-menu-id="b-menu208" class="g-button-menu" href="javascript:void(0);">显示链接</a>');
+      let $downloadButton = $('<a data-menu-id="b-menu207" class="g-button-menu" href="javascript:void(0);">直接下载<small>(小文件)</small></a>');
+      let $linkButton = $('<a data-menu-id="b-menu208" class="g-button-menu" href="javascript:void(0);">显示链接<small>(小文件)</small></a>');
       let $ariclinkButton = $('<a data-menu-id="b-menu208" class="g-button-menu" href="javascript:void(0);">显示链接(aric)</a>');
       let $outlinkButton = $('<a data-menu-id="b-menu209" class="g-button-menu" href="javascript:void(0);">高速下载(beta)</a>');
 
@@ -1182,7 +1188,7 @@
 
     function ariclinkButtonClick() {
       slog('选中文件列表：', selectFileList);
-      if (select234FileList.length === 0) {
+      if (selectFileList.length === 0) {
         return alert(errorMsg.unselected);
       }
       if (selectFileList[0].isdir == 1) {

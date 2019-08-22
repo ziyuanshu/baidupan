@@ -1,7 +1,6 @@
 # 百度网盘直链下载助手
 ![TamperMonkey v4.8](https://img.shields.io/badge/tamperMonkey-v4.8-brightgreen.svg) ![Chrome x64 v60.4](https://img.shields.io/badge/chrome%20x64-v76.0-brightgreen.svg) ![Safari v11.0.3](https://img.shields.io/badge/safari%20-v12.0-brightgreen.svg) ![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20Mac%20%7C%20Android-blue.svg) [![Github](https://img.shields.io/badge/GitHub-8k+-yellow.svg?style=social&logo=github)](https://github.com/syhyz1990/baiduyun)
 
-
 👉 本脚本适用于多平台支持安装 Tampermonkey 或 暴力猴扩展的浏览器，如Chrome，360，QQ，UC，2345等。
 
 支持百度网盘PC端网页获取分享链接下载地址和我的网盘下载地址。安装后会在对应界面出现【下载助手】按钮, 配合多线程下载工具达到提速的效果。
@@ -23,6 +22,8 @@
 - [安装地址2](https://openuserjs.org/scripts/syhyz1990/百度网盘直链下载助手)
 
 ## 🔔 更新日志
+**2019-08-21** : v2.6.0 修复分享页下载链接使用IDM失效的问题，**替换了原来的高速下载接口，实现免登录下载，无次数限制**。IDM(付费) & [Xdown(免费)](https://baiduwp.ctfile.com/dir/3994041-35240665-e1ea37/) 完美支持。
+
 **2019-08-18** : v2.5.3 修复了分享界面Aria链接获取没有反应的问题, 支持批量下载 , 需配合最新版 [XDown](https://baiduwp.ctfile.com/dir/3994041-35240665-e1ea37/)
 
 **2019-08-14** : v2.5.0 新增对Aria2c的链接支持，需要安装 [百度Cookies获取助手](https://github.com/syhyz1990/baiduyun/wiki/%E7%99%BE%E5%BA%A6Cookies%E8%8E%B7%E5%8F%96%E5%8A%A9%E6%89%8B-%E4%B8%8B%E8%BD%BD%E5%9C%B0%E5%9D%80) 配合

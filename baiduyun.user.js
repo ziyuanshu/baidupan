@@ -1,12 +1,12 @@
 // ==UserScript==
 // @name              百度网盘直链下载助手
-// @namespace         https://github.com/syhyz1990/baiduyun
-// @version           2.6.0
+// @namespace         http://www.baiduyun.wiki
+// @version           2.6.1
 // @icon              https://pan.baidu.com/ppres/static/images/favicon.ico
 // @description       【百度网盘直接下载助手 直链加速版】正式更名为【百度网盘直链下载助手】免客户端一键获取百度网盘文件真实下载地址，支持使用IDM，迅雷，Aria2c协议等下载工具下载
 // @author            syhyz1990
 // @license           MIT
-// @supportURL        https://github.com/syhyz1990/baiduyun
+// @supportURL        http://www.baiduyun.wiki
 // @match             *://pan.baidu.com/disk/home*
 // @match             *://yun.baidu.com/disk/home*
 // @match             *://pan.baidu.com/s/*
@@ -24,10 +24,9 @@
 // @grant             GM_openInTab
 // ==/UserScript==
 
+'use strict';
 
 ;(function () {
-    'use strict';
-
     const classMap = {
         'list': 'zJMtAEb',
         'grid': 'fyQgAEb',
@@ -74,7 +73,7 @@
         let BDUSS = JSON.parse(baiduyunPlugin_BDUSS).BDUSS;
         if (!BDUSS) {
             swal('请先安装百度Cookies获取助手');
-            GM_openInTab('https://github.com/syhyz1990/baiduyun/wiki/百度Cookies获取助手-下载地址', {active: true});
+            GM_openInTab('http://www.baiduyun.wiki/#/zh-cn/cookie-plugin', {active: true});
             return '请先安装百度Cookies获取助手，安装后刷新页面重试';
         }
         return `aria2c "${link}" --out "${filename}" --header "User-Agent: ${userAgent}" --header "Cookie: BDUSS=${BDUSS}"`;
@@ -88,7 +87,7 @@
         event.preventDefault();
         let link = $(this).text();
         GM_setClipboard(link, 'text');
-        swal('已将链接复制到剪贴板！请复制到XDown中下载');
+        swal('已将链接复制到剪贴板！请复制到Xdown中下载');
         return false;
     });
 
@@ -166,7 +165,7 @@
 
         this.createSideBar = function () {
             let sidebar = $('.' + classMap['sidebar']);
-            let sideImg = $(`<a href="http://qr23.cn/CViQu9" target="_blank"><img src="https://baidupan.cdn.bcebos.com/baidu.png?t=${Math.random()}" style="margin: 0 auto; position: absolute; left: 0; right: 0; bottom: 100px;"></a>`);
+            let sideImg = $(`<a href="http://pan.baiduyun.wiki/home" target="_blank"><img src="https://baidupan.cdn.bcebos.com/baidu.png?t=${Math.random()}" style="margin: 0 auto; position: absolute; left: 0; right: 0; bottom: 100px;"></a>`);
             sidebar.append(sideImg);
         };
 
@@ -687,7 +686,7 @@
             batchLinkListAll = [];
             if (id.indexOf('direct') != -1) {  //aria下载
                 batchLinkList = getDirectBatchLink(linkType);
-                tip = '请先安装 <a target="_blank" href="https://github.com/syhyz1990/baiduyun/wiki/百度Cookies获取助手-下载地址">百度Cookies获取助手</a> 请将链接复制到支持Aria的下载器中, 推荐使用 <a target="_blank" href="https://baiduwp.ctfile.com/dir/3994041-35240665-e1ea37/">XDown</a>（仅支持300M以下的文件夹）';
+                tip = '请先安装 <a target="_blank" href="http://www.baiduyun.wiki/#/zh-cn/cookie-plugin">百度Cookies获取助手</a> 请将链接复制到支持Aria的下载器中, 推荐使用 <a target="_blank" href="https://baiduwp.ctfile.com/dir/3994041-35240665-e1ea37/">Xdown</a>（仅支持300M以下的文件夹）';
                 if (batchLinkList.length === 0) {
                     swal('没有链接可以显示，API链接不要全部选中文件夹！');
                     return;
@@ -695,7 +694,7 @@
                 dialog.open({title: 'Aria链接', type: 'batchAria', list: batchLinkList, tip: tip, showcopy: true});
             } else if (id.indexOf('api') != -1) {
                 batchLinkList = getAPIBatchLink(linkType);
-                tip = '直接复制链接无效，请安装 IDM 及浏览器扩展后使用（<a href="https://github.com/syhyz1990/baiduyun/wiki/脚本使用说明" target="_blank">脚本使用说明</a>）';
+                tip = '直接复制链接无效，请安装 IDM 及浏览器扩展后使用（<a href="http://www.baiduyun.wiki/#/zh-cn/" target="_blank">脚本使用说明</a>）';
                 if (batchLinkList.length === 0) {
                     swal('没有链接可以显示，API链接不要全部选中文件夹！');
                     return;
@@ -708,7 +707,7 @@
                         swal('没有链接可以显示，API链接不要全部选中文件夹！');
                         return;
                     }
-                    let tip = '请先安装 <a target="_blank" href="https://github.com/syhyz1990/baiduyun/wiki/百度Cookies获取助手-下载地址">百度Cookies获取助手</a> 请将链接复制到支持Aria的下载器中, 推荐使用 <a target="_blank" href="https://baiduwp.ctfile.com/dir/3994041-35240665-e1ea37/">XDown</a>';
+                    let tip = '请先安装 <a target="_blank" href="http://www.baiduyun.wiki/#/zh-cn/cookie-plugin">百度Cookies获取助手</a> 请将链接复制到支持Aria的下载器中, 推荐使用 <a target="_blank" href="https://baiduwp.ctfile.com/dir/3994041-35240665-e1ea37/">Xdown</a>';
                     dialog.open({
                         title: '下载链接（仅显示文件链接）',
                         type: 'batchAria',
@@ -1142,10 +1141,10 @@
             let sidebar, sidetemp;
             if ($('.bd-aside').length > 0) {
                 sidebar = $('.bd-aside');
-                sidetemp = $(`<a href="http://qr23.cn/A0FehH" target="_blank"><img src="https://baidupan.cdn.bcebos.com/baidu_share.png?t=${Math.random()}" style="margin: 0 auto; position: absolute; left: 0; right: 0; bottom: 100px;"></a>`);
+                sidetemp = $(`<a href="http://pan.baiduyun.wiki/share" target="_blank"><img src="https://baidupan.cdn.bcebos.com/baidu_share.png?t=${Math.random()}" style="margin: 0 auto; position: absolute; left: 0; right: 0; bottom: 100px;"></a>`);
             } else {
                 sidebar = $('.module-aside');
-                sidetemp = $(`<a href="http://qr23.cn/A0FehH" target="_blank"><img src="https://baidupan.cdn.bcebos.com/baidu_share.png?t=${Math.random()}" style="margin: 10px"></a>`);
+                sidetemp = $(`<a href="http://pan.baiduyun.wiki/share" target="_blank"><img src="https://baidupan.cdn.bcebos.com/baidu_share.png?t=${Math.random()}" style="margin: 10px"></a>`);
             }
             sidebar.append(sidetemp);
         };
@@ -1253,7 +1252,7 @@
                 swal('页面过期，请刷新重试');
                 return false;
             } else if (downloadLink.errno === 0) {
-                let tip = '请先安装 <a target="_blank" href="https://github.com/syhyz1990/baiduyun/wiki/百度Cookies获取助手-下载地址">百度Cookies获取助手</a> 请将链接复制到支持Aria的下载器中, 推荐使用 <a target="_blank" href="https://baiduwp.ctfile.com/dir/3994041-35240665-e1ea37/">XDown</a>';
+                let tip = '请先安装 <a target="_blank" href="http://www.baiduyun.wiki/#/zh-cn/cookie-plugin">百度Cookies获取助手</a> 请将链接复制到支持Aria的下载器中, 推荐使用 <a target="_blank" href="https://baiduwp.ctfile.com/dir/3994041-35240665-e1ea37/">Xdown</a>';
                 dialog.open({
                     title: '下载链接（仅显示文件链接）',
                     type: 'shareAriaLink',
@@ -1599,7 +1598,7 @@
                     let link = result.list[0].dlink;
                     execDownload(link);
                 } else if (buttonTarget == 'link') {
-                    let tip = '直接复制链接无效，请安装 IDM 及浏览器扩展后使用（<a href="https://github.com/syhyz1990/baiduyun/wiki/脚本使用说明" target="_blank">脚本使用说明</a>）';
+                    let tip = '直接复制链接无效，请安装 IDM 及浏览器扩展后使用（<a href="http://www.baiduyun.wiki/#/zh-cn/" target="_blank">脚本使用说明</a>）';
                     dialog.open({title: '下载链接（仅显示文件链接）', type: 'shareLink', list: result.list, tip: tip});
                 }
             } else {
@@ -1692,6 +1691,7 @@
                 return result;
             }
         }
+
         //获取高速下载链接
         function getHighDownloadLink() {
             let result;
@@ -2041,7 +2041,7 @@
                 let link = params.list;
                 link = replaceLink(link);
                 $('div.dialog-header h3 span.dialog-title', dialog).text(params.title);
-                let $div = $('<div style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap"><div style="width:100px;float:left;overflow:hidden;text-overflow:ellipsis">普通链接</div><span>：</span><a href="' + link+ '">' + link + '</a></div>');
+                let $div = $('<div style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap"><div style="width:100px;float:left;overflow:hidden;text-overflow:ellipsis">普通链接</div><span>：</span><a href="' + link + '">' + link + '</a></div>');
                 let airaLink = `aria2c "${link}" --header "User-Agent: ${userAgent}"`
                 let $div2 = $('<div style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap"><div style="width:100px;float:left;overflow:hidden;text-overflow:ellipsis"">Aria链接</div><span>：</span><a href="javasctipt:void(0)" class="aria2c-link">' + airaLink + '</a></div>');
                 $('div.dialog-body', dialog).append($div).append($div2);
@@ -2202,11 +2202,11 @@
     $(function () {
         classMap['default-dom'] = ($('.icon-upload').parent().parent().parent().parent().parent().attr('class'));
         classMap['bar'] = ($('.icon-upload').parent().parent().parent().parent().attr('class'));
-        /*setTimeout(() => {
+        setTimeout(() => {
           let topbar = $('.' + classMap['header']);
-          let toptemp = $('<span class="cMEMEF" node-type="help-author"><a href="" style="color: #dd6287" target="_blank">支持作者</a></span>');
+          let toptemp = $('<span class="cMEMEF" node-type="help-author"><a href="http://www.baiduyun.wiki" style="color: #ddd" target="_blank">使用文档</a></span>');
           topbar.append(toptemp);
-        }, 5000);*/
+        }, 5000);
         switch (detectPage()) {
             case 'disk':
                 let panHelper = new PanHelper();

@@ -24,7 +24,7 @@
 - [安装地址3](https://github.com/syhyz1990/baiduyun/raw/master/baiduyun.user.js)
 
 ## 🔔 更新日志
-**2019-08-21** : v2.6.1 修复分享页下载链接使用IDM失效的问题，**增加了一个免登录高速下载接口，无次数限制**。IDM(付费) & [Xdown(免费)](https://baiduwp.ctfile.com/dir/3994041-35240665-e1ea37/) 完美支持。
+**2019-08-24** : v2.6.1 修复分享页下载链接使用IDM失效的问题，**增加了一个免登录高速下载接口，无次数限制**。IDM(付费) & [Xdown(免费)](https://baiduwp.ctfile.com/dir/3994041-35240665-e1ea37/) 完美支持。
 
 **2019-08-18** : v2.5.3 修复了分享界面Aria链接获取没有反应的问题, 支持批量下载 , 需配合最新版 [Xdown](https://baiduwp.ctfile.com/dir/3994041-35240665-e1ea37/)
 

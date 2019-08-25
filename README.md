@@ -7,13 +7,13 @@
 
 **自 2.5.0 版本起，脚本支持Aria2C链接**
 
-## 📖 使用说明
+## 📖 使用教程
 
-- [Windows平台使用说明(已更新)](http://www.baiduyun.wiki/#/zh-cn/windows)
+- [Windows平台使用教程(已更新)](https://www.baiduyun.wiki/#/zh-cn/windows)
 
-- [MacOS平台使用说明](http://www.baiduyun.wiki/#/zh-cn/mac)
+- [MacOS平台使用教程](https://www.baiduyun.wiki/#/zh-cn/mac)
 
-- [Android平台使用说明](http://www.baiduyun.wiki/#/zh-cn/android)
+- [Android平台使用教程](https://www.baiduyun.wiki/#/zh-cn/android)
 
 ## 💽 安装脚本
 
@@ -24,11 +24,11 @@
 - [安装地址3](https://github.com/syhyz1990/baiduyun/raw/master/baiduyun.user.js)
 
 ## 🔔 更新日志
-**2019-08-24** : v2.6.2 修复分享页下载链接使用IDM失效的问题，**增加了一个免登录高速下载接口，无次数限制**。IDM(付费) & [Xdown(免费)](https://baiduwp.ctfile.com/dir/3994041-35240665-e1ea37/) 完美支持。
+**2019-08-25** : v2.6.3 修复分享页下载链接使用IDM失效的问题，**增加了一个免登录高速下载接口，无次数限制**。[IDM(收费软件)](https://baiduwp.ctfile.com/dir/3994041-35240665-e1ea37/) & [Xdown(免费软件)](https://baiduwp.ctfile.com/dir/3994041-35240665-e1ea37/) 完美支持。
 
 **2019-08-18** : v2.5.3 修复了分享界面Aria链接获取没有反应的问题, 支持批量下载 , 需配合最新版 [Xdown](https://baiduwp.ctfile.com/dir/3994041-35240665-e1ea37/)
 
-**2019-08-14** : v2.5.0 新增对Aria2c的链接支持，需要安装 [百度Cookies获取助手](http://www.baiduyun.wiki/#/zh-cn/cookie-plugin) 配合
+**2019-08-14** : v2.5.0 新增对Aria2c的链接支持，需要安装 [百度Cookies获取助手](https://www.baiduyun.wiki/#/zh-cn/cookie-plugin) 配合
 aria下载器达到宽带上线
 
 ......

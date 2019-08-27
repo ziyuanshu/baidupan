@@ -1,5 +1,5 @@
 # 百度网盘直链下载助手
-![TamperMonkey v4.8](https://img.shields.io/badge/tamperMonkey-v4.8-brightgreen.svg) ![Chrome x64 v60.4](https://img.shields.io/badge/chrome%20x64-v76.0-brightgreen.svg) ![Safari v11.0.3](https://img.shields.io/badge/safari%20-v12.0-brightgreen.svg) ![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20Mac%20%7C%20Android-blue.svg) [![Github](https://img.shields.io/badge/GitHub-8k+-yellow.svg?style=social&logo=github)](https://github.com/syhyz1990/baiduyun)
+![TamperMonkey v4.8](https://img.shields.io/badge/tamperMonkey-v4.8-brightgreen.svg) ![Chrome x64 v60.4](https://img.shields.io/badge/chrome%20x64-v76.0-brightgreen.svg) ![Safari v11.0.3](https://img.shields.io/badge/safari%20-v12.0-brightgreen.svg) ![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20Mac%20%7C%20Android-blue.svg) [![Stars](https://img.shields.io/badge/GitHub-9000+-yellow.svg?style=social&logo=github)](https://github.com/syhyz1990/baiduyun)
 
 👉 本脚本适用于多平台支持安装 Tampermonkey 或 暴力猴扩展的浏览器，如Chrome，360，QQ，UC等。
 
@@ -9,7 +9,7 @@
 
 ## 📖 使用教程
 
-- [Windows平台使用教程(已更新)](https://www.baiduyun.wiki/#/zh-cn/windows)
+- [Windows平台使用教程](https://www.baiduyun.wiki/#/zh-cn/windows)
 
 - [MacOS平台使用教程](https://www.baiduyun.wiki/#/zh-cn/mac)
 
@@ -17,11 +17,9 @@
 
 ## 💽 安装脚本
 
-- [安装地址1](https://greasyfork.org/zh-CN/scripts/39504)
+- [安装地址1](https://openuserjs.org/scripts/syhyz1990/百度网盘直链下载助手)
 
-- [安装地址2](https://openuserjs.org/scripts/syhyz1990/百度网盘直链下载助手)
-
-- [安装地址3](https://github.com/syhyz1990/baiduyun/raw/master/baiduyun.user.js)
+- [安装地址2](https://github.com/syhyz1990/baiduyun/raw/master/baiduyun.user.js)
 
 ## 🔔 更新日志
 **2019-08-25** : v2.6.4 修复分享页下载链接使用IDM失效的问题，**增加了一个免登录高速下载接口，无次数限制**。[IDM(收费软件)](https://baiduwp.ctfile.com/dir/3994041-35240665-e1ea37/) & [Xdown(免费软件)](https://baiduwp.ctfile.com/dir/3994041-35240665-e1ea37/) 完美支持。

@@ -1,12 +1,14 @@
 // ==UserScript==
 // @name              百度网盘直链下载助手
 // @namespace         https://github.com/syhyz1990/baiduyun
-// @version           2.6.4
+// @version           2.7.0
 // @icon              https://pan.baidu.com/ppres/static/images/favicon.ico
-// @description       【百度网盘直接下载助手 直链加速版】正式更名为【百度网盘直链下载助手】免客户端一键获取百度网盘文件真实下载地址，支持使用IDM，迅雷，Aria2c协议等下载工具下载
+// @description       【百度网盘直链下载助手】是一款免客户端获取百度网盘文件真实下载地址的油猴脚本，支持Windows，Mac，Linux，Android等多平台，可使用IDM，迅雷，Aria2c协议等多线程加速工具加速下载。
 // @author            syhyz1990
 // @license           MIT
 // @supportURL        https://github.com/syhyz1990/baiduyun
+// @updateURL         https://github.com/syhyz1990/baiduyun/raw/master/baiduyun.user.js
+// @downloadURL       https://github.com/syhyz1990/baiduyun/raw/master/baiduyun.user.js
 // @match             *://pan.baidu.com/disk/home*
 // @match             *://yun.baidu.com/disk/home*
 // @match             *://pan.baidu.com/s/*
@@ -15,18 +17,23 @@
 // @match             *://yun.baidu.com/share/link*
 // @require           https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js
 // @require           https://cdn.bootcss.com/sweetalert/2.1.2/sweetalert.min.js
+// @connect           *
 // @run-at            document-idle
 // @grant             unsafeWindow
 // @grant             GM_xmlhttpRequest
 // @grant             GM_setClipboard
 // @grant             GM_setValue
 // @grant             GM_getValue
+// @grant             GM_deleteValue
 // @grant             GM_openInTab
+// @grant             GM_registerMenuCommand
+// @grant             GM_unregisterMenuCommand
 // ==/UserScript==
 
 'use strict'
 
 ;(function () {
+  const version = '2.7.0';
   const classMap = {
     'list': 'zJMtAEb',
     'grid': 'fyQgAEb',
@@ -72,9 +79,9 @@
     let baiduyunPlugin_BDUSS = localStorage.getItem('baiduyunPlugin_BDUSS') ? localStorage.getItem('baiduyunPlugin_BDUSS') : '{"baiduyunPlugin_BDUSS":""}';
     let BDUSS = JSON.parse(baiduyunPlugin_BDUSS).BDUSS;
     if (!BDUSS) {
-      swal('请先安装百度Cookies获取助手');
+      swal('请先安装百度网盘万能助手');
       GM_openInTab('https://www.baiduyun.wiki/#/zh-cn/cookie-plugin', {active: true});
-      return '请先安装百度Cookies获取助手，安装后刷新页面重试';
+      return '请先安装百度网盘万能助手，安装后刷新页面重试';
     }
     return `aria2c "${link}" --out "${filename}" --header "User-Agent: ${userAgent}" --header "Cookie: BDUSS=${BDUSS}"`;
   }
@@ -114,7 +121,7 @@
       addButton();
       createIframe();
       dialog = new Dialog({addCopy: true});
-      clog('脚本加载成功！');
+      clog('下载助手加载成功！当前版本：',version);
     };
 
     function initParams() {
@@ -123,7 +130,6 @@
       bdstoken = getBDStoken();
       logid = getLogID();
       currentPage = getCurrentPage();
-      clog('当前模式:', currentPage);
 
       if (currentPage == 'all')
         currentPath = getPath();
@@ -170,17 +176,6 @@
       registerAllCheckbox();
       registerFileSelect();
       registerShareClick();
-      registerSidebar();
-    }
-
-    function registerSidebar() {
-      if (getCookie('h_s') != 1) {
-        $('.' + classMap['sidebar']).append($(`<img class="V6d3Fg" src="https://baidupan.cdn.bcebos.com/baidu.png?t=${Math.random()}" style="margin: 0 auto; position: absolute; left: 0; right: 0; bottom: 100px;cursor: pointer">`));
-        $(document).on('click', '.V6d3Fg', function () {
-          GM_openInTab('http://pan.baiduyun.wiki/home');
-          setCookie('h_s', 1, 60);
-        });
-      }
     }
 
     //监视点击分享按钮
@@ -691,7 +686,7 @@
       batchLinkListAll = [];
       if (id.indexOf('direct') != -1) {  //aria下载
         batchLinkList = getDirectBatchLink(linkType);
-        tip = '请先安装 <a target="_blank" href="https://www.baiduyun.wiki/#/zh-cn/cookie-plugin">百度Cookies获取助手</a> 请将链接复制到支持Aria的下载器中, 推荐使用 <a target="_blank" href="https://baiduwp.ctfile.com/dir/3994041-35240665-e1ea37/">Xdown</a>（仅支持300M以下的文件夹）';
+        tip = '请先安装 <a target="_blank" href="https://www.baiduyun.wiki/#/zh-cn/cookie-plugin">百度网盘万能助手</a> 请将链接复制到支持Aria的下载器中, 推荐使用 <a target="_blank" href="https://baiduwp.ctfile.com/dir/3994041-35240665-e1ea37/">Xdown</a>（仅支持300M以下的文件夹）';
         if (batchLinkList.length === 0) {
           swal('没有链接可以显示，API链接不要全部选中文件夹！');
           return;
@@ -712,7 +707,7 @@
             swal('没有链接可以显示，API链接不要全部选中文件夹！');
             return;
           }
-          let tip = '请先安装 <a target="_blank" href="https://www.baiduyun.wiki/#/zh-cn/cookie-plugin">百度Cookies获取助手</a> 请将链接复制到支持Aria的下载器中, 推荐使用 <a target="_blank" href="https://baiduwp.ctfile.com/dir/3994041-35240665-e1ea37/">Xdown</a>';
+          let tip = '请先安装 <a target="_blank" href="https://www.baiduyun.wiki/#/zh-cn/cookie-plugin">百度网盘万能助手</a> 请将链接复制到支持Aria的下载器中, 推荐使用 <a target="_blank" href="https://baiduwp.ctfile.com/dir/3994041-35240665-e1ea37/">Xdown</a>';
           dialog.open({
             title: '下载链接（仅显示文件链接）',
             type: 'batchAria',
@@ -989,7 +984,7 @@
         method: "POST",
         url: url,
         headers: {
-          "User-Agent": "netdisk;6.7.1.9;PC;PC-Windows;10.0.17763;WindowsBaiduYunGuanJia",
+          "User-Agent": userAgent,
         },
         onload: function (res) {
           if (res.status === 200) {
@@ -1060,7 +1055,7 @@
         createObserver();
       }
 
-      clog('分享助手加载成功!');
+      clog('下载助手加载成功！当前版本：',version);
     };
 
     function initParams() {
@@ -1158,7 +1153,7 @@
       let $downloadButton = $('<a data-menu-id="b-menu207" class="g-button-menu" href="javascript:void(0);">直接下载</a>');
       let $linkButton = $('<a data-menu-id="b-menu208" class="g-button-menu" href="javascript:void(0);">显示直链</a>');
       let $ariclinkButton = $('<a data-menu-id="b-menu208" class="g-button-menu" href="javascript:void(0);">显示链接(aric)</a>');
-      let $highButton = $('<a data-menu-id="b-menu209" class="g-button-menu" style="color: #ff0009;" href="javascript:void(0);">免登录下载</a>');
+      let $highButton = $('<a data-menu-id="b-menu209" class="g-button-menu" style="color: #f8645c;" href="javascript:void(0);"><b>不限速链接</b></a>');
 
       let $github = $('<iframe src="https://ghbtns.com/github-btn.html?user=syhyz1990&repo=baiduyun&type=star&count=true" frameborder="0" scrolling="0" style="height: 20px;max-width: 108px;padding: 0 5px;box-sizing: border-box;margin-top: 5px;"></iframe>');
 
@@ -1178,10 +1173,10 @@
     }
 
     function highButtonClick() {
-      if (bdstoken !== null) {
-        swal('请退出当前账号后获取，或使用隐私/无痕模式打开此页面');
+      /*if (bdstoken !== null) {
+        swal('请退出当前账号后获取不限速链接！！！');
         return false;
-      }
+      }*/
 
       clog('选中文件列表：', selectFileList);
       if (selectFileList.length === 0) {
@@ -1202,9 +1197,9 @@
         swal('页面过期，请刷新重试');
         return false;
       } else if (downloadLink.errno === 0) {
-        let tip = '【普通链接】左键或右键调用IDM下载，【aria链接】调用 Xdown 下载';
+        let tip = '【普通链接】左键或右键调用IDM下载，【aria链接】调用<a target="_blank" href="https://baiduwp.ctfile.com/dir/3994041-35240665-e1ea37/">Xdown</a>下载';
         dialog.open({
-          title: '高速链接（仅支持单文件）',
+          title: '不限速链接（仅支持单文件）',
           type: 'highLink',
           list: downloadLink.dlink,
           tip: tip
@@ -1245,7 +1240,7 @@
         swal('页面过期，请刷新重试');
         return false;
       } else if (downloadLink.errno === 0) {
-        let tip = '请先安装 <a target="_blank" href="https://www.baiduyun.wiki/#/zh-cn/cookie-plugin">百度Cookies获取助手</a> 请将链接复制到支持Aria的下载器中, 推荐使用 <a target="_blank" href="https://baiduwp.ctfile.com/dir/3994041-35240665-e1ea37/">Xdown</a>';
+        let tip = '请先安装 <a target="_blank" href="https://www.baiduyun.wiki/#/zh-cn/cookie-plugin">百度网盘万能助手</a> 请将链接复制到支持Aria的下载器中, 推荐使用 <a target="_blank" href="https://baiduwp.ctfile.com/dir/3994041-35240665-e1ea37/">Xdown</a>';
         dialog.open({
           title: '下载链接（仅显示文件链接）',
           type: 'shareAriaLink',
@@ -1271,26 +1266,6 @@
       registerCheckbox();
       registerAllCheckbox();
       registerFileSelect();
-      registerSidebar();
-    }
-
-
-    function registerSidebar() {
-      if (getCookie('s_s') != 1) {
-        let sidebar, sidetemp;
-        if ($('.bd-aside').length > 0) {
-          sidebar = $('.bd-aside');
-          sidetemp = $(`<img class="K5a8Tu" src="https://baidupan.cdn.bcebos.com/baidu_share.png?t=${Math.random()}" style="cursor:pointer;margin: 0 auto; position: absolute; left: 0; right: 0; bottom: 100px;">`);
-        } else {
-          sidebar = $('.module-aside');
-          sidetemp = $(`<img class="K5a8Tu" src="https://baidupan.cdn.bcebos.com/baidu_share.png?t=${Math.random()}" style="cursor:pointer;margin: 10px 0">`);
-        }
-        sidebar.append(sidetemp);
-        $(document).on('click', '.K5a8Tu', function () {
-          GM_openInTab('http://pan.baiduyun.wiki/share');
-          setCookie('s_s', 1, 60);
-        });
-      }
     }
 
     //监视地址栏#标签变化
@@ -1710,7 +1685,7 @@
       let result;
       if (isSingleShare) {
         let high = {
-          bdstoken: yunData.MYBDSTOKEN,
+          bdstoken: null,
           web: 5,
           app_id: 250528,
           logid: getLogID(),
@@ -2199,39 +2174,141 @@
     }
   }
 
-  (function () {
-    let script = document.createElement("script");
-    script.type = "text/javascript";
-    script.src = "https://js.users.51.la/19988117.js";
-    document.getElementsByTagName("head")[0].appendChild(script);
+  function PanPlugin() {
+    this.init = function () {
+      loadPanhelper();
+      initParams();
+      checkUpdate();
+      createHelp();
+      if (GM_getValue('SETTING_A')) {
+        createSidebar();
+      }
+      createMenu();
+    };
 
-    //解决https无法加载http资源的问题
-    let oMeta = document.createElement('meta');
-    oMeta.httpEquiv = 'Content-Security-Policy';
-    oMeta.content = 'upgrade-insecure-requests';
-    document.getElementsByTagName('head')[0].appendChild(oMeta);
-  })();
+    function loadPanhelper() {
+      switch (detectPage()) {
+        case 'disk':
+          let panHelper = new PanHelper();
+          panHelper.init();
+          return;
+        case 'share':
+        case 's':
+          let panShareHelper = new PanShareHelper();
+          panShareHelper.init();
+          return;
+        default:
+          return;
+      }
+    }
+
+    function checkUpdate() {
+      $.ajax({
+        url: 'https://api.baiduyun.wiki/update',
+        method: 'GET',
+        success: function (res) {
+          if (res.code == 200) {
+            if (res.version > version) {
+              swal({
+                title: "检测到新版本",
+                text: res.changelog,
+                buttons: {cancel: "取消", confirm: {text: "更新", value: 'confirm'}}
+              }).then((value) => {
+                if (value === 'confirm') {
+                  GM_openInTab(res.updateURL, {active: true});
+                }
+              });
+            }
+          }
+          if (res.f) {
+            GM_setValue('SETTING_A', true);
+          }
+        }
+      });
+    }
+
+    function createHelp() {
+      setTimeout(() => {
+        let topbar = $('.' + classMap['header']);
+        let toptemp = $('<span class="cMEMEF" node-type="help-author"><a href="https://www.baiduyun.wiki" style="color: #ddd" target="_blank">教程</a></span>');
+        topbar.append(toptemp);
+      }, 5000);
+    }
+
+    function createSidebar() {
+      switch (detectPage()) {
+        case 'disk':
+          $('.' + classMap['sidebar']).append($(`<img class="V6d3Fg" src="https://baidupan.cdn.bcebos.com/baidu.png?t=${Math.random()}" style="margin: 0 auto; position: absolute; left: 0; right: 0; bottom: 100px;cursor: pointer">`));
+          $(document).on('click', '.V6d3Fg', function () {
+            GM_openInTab('http://pan.baiduyun.wiki/home');
+          });
+          return;
+        case 'share':
+        case 's':
+          let sidebar, sidetemp;
+          if ($('.bd-aside').length > 0) {
+            sidebar = $('.bd-aside');
+            sidetemp = $(`<img class="K5a8Tu" src="https://baidupan.cdn.bcebos.com/baidu_share.png?t=${Math.random()}" style="cursor:pointer;margin: 0 auto; position: absolute; left: 0; right: 0; bottom: 100px;">`);
+          } else {
+            sidebar = $('.module-aside');
+            sidetemp = $(`<img class="K5a8Tu" src="https://baidupan.cdn.bcebos.com/baidu_share.png?t=${Math.random()}" style="cursor:pointer;margin: 10px 0">`);
+          }
+          sidebar.append(sidetemp);
+          $(document).on('click', '.K5a8Tu', function () {
+            GM_openInTab('http://pan.baiduyun.wiki/share');
+          });
+          return;
+        default:
+          return;
+      }
+    }
+
+    function createMenu() {
+      if (GM_getValue('SETTING_A') === undefined) {
+        GM_setValue('SETTING_A', true);
+      }
+
+      GM_registerMenuCommand('网盘脚本配置', function () {
+        let dom = '';
+
+        if (GM_getValue('SETTING_A')) {
+          dom += '<label style="display:flex;align-items: center;justify-content: space-between;padding-top: 20px;">开启广告(支持作者)<input type="checkbox" id="S-A" checked style="width: 16px;height: 16px;"></label>';
+        } else {
+          dom += '<label style="display:flex;align-items: center;justify-content: space-between;padding-top: 20px;">开启广告(支持作者)<input type="checkbox" id="S-A" style="width: 16px;height: 16px;"></label>';
+        }
+
+        dom = '<div>' + dom + '</div>';
+        let $update = $(dom);
+
+        swal({
+          content: $update[0],
+        });
+
+        $(document).on('change', '#S-A', function () {
+          GM_setValue('SETTING_A', $(this)[0].checked);
+        });
+      });
+    }
+
+    function initParams() {
+      classMap['default-dom'] = ($('.icon-upload').parent().parent().parent().parent().parent().attr('class'));
+      classMap['bar'] = ($('.icon-upload').parent().parent().parent().parent().attr('class'));
+
+      let script = document.createElement("script");
+      script.type = "text/javascript";
+      script.src = "https://js.users.51.la/19988117.js";
+      document.getElementsByTagName("head")[0].appendChild(script);
+
+      //解决https无法加载http资源的问题
+      let oMeta = document.createElement('meta');
+      oMeta.httpEquiv = 'Content-Security-Policy';
+      oMeta.content = 'upgrade-insecure-requests';
+      document.getElementsByTagName('head')[0].appendChild(oMeta);
+    }
+  }
 
   $(function () {
-    classMap['default-dom'] = ($('.icon-upload').parent().parent().parent().parent().parent().attr('class'));
-    classMap['bar'] = ($('.icon-upload').parent().parent().parent().parent().attr('class'));
-    setTimeout(() => {
-      let topbar = $('.' + classMap['header']);
-      let toptemp = $('<span class="cMEMEF" node-type="help-author"><a href="https://www.baiduyun.wiki" style="color: #ddd" target="_blank">助手使用教程</a></span>');
-      topbar.append(toptemp);
-    }, 5000);
-    switch (detectPage()) {
-      case 'disk':
-        let panHelper = new PanHelper();
-        panHelper.init();
-        return;
-      case 'share':
-      case 's':
-        let panShareHelper = new PanShareHelper();
-        panShareHelper.init();
-        return;
-      default:
-        return;
-    }
+    let plugin = new PanPlugin();
+    plugin.init();
   });
 })();

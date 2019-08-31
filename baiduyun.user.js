@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name              百度网盘直链下载助手
 // @namespace         https://github.com/syhyz1990/baiduyun
-// @version           2.7.0
+// @version           2.7.1
 // @icon              https://pan.baidu.com/ppres/static/images/favicon.ico
 // @description       【百度网盘直链下载助手】是一款免客户端获取百度网盘文件真实下载地址的油猴脚本，支持Windows，Mac，Linux，Android等多平台，可使用IDM，迅雷，Aria2c协议等多线程加速工具加速下载。
 // @author            syhyz1990
@@ -33,7 +33,7 @@
 'use strict'
 
 ;(function () {
-  const version = '2.7.0';
+  const version = '2.7.1';
   const classMap = {
     'list': 'zJMtAEb',
     'grid': 'fyQgAEb',
@@ -52,7 +52,6 @@
     'grid-view': 'JKvHJMb',
     'bar-search': 'OFaPaO',
     'list-tools': 'tcuLAu',
-    'sidebar': 'KHbQCub',
     'header': 'vyQHNyb'
   };
   const errorMsg = {
@@ -121,7 +120,7 @@
       addButton();
       createIframe();
       dialog = new Dialog({addCopy: true});
-      clog('下载助手加载成功！当前版本：',version);
+      clog('下载助手加载成功！当前版本：', version);
     };
 
     function initParams() {
@@ -686,7 +685,7 @@
       batchLinkListAll = [];
       if (id.indexOf('direct') != -1) {  //aria下载
         batchLinkList = getDirectBatchLink(linkType);
-        tip = '请先安装 <a target="_blank" href="https://www.baiduyun.wiki/#/zh-cn/cookie-plugin">百度网盘万能助手</a> 请将链接复制到支持Aria的下载器中, 推荐使用 <a target="_blank" href="https://baiduwp.ctfile.com/dir/3994041-35240665-e1ea37/">Xdown</a>（仅支持300M以下的文件夹）';
+        tip = '请先安装 <a target="_blank" href="https://www.baiduyun.wiki/#/zh-cn/cookie-plugin">百度网盘万能助手</a> 请将链接复制到支持Aria的下载器中, 推荐使用 <a target="_blank" href="https://baiduwp.pipipan.com/dir/3994041-35240665-e1ea37/">Xdown</a>（仅支持300M以下的文件夹）';
         if (batchLinkList.length === 0) {
           swal('没有链接可以显示，API链接不要全部选中文件夹！');
           return;
@@ -707,7 +706,7 @@
             swal('没有链接可以显示，API链接不要全部选中文件夹！');
             return;
           }
-          let tip = '请先安装 <a target="_blank" href="https://www.baiduyun.wiki/#/zh-cn/cookie-plugin">百度网盘万能助手</a> 请将链接复制到支持Aria的下载器中, 推荐使用 <a target="_blank" href="https://baiduwp.ctfile.com/dir/3994041-35240665-e1ea37/">Xdown</a>';
+          let tip = '请先安装 <a target="_blank" href="https://www.baiduyun.wiki/#/zh-cn/cookie-plugin">百度网盘万能助手</a> 请将链接复制到支持Aria的下载器中, 推荐使用 <a target="_blank" href="https://baiduwp.pipipan.com/dir/3994041-35240665-e1ea37/">Xdown</a>';
           dialog.open({
             title: '下载链接（仅显示文件链接）',
             type: 'batchAria',
@@ -1055,7 +1054,7 @@
         createObserver();
       }
 
-      clog('下载助手加载成功！当前版本：',version);
+      clog('下载助手加载成功！当前版本：', version);
     };
 
     function initParams() {
@@ -1197,7 +1196,7 @@
         swal('页面过期，请刷新重试');
         return false;
       } else if (downloadLink.errno === 0) {
-        let tip = '【普通链接】左键或右键调用IDM下载，【aria链接】调用<a target="_blank" href="https://baiduwp.ctfile.com/dir/3994041-35240665-e1ea37/">Xdown</a>下载';
+        let tip = '【普通链接】左键或右键调用IDM下载，【aria链接】调用<a target="_blank" href="https://baiduwp.pipipan.com/dir/3994041-35240665-e1ea37/">Xdown</a>下载';
         dialog.open({
           title: '不限速链接（仅支持单文件）',
           type: 'highLink',
@@ -1240,7 +1239,7 @@
         swal('页面过期，请刷新重试');
         return false;
       } else if (downloadLink.errno === 0) {
-        let tip = '请先安装 <a target="_blank" href="https://www.baiduyun.wiki/#/zh-cn/cookie-plugin">百度网盘万能助手</a> 请将链接复制到支持Aria的下载器中, 推荐使用 <a target="_blank" href="https://baiduwp.ctfile.com/dir/3994041-35240665-e1ea37/">Xdown</a>';
+        let tip = '请先安装 <a target="_blank" href="https://www.baiduyun.wiki/#/zh-cn/cookie-plugin">百度网盘万能助手</a> 请将链接复制到支持Aria的下载器中, 推荐使用 <a target="_blank" href="https://baiduwp.pipipan.com/dir/3994041-35240665-e1ea37/">Xdown</a>';
         dialog.open({
           title: '下载链接（仅显示文件链接）',
           type: 'shareAriaLink',
@@ -2176,6 +2175,7 @@
 
   function PanPlugin() {
     this.init = function () {
+      GM_setValue('current_version', version);
       loadPanhelper();
       initParams();
       checkUpdate();
@@ -2204,10 +2204,11 @@
 
     function checkUpdate() {
       $.ajax({
-        url: 'https://api.baiduyun.wiki/update',
+        url: 'https://api.baiduyun.wiki/update?ver=' + version,
         method: 'GET',
         success: function (res) {
           if (res.code == 200) {
+            GM_setValue('lastest_version', res.version);
             if (res.version > version) {
               swal({
                 title: "检测到新版本",
@@ -2238,7 +2239,8 @@
     function createSidebar() {
       switch (detectPage()) {
         case 'disk':
-          $('.' + classMap['sidebar']).append($(`<img class="V6d3Fg" src="https://baidupan.cdn.bcebos.com/baidu.png?t=${Math.random()}" style="margin: 0 auto; position: absolute; left: 0; right: 0; bottom: 100px;cursor: pointer">`));
+          if (GM_getValue('current_version') < GM_getValue('lastest_version'))
+            $('.aside-absolute-container').append($(`<img class="V6d3Fg" src="https://baidupan.cdn.bcebos.com/baidu.png?t=${Math.random()}" style="margin: 0 auto; position: absolute; left: 0; right: 0; bottom: 100px;cursor: pointer">`));
           $(document).on('click', '.V6d3Fg', function () {
             GM_openInTab('http://pan.baiduyun.wiki/home');
           });

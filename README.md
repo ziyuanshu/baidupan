@@ -25,7 +25,7 @@
 
 ## 🔔 更新日志
 
-**2019-08-30** : v2.7.0 免登录接口更名为不限速链接，不用再退出登录获取链接了。脚本增加自动更新功能，从此不再迷路，支持 Tampermonkey 配置选项。
+**2019-08-31** : v2.7.1 免登录接口更名为不限速链接，不用再退出登录获取链接了。脚本增加自动更新功能，从此不再迷路，支持 Tampermonkey 配置选项。
 
 [查看更多](https://www.baiduyun.wiki/#/zh-cn/changelog)
 
@@ -34,7 +34,7 @@
 
 ## 🚀 速度测试
 
-**[Xdown(推荐)](https://baiduwp.ctfile.com/dir/3994041-35240665-e1ea37/)**
+**[Xdown(推荐)](https://baiduwp.pipipan.com/dir/3994041-35240665-e1ea37/)**
 
 ![Xdown](https://i.loli.net/2019/08/18/l4DzJh3Zvr8Osmt.gif)
 

@@ -13,11 +13,11 @@
 
 ## 📖 使用教程
 
-- [Windows平台使用教程](https://www.baiduyun.wiki/zh-cn/windows)
+- [Windows平台使用教程](https://www.baiduyun.wiki/zh-cn/windows.html)
 
-- [MacOS平台使用教程](https://www.baiduyun.wiki/zh-cn/mac)
+- [MacOS平台使用教程](https://www.baiduyun.wiki/zh-cn/mac.html)
 
-- [Android平台使用教程](https://www.baiduyun.wiki/zh-cn/android)
+- [Android平台使用教程](https://www.baiduyun.wiki/zh-cn/android.html)
 
 ## 💽 安装脚本
 
@@ -29,7 +29,7 @@
 
 **2019-08-31** : v2.7.1 免登录接口更名为不限速链接，不用再退出登录获取链接了。脚本增加自动更新功能，从此不再迷路，支持 Tampermonkey 配置选项。
 
-[查看更多](https://www.baiduyun.wiki/zh-cn/changelog)
+[查看更多](https://www.baiduyun.wiki/zh-cn/changelog.html)
 
 ## ✨ 插件功能
 - 获取百度网盘的直链真实下载地址，加快下载速度

@@ -1,6 +1,8 @@
 # 百度网盘直链下载助手
 ![TamperMonkey v4.8](https://img.shields.io/badge/tamperMonkey-v4.8-brightgreen.svg) ![Chrome x64 v60.4](https://img.shields.io/badge/chrome%20x64-v76.0-brightgreen.svg) ![Safari v11.0.3](https://img.shields.io/badge/safari%20-v12.0-brightgreen.svg) ![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20Mac%20%7C%20Android-blue.svg) [![Stars](https://img.shields.io/badge/GitHub-9000+-yellow.svg?style=social&logo=github)](https://github.com/syhyz1990/baiduyun)
 
+[中文](README.md) | [English](README_EN.md)
+
 👉 本脚本适用于多平台支持安装 Tampermonkey 或 暴力猴扩展的浏览器，如Chrome，360，QQ，UC等。
 
 支持百度网盘PC端网页获取分享链接下载地址和我的网盘下载地址。安装后会在对应界面出现【下载助手】按钮, 配合多线程下载工具达到提速的效果。
@@ -11,11 +13,11 @@
 
 ## 📖 使用教程
 
-- [Windows平台使用教程](https://www.baiduyun.wiki/#/zh-cn/windows)
+- [Windows平台使用教程](https://www.baiduyun.wiki/zh-cn/windows)
 
-- [MacOS平台使用教程](https://www.baiduyun.wiki/#/zh-cn/mac)
+- [MacOS平台使用教程](https://www.baiduyun.wiki/zh-cn/mac)
 
-- [Android平台使用教程](https://www.baiduyun.wiki/#/zh-cn/android)
+- [Android平台使用教程](https://www.baiduyun.wiki/zh-cn/android)
 
 ## 💽 安装脚本
 
@@ -27,7 +29,7 @@
 
 **2019-08-31** : v2.7.1 免登录接口更名为不限速链接，不用再退出登录获取链接了。脚本增加自动更新功能，从此不再迷路，支持 Tampermonkey 配置选项。
 
-[查看更多](https://www.baiduyun.wiki/#/zh-cn/changelog)
+[查看更多](https://www.baiduyun.wiki/zh-cn/changelog)
 
 ## ✨ 插件功能
 - 获取百度网盘的直链真实下载地址，加快下载速度

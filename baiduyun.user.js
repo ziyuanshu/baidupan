@@ -59,7 +59,7 @@
     'unlogin': '提示 : 必须登录百度网盘后才能正常使用脚本哦!!!',
     'fail': '获取下载链接失败！请刷新后重试！',
     'unselected': '未选中文件，请勿勾选文件夹，否则刷新后重试！',
-    'morethan2': '多个文件请点击【显示链接】'
+    'morethan': '多个文件请点击【显示链接】'
   };
 
   let secretCode = GM_getValue('secretCode') ? GM_getValue('secretCode') : '498065';
@@ -79,7 +79,7 @@
     let BDUSS = JSON.parse(baiduyunPlugin_BDUSS).BDUSS;
     if (!BDUSS) {
       swal('请先安装百度网盘万能助手');
-      GM_openInTab('https://www.baiduyun.wiki/#/zh-cn/cookie-plugin', {active: true});
+      GM_openInTab('https://www.baiduyun.wiki/zh-cn/cookie-plugin', {active: true});
       return '请先安装百度网盘万能助手，安装后刷新页面重试';
     }
     return `aria2c "${link}" --out "${filename}" --header "User-Agent: ${userAgent}" --header "Cookie: BDUSS=${BDUSS}"`;
@@ -93,7 +93,7 @@
     event.preventDefault();
     let link = $(this).text();
     GM_setClipboard(link, 'text');
-    swal('已将链接复制到剪贴板！请复制到Xdown中下载');
+    swal('已将链接复制到剪贴板！请复制到XDown中下载');
     return false;
   });
 
@@ -532,7 +532,7 @@
           swal(errorMsg.unselected);
           return;
         } else if (selectFileList.length > 1) {
-          swal(errorMsg.morethan2);
+          swal(errorMsg.morethan);
           return;
         } else {
           if (selectFileList[0].isdir == 1) {
@@ -618,7 +618,7 @@
           swal(errorMsg.unselected);
           return;
         } else if (selectFileList.length > 1) {
-          swal(errorMsg.morethan2);
+          swal(errorMsg.morethan);
           return;
         } else {
           if (selectFileList[0].isdir == 1) {
@@ -685,7 +685,7 @@
       batchLinkListAll = [];
       if (id.indexOf('direct') != -1) {  //aria下载
         batchLinkList = getDirectBatchLink(linkType);
-        tip = '请先安装 <a target="_blank" href="https://www.baiduyun.wiki/#/zh-cn/cookie-plugin">百度网盘万能助手</a> 请将链接复制到支持Aria的下载器中, 推荐使用 <a target="_blank" href="https://baiduwp.pipipan.com/dir/3994041-35240665-e1ea37/">Xdown</a>（仅支持300M以下的文件夹）';
+        tip = '请先安装 <a target="_blank" href="https://www.baiduyun.wiki/zh-cn/cookie-plugin">百度网盘万能助手</a> 请将链接复制到支持Aria的下载器中, 推荐使用 <a target="_blank" href="https://baiduwp.pipipan.com/dir/3994041-35240665-e1ea37/">XDown</a>（仅支持300M以下的文件夹）';
         if (batchLinkList.length === 0) {
           swal('没有链接可以显示，API链接不要全部选中文件夹！');
           return;
@@ -693,7 +693,7 @@
         dialog.open({title: 'Aria链接', type: 'batchAria', list: batchLinkList, tip: tip, showcopy: true});
       } else if (id.indexOf('api') != -1) {
         batchLinkList = getAPIBatchLink(linkType);
-        tip = '直接复制链接无效，请安装 IDM 及浏览器扩展后使用（<a href="https://www.baiduyun.wiki/#/zh-cn/" target="_blank">脚本使用说明</a>）';
+        tip = '直接复制链接无效，请安装 IDM 及浏览器扩展后使用（<a href="https://www.baiduyun.wiki/zh-cn/" target="_blank">脚本使用说明</a>）';
         if (batchLinkList.length === 0) {
           swal('没有链接可以显示，API链接不要全部选中文件夹！');
           return;
@@ -706,7 +706,7 @@
             swal('没有链接可以显示，API链接不要全部选中文件夹！');
             return;
           }
-          let tip = '请先安装 <a target="_blank" href="https://www.baiduyun.wiki/#/zh-cn/cookie-plugin">百度网盘万能助手</a> 请将链接复制到支持Aria的下载器中, 推荐使用 <a target="_blank" href="https://baiduwp.pipipan.com/dir/3994041-35240665-e1ea37/">Xdown</a>';
+          let tip = '请先安装 <a target="_blank" href="https://www.baiduyun.wiki/zh-cn/cookie-plugin">百度网盘万能助手</a> 请将链接复制到支持Aria的下载器中, 推荐使用 <a target="_blank" href="https://baiduwp.pipipan.com/dir/3994041-35240665-e1ea37/">XDown</a>';
           dialog.open({
             title: '下载链接（仅显示文件链接）',
             type: 'batchAria',
@@ -1186,6 +1186,10 @@
         swal(errorMsg.dir);
         return false;
       }
+      if (selectFileList.length > 1 ) {
+        swal('一次只能勾选一个文件');
+        return false;
+      }
 
       let downloadLink = getHighDownloadLink();
 
@@ -1196,7 +1200,7 @@
         swal('页面过期，请刷新重试');
         return false;
       } else if (downloadLink.errno === 0) {
-        let tip = '【普通链接】左键或右键调用IDM下载，【aria链接】调用<a target="_blank" href="https://baiduwp.pipipan.com/dir/3994041-35240665-e1ea37/">Xdown</a>下载';
+        let tip = '【普通链接】左键或右键调用IDM下载，【aria链接】调用<a target="_blank" href="https://baiduwp.pipipan.com/dir/3994041-35240665-e1ea37/">XDown</a>下载';
         dialog.open({
           title: '不限速链接（仅支持单文件）',
           type: 'highLink',
@@ -1239,7 +1243,7 @@
         swal('页面过期，请刷新重试');
         return false;
       } else if (downloadLink.errno === 0) {
-        let tip = '请先安装 <a target="_blank" href="https://www.baiduyun.wiki/#/zh-cn/cookie-plugin">百度网盘万能助手</a> 请将链接复制到支持Aria的下载器中, 推荐使用 <a target="_blank" href="https://baiduwp.pipipan.com/dir/3994041-35240665-e1ea37/">Xdown</a>';
+        let tip = '请先安装 <a target="_blank" href="https://www.baiduyun.wiki/zh-cn/cookie-plugin">百度网盘万能助手</a> 请将链接复制到支持Aria的下载器中, 推荐使用 <a target="_blank" href="https://baiduwp.pipipan.com/dir/3994041-35240665-e1ea37/">XDown</a>';
         dialog.open({
           title: '下载链接（仅显示文件链接）',
           type: 'shareAriaLink',
@@ -1490,7 +1494,7 @@
         return false;
       }
       if (selectFileList.length > 1) {
-        swal(errorMsg.morethan2);
+        swal(errorMsg.morethan);
         return false;
       }
 
@@ -1579,13 +1583,13 @@
         vcodeDialog.close();
         if (buttonTarget == 'download') {
           if (result.list.length > 1 || result.list[0].isdir == 1) {
-            swal(errorMsg.morethan2);
+            swal(errorMsg.morethan);
             return false;
           }
           let link = result.list[0].dlink;
           execDownload(link);
         } else if (buttonTarget == 'link') {
-          let tip = '直接复制链接无效，请安装 IDM 及浏览器扩展后使用（<a href="https://www.baiduyun.wiki/#/zh-cn/" target="_blank">脚本使用说明</a>）';
+          let tip = '直接复制链接无效，请安装 IDM 及浏览器扩展后使用（<a href="https://www.baiduyun.wiki/zh-cn/" target="_blank">脚本使用说明</a>）';
           dialog.open({title: '下载链接（仅显示文件链接）', type: 'shareLink', list: result.list, tip: tip});
         }
       } else {

@@ -27,8 +27,6 @@ Support Baidu network disk PC-side webpage to get the share link download addres
 
 ## 🔔 Changelog
 
-**2019-08-31** : v2.7.1 The login-free interface is renamed as an unlimited link, so you don't have to log out to get the link. The script adds automatic updates and no longer gets lost, supporting Tampermonkey configuration options.
-
 [View more](https://www.baiduyun.wiki/zh-cn/changelog.html)
 
 ## ✨ Function

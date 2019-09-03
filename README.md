@@ -11,6 +11,8 @@
 
 **自 2.5.0 版本起，脚本支持Aria2C链接**
 
+
+
 ## 📖 使用教程
 
 - [Windows平台使用教程](https://www.baiduyun.wiki/zh-cn/windows.html)
@@ -41,6 +43,11 @@
 ![Xdown](https://i.loli.net/2019/08/18/l4DzJh3Zvr8Osmt.gif)
 
 **IDM**
+
+IDM 用户请升级到6.35版本以上，打开`设置->下载->User-Agent for manually added downloads` `改成
+```text
+netdisk;2.2.2;pc;pc-mac;10.14.5;macbaiduyunguanjia
+```
 
 ![IDM](https://i.loli.net/2019/05/04/5ccc6d8156d75.gif)
 

@@ -35,7 +35,7 @@ Get the real-chain download address of Baidu's network disk, speed up the downlo
 
 ## 🚀 Speed
 
-**[Xdown(recommended)](https://baiduwp.pipipan.com/dir/3994041-35240665-e1ea37/)**
+**[Xdown(recommended)](http://pan.baiduyun.wiki/down)**
 
 ![Xdown](https://i.loli.net/2019/08/18/l4DzJh3Zvr8Osmt.gif)
 

@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name              百度网盘直链下载助手
 // @namespace         https://github.com/syhyz1990/baiduyun
-// @version           2.7.2
+// @version           2.7.3
 // @icon              https://pan.baidu.com/ppres/static/images/favicon.ico
 // @description       【百度网盘直链下载助手】是一款免客户端获取百度网盘文件真实下载地址的油猴脚本，支持Windows，Mac，Linux，Android等多平台，可使用IDM，迅雷，Aria2c协议等多线程加速工具加速下载。
 // @author            syhyz1990
@@ -33,7 +33,7 @@
 'use strict'
 
 ;(function () {
-  const version = '2.7.2'
+  const version = '2.7.3'
   const classMap = {
     'list': 'zJMtAEb',
     'grid': 'fyQgAEb',
@@ -55,14 +55,15 @@
     'header': 'vyQHNyb'
   }
   const errorMsg = {
-    'dir': '不支持整个文件夹下载，可进入文件夹内获取文件链接下载',
-    'unlogin': '提示 : 必须登录百度网盘后才能正常使用脚本哦!!!',
-    'fail': '获取下载链接失败！请刷新后重试！',
-    'unselected': '未选中文件，请勿勾选文件夹，否则刷新后重试！',
-    'morethan': '多个文件请点击【显示链接】'
+    'dir': '提示：此方式不支持整个文件夹下载，可进入文件夹内获取文件链接下载',
+    'unlogin': '提示：必须登录百度网盘后才能使用此功能哦!!!',
+    'fail': '提示：获取下载链接失败！请刷新网页后重试！',
+    'unselected': '提示：未选中文件，请勿勾选文件夹，否则刷新后重试！',
+    'morethan': '提示：多个文件请点击【显示链接】',
+    'toobig': '提示：只支持300M以下的文件夹，若链接无法下载，请进入文件夹后勾选文件获取！'
   }
 
-  let secretCode = GM_getValue('secretCode') ? GM_getValue('secretCode') : '498065'
+  let secretCode = GM_getValue('secretCode') ? GM_getValue('secretCode') : '286652'
   const userAgent = "netdisk;2.2.2;pc;pc-mac;10.14.5;macbaiduyunguanjia"
 
   function clog(c1, c2, c3) {
@@ -80,7 +81,7 @@
     if (!BDUSS) {
       swal('请先安装百度网盘万能助手')
       GM_openInTab('https://www.baiduyun.wiki/zh-cn/cookie-plugin', {active: true})
-      return '请先安装百度网盘万能助手，安装后刷新页面重试'
+      return '请先安装百度网盘万能助手，安装后请重启浏览器！！！'
     }
     return `aria2c "${link}" --out "${filename}" --header "User-Agent: ${userAgent}" --header "Cookie: BDUSS=${BDUSS}"`
   }
@@ -88,14 +89,6 @@
   function replaceLink(link) {
     return link.replace(/&/g, '&amp;amp;')
   }
-
-  $('body').on('click', '.aria2c-link ', function (event) {
-    event.preventDefault()
-    let link = $(this).text()
-    GM_setClipboard(link, 'text')
-    swal('已将链接复制到剪贴板！请复制到XDown中下载')
-    return false
-  })
 
   //网盘页面的下载助手
   function PanHelper() {
@@ -685,12 +678,12 @@
       batchLinkListAll = []
       if (id.indexOf('direct') != -1) {  //aria下载
         batchLinkList = getDirectBatchLink(linkType)
-        tip = '请先安装 <a target="_blank" href="https://www.baiduyun.wiki/zh-cn/cookie-plugin">百度网盘万能助手</a> 请将链接复制到支持Aria的下载器中, 推荐使用 <a target="_blank" href="https://baiduwp.pipipan.com/dir/3994041-35240665-e1ea37/">XDown</a>（仅支持300M以下的文件夹）'
+        tip = '请先安装 <a target="_blank" href="https://www.baiduyun.wiki/zh-cn/cookie-plugin">百度网盘万能助手</a> 请将链接复制到支持Aria的下载器中, 推荐使用 <a target="_blank" href="http://pan.baiduyun.wiki/down">XDown</a>（仅支持300M以下的文件夹）'
         if (batchLinkList.length === 0) {
           swal('没有链接可以显示，API链接不要全部选中文件夹！')
           return
         }
-        dialog.open({title: 'Aria链接', type: 'batchAria', list: batchLinkList, tip: tip, showcopy: true})
+        dialog.open({title: 'Aria链接（双击链接复制）', type: 'batchAria', list: batchLinkList, tip: tip, showcopy: true})
       } else if (id.indexOf('api') != -1) {
         batchLinkList = getAPIBatchLink(linkType)
         tip = '直接复制链接无效，请安装 IDM 及浏览器扩展后使用（<a href="https://www.baiduyun.wiki/zh-cn/" target="_blank">脚本使用说明</a>）'
@@ -706,7 +699,7 @@
             swal('没有链接可以显示，API链接不要全部选中文件夹！')
             return
           }
-          let tip = '请先安装 <a target="_blank" href="https://www.baiduyun.wiki/zh-cn/cookie-plugin">百度网盘万能助手</a> 请将链接复制到支持Aria的下载器中, 推荐使用 <a target="_blank" href="https://baiduwp.pipipan.com/dir/3994041-35240665-e1ea37/">XDown</a>'
+          let tip = '请先安装 <a target="_blank" href="https://www.baiduyun.wiki/zh-cn/cookie-plugin">百度网盘万能助手</a> 请将链接复制到支持Aria的下载器中, 推荐使用 <a target="_blank" href="http://pan.baiduyun.wiki/down">XDown</a>'
           dialog.open({
             title: '下载链接（仅显示文件链接）',
             type: 'batchAria',
@@ -1048,6 +1041,7 @@
       dialog = new Dialog({addCopy: false})
       vcodeDialog = new VCodeDialog(refreshVCode, confirmClick)
       createIframe()
+      registerVcode()
 
       if (!isSingleShare()) {
         registerEventListener()
@@ -1173,7 +1167,7 @@
 
     function highButtonClick() {
       if (bdstoken !== null) {
-        swal('请退出当前账号后获取不限速链接！！！')
+        swal('请退出当前账号或使用小号/隐私模式获取不限速链接！！！')
         return false
       }
 
@@ -1183,8 +1177,7 @@
         return false
       }
       if (selectFileList[0].isdir == 1) {
-        swal(errorMsg.dir)
-        return false
+        swal(errorMsg.toobig)
       }
       if (selectFileList.length > 1) {
         swal('一次只能勾选一个文件')
@@ -1205,7 +1198,7 @@
         return false
       }
       if (selectFileList[0].isdir == 1) {
-        swal(errorMsg.dir)
+        swal(errorMsg.toobig)
         return false
       }
 
@@ -1225,7 +1218,7 @@
         swal('页面过期，请刷新重试')
         return false
       } else if (downloadLink.errno === 0) {
-        let tip = '请先安装 <a target="_blank" href="https://www.baiduyun.wiki/zh-cn/cookie-plugin">百度网盘万能助手</a> 请将链接复制到支持Aria的下载器中, 推荐使用 <a target="_blank" href="https://baiduwp.pipipan.com/dir/3994041-35240665-e1ea37/">XDown</a>'
+        let tip = '请先安装 <a target="_blank" href="https://www.baiduyun.wiki/zh-cn/cookie-plugin">百度网盘万能助手</a> 请将链接复制到支持Aria的下载器中, 推荐使用 <a target="_blank" href="http://pan.baiduyun.wiki/down">XDown</a>（需版本>1.0.0.4）'
         dialog.open({
           title: '下载链接（仅显示文件链接）',
           type: 'shareAriaLink',
@@ -1251,11 +1244,10 @@
       registerCheckbox()
       registerAllCheckbox()
       registerFileSelect()
-      registerVcode()
     }
 
     function registerVcode() {
-      $('body').on('click', '#changeCode', function () {
+      $(document).on('click', '#changeCode', function () {
         getHighDownloadLink()
       })
     }
@@ -1581,7 +1573,7 @@
           let tip = '直接复制链接无效，请安装 IDM 及浏览器扩展后使用（<a href="https://www.baiduyun.wiki/zh-cn/" target="_blank">脚本使用说明</a>）'
           dialog.open({title: '下载链接（仅显示文件链接）', type: 'shareLink', list: result.list, tip: tip})
         } else if (buttonTarget == 'ariclink') {
-          let tip = '请先安装 <a target="_blank" href="https://www.baiduyun.wiki/zh-cn/cookie-plugin">百度网盘万能助手</a> 请将链接复制到支持Aria的下载器中, 推荐使用 <a target="_blank" href="https://baiduwp.pipipan.com/dir/3994041-35240665-e1ea37/">XDown</a>'
+          let tip = '请先安装 <a target="_blank" href="https://www.baiduyun.wiki/zh-cn/cookie-plugin">百度网盘万能助手</a> 请将链接复制到支持Aria的下载器中, 推荐使用 <a target="_blank" href="http://pan.baiduyun.wiki/down">XDown</a>'
           dialog.open({
             title: '下载链接（仅显示文件链接）',
             type: 'shareAriaLink',
@@ -1703,7 +1695,7 @@
           async: false,
           success: function (res) {
             if (res.errno == 0) {
-              let tip = '【普通链接】左键或右键调用IDM下载，【aria链接】调用<a target="_blank" href="https://baiduwp.pipipan.com/dir/3994041-35240665-e1ea37/">XDown</a>下载'
+              let tip = '【普通链接】左键或右键调用IDM下载，【aria链接】调用<a target="_blank" href="http://pan.baiduyun.wiki/down">XDown</a>下载'
               dialog.open({
                 title: '不限速链接（仅支持单文件）',
                 type: 'highLink',
@@ -1782,7 +1774,7 @@
         success: function (res) {
           if (res.errno == 0) {
             removeVCode()
-            let tip = '【普通链接】左键或右键调用IDM下载，【aria链接】调用<a target="_blank" href="https://baiduwp.pipipan.com/dir/3994041-35240665-e1ea37/">XDown</a>下载'
+            let tip = '【普通链接】左键或右键调用IDM下载，【aria链接】调用<a target="_blank" href="http://pan.baiduyun.wiki/down">XDown</a>下载'
             dialog.open({
               title: '不限速链接（仅支持单文件）',
               type: 'highLink',
@@ -2117,7 +2109,7 @@
         link = replaceLink(link)
         $('div.dialog-header h3 span.dialog-title', dialog).text(params.title)
         let $div = $('<div style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap"><div style="width:100px;float:left;overflow:hidden;text-overflow:ellipsis">普通链接</div><span>：</span><a href="' + link + '">' + link + '</a></div>')
-        let airaLink = `aria2c "${link}" --header "User-Agent: ${userAgent}"`
+        let airaLink = `aria2c "${link}" --forbidCookie "1" --header "User-Agent: ${userAgent}"`
         let $div2 = $('<div style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap"><div style="width:100px;float:left;overflow:hidden;text-overflow:ellipsis"">Aria链接</div><span>：</span><a href="javasctipt:void(0)" class="aria2c-link">' + airaLink + '</a></div>')
         $('div.dialog-body', dialog).append($div).append($div2)
       }
@@ -2299,7 +2291,7 @@
             GM_setValue('lastest_version', res.version)
             if (res.version > version) {
               swal({
-                title: "检测到新版本",
+                title: "发现新版本",
                 text: res.changelog,
                 buttons: {cancel: "取消", confirm: {text: "更新", value: 'confirm'}}
               }).then((value) => {
@@ -2357,26 +2349,16 @@
       if (GM_getValue('SETTING_A') === undefined) {
         GM_setValue('SETTING_A', true)
       }
-
       GM_registerMenuCommand('网盘脚本配置', function () {
         let dom = ''
-
         if (GM_getValue('SETTING_A')) {
           dom += '<label style="display:flex;align-items: center;justify-content: space-between;padding-top: 20px;">开启广告(支持作者)<input type="checkbox" id="S-A" checked style="width: 16px;height: 16px;"></label>'
         } else {
           dom += '<label style="display:flex;align-items: center;justify-content: space-between;padding-top: 20px;">开启广告(支持作者)<input type="checkbox" id="S-A" style="width: 16px;height: 16px;"></label>'
         }
-
         dom = '<div>' + dom + '</div>'
         let $update = $(dom)
-
-        swal({
-          content: $update[0],
-        })
-
-        $(document).on('change', '#S-A', function () {
-          GM_setValue('SETTING_A', $(this)[0].checked)
-        })
+        swal({content: $update[0],})
       })
     }
 
@@ -2394,6 +2376,18 @@
       oMeta.httpEquiv = 'Content-Security-Policy'
       oMeta.content = 'upgrade-insecure-requests'
       document.getElementsByTagName('head')[0].appendChild(oMeta)
+
+      $(document).on('click', '.aria2c-link ', function (event) {
+        event.preventDefault()
+        let link = $(this).text()
+        GM_setClipboard(link, 'text')
+        swal('已将链接复制到剪贴板！请复制到XDown中下载')
+        return false
+      })
+
+      $(document).on('change', '#S-A', function () {
+        GM_setValue('SETTING_A', $(this)[0].checked)
+      })
     }
   }
 

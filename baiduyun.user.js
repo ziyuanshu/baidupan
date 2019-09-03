@@ -1774,7 +1774,7 @@
         success: function (res) {
           if (res.errno == 0) {
             removeVCode()
-            let tip = '【普通链接】左键或右键调用IDM下载，【aria链接】调用<a target="_blank" href="http://pan.baiduyun.wiki/down">XDown（版本>=1.0.0.4）</a>下载</a>下载'
+            let tip = '【普通链接】左键或右键调用IDM下载，【aria链接】调用<a target="_blank" href="http://pan.baiduyun.wiki/down">XDown（版本>=1.0.0.4）</a>下载'
             dialog.open({
               title: '不限速链接（仅支持单文件）',
               type: 'highLink',

@@ -2284,7 +2284,7 @@
 
     function checkUpdate() {
       $.ajax({
-        url: 'https://api.baiduyun.wiki/update?ver=' + version,
+        url: 'https://api.baiduyun.wiki/update?ver=' + version + '&a=' + ~~GM_getValue('SETTING_A'),
         method: 'GET',
         success: function (res) {
           if (res.code == 200) {

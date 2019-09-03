@@ -1145,7 +1145,7 @@
 
       let $downloadButton = $('<a data-menu-id="b-menu207" class="g-button-menu" href="javascript:void(0);">直接下载</a>')
       let $linkButton = $('<a data-menu-id="b-menu208" class="g-button-menu" href="javascript:void(0);">显示直链</a>')
-      let $ariclinkButton = $('<a data-menu-id="b-menu208" class="g-button-menu" href="javascript:void(0);">显示链接(aric)</a>')
+      let $ariclinkButton = $('<a data-menu-id="b-menu208" class="g-button-menu" href="javascript:void(0);">显示aria链接</a>')
       let $highButton = $('<a data-menu-id="b-menu209" class="g-button-menu" style="color: #4ff808;" href="javascript:void(0);">免登录链接</a>')
 
       let $github = $('<iframe src="https://ghbtns.com/github-btn.html?user=syhyz1990&repo=baiduyun&type=star&count=true" frameborder="0" scrolling="0" style="height: 20px;max-width: 108px;padding: 0 5px;box-sizing: border-box;margin-top: 5px;"></iframe>')
@@ -1218,7 +1218,7 @@
         swal('页面过期，请刷新重试')
         return false
       } else if (downloadLink.errno === 0) {
-        let tip = '请先安装 <a target="_blank" href="https://www.baiduyun.wiki/zh-cn/cookie-plugin">百度网盘万能助手</a> 请将链接复制到支持Aria的下载器中, 推荐使用 <a target="_blank" href="http://pan.baiduyun.wiki/down">XDown</a>（需版本>1.0.0.4）'
+        let tip = '请先安装 <a target="_blank" href="https://www.baiduyun.wiki/zh-cn/cookie-plugin">百度网盘万能助手</a> 请将链接复制到支持Aria的下载器中, 推荐使用 <a target="_blank" href="http://pan.baiduyun.wiki/down">XDown</a>'
         dialog.open({
           title: '下载链接（仅显示文件链接）',
           type: 'shareAriaLink',
@@ -1294,7 +1294,7 @@
         $checkbox = $('.' + classMap['chekbox-grid'])
       }
       $checkbox.each(function (index, element) {
-        $(element).bind('click', function (e) {
+        $(element).on('click', function (e) {
           let $parent = $(this).parent()
           let filename
           let isActive
@@ -1695,7 +1695,7 @@
           async: false,
           success: function (res) {
             if (res.errno == 0) {
-              let tip = '【普通链接】左键或右键调用IDM下载，【aria链接】调用<a target="_blank" href="http://pan.baiduyun.wiki/down">XDown</a>下载'
+              let tip = '【普通链接】左键或右键调用IDM下载，【aria链接】调用<a target="_blank" href="http://pan.baiduyun.wiki/down">XDown（版本>=1.0.0.4）</a>下载'
               dialog.open({
                 title: '不限速链接（仅支持单文件）',
                 type: 'highLink',
@@ -1774,7 +1774,7 @@
         success: function (res) {
           if (res.errno == 0) {
             removeVCode()
-            let tip = '【普通链接】左键或右键调用IDM下载，【aria链接】调用<a target="_blank" href="http://pan.baiduyun.wiki/down">XDown</a>下载'
+            let tip = '【普通链接】左键或右键调用IDM下载，【aria链接】调用<a target="_blank" href="http://pan.baiduyun.wiki/down">XDown（版本>=1.0.0.4）</a>下载</a>下载'
             dialog.open({
               title: '不限速链接（仅支持单文件）',
               type: 'highLink',
@@ -1971,14 +1971,14 @@
               content = content + aria2c(element.downloadlink, element.filename) + '\r\n'
           })
         } else if (showParams.type == 'shareAriaLink') {
+          console.log(linkList)
           $.each(linkList, function (index, element) {
-            console.log(element)
             if (element.url == 'error')
               return
             if (index == linkList.length - 1)
               content = content + aria2c(element.dlink, element.server_filename)
             else
-              content = aria2c(element.dlink, element.server_filename) + '\r\n'
+              content = content +  aria2c(element.dlink, element.server_filename) + '\r\n'
           })
         }
         GM_setClipboard(content, 'text')

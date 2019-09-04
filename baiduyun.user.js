@@ -80,7 +80,7 @@
     let BDUSS = JSON.parse(baiduyunPlugin_BDUSS).BDUSS
     if (!BDUSS) {
       swal('请先安装百度网盘万能助手')
-      GM_openInTab('https://www.baiduyun.wiki/zh-cn/cookie-plugin', {active: true})
+      GM_openInTab('https://www.baiduyun.wiki/zh-cn/cookie-plugin.html', {active: true})
       return '请先安装百度网盘万能助手，安装后请重启浏览器！！！'
     }
     return `aria2c "${link}" --out "${filename}" --header "User-Agent: ${userAgent}" --header "Cookie: BDUSS=${BDUSS}"`
@@ -678,7 +678,7 @@
       batchLinkListAll = []
       if (id.indexOf('direct') != -1) {  //aria下载
         batchLinkList = getDirectBatchLink(linkType)
-        tip = '请先安装 <a target="_blank" href="https://www.baiduyun.wiki/zh-cn/cookie-plugin">百度网盘万能助手</a> 请将链接复制到支持Aria的下载器中, 推荐使用 <a target="_blank" href="http://pan.baiduyun.wiki/down">XDown</a>（仅支持300M以下的文件夹）'
+        tip = '请先安装 <a target="_blank" href="https://www.baiduyun.wiki/zh-cn/cookie-plugin.html">百度网盘万能助手</a> 请将链接复制到支持Aria的下载器中, 推荐使用 <a target="_blank" href="http://pan.baiduyun.wiki/down">XDown</a>（仅支持300M以下的文件夹）'
         if (batchLinkList.length === 0) {
           swal('没有链接可以显示，API链接不要全部选中文件夹！')
           return
@@ -699,7 +699,7 @@
             swal('没有链接可以显示，API链接不要全部选中文件夹！')
             return
           }
-          let tip = '请先安装 <a target="_blank" href="https://www.baiduyun.wiki/zh-cn/cookie-plugin">百度网盘万能助手</a> 请将链接复制到支持Aria的下载器中, 推荐使用 <a target="_blank" href="http://pan.baiduyun.wiki/down">XDown</a>'
+          let tip = '请先安装 <a target="_blank" href="https://www.baiduyun.wiki/zh-cn/cookie-plugin.html">百度网盘万能助手</a> 请将链接复制到支持Aria的下载器中, 推荐使用 <a target="_blank" href="http://pan.baiduyun.wiki/down">XDown</a>'
           dialog.open({
             title: '下载链接（仅显示文件链接）',
             type: 'batchAria',
@@ -1218,7 +1218,7 @@
         swal('页面过期，请刷新重试')
         return false
       } else if (downloadLink.errno === 0) {
-        let tip = '请先安装 <a target="_blank" href="https://www.baiduyun.wiki/zh-cn/cookie-plugin">百度网盘万能助手</a> 请将链接复制到支持Aria的下载器中, 推荐使用 <a target="_blank" href="http://pan.baiduyun.wiki/down">XDown</a>'
+        let tip = '请先安装 <a target="_blank" href="https://www.baiduyun.wiki/zh-cn/cookie-plugin.html">百度网盘万能助手</a> 请将链接复制到支持Aria的下载器中, 推荐使用 <a target="_blank" href="http://pan.baiduyun.wiki/down">XDown</a>'
         dialog.open({
           title: '下载链接（仅显示文件链接）',
           type: 'shareAriaLink',
@@ -1573,7 +1573,7 @@
           let tip = '直接复制链接无效，请安装 IDM 及浏览器扩展后使用（<a href="https://www.baiduyun.wiki/zh-cn/" target="_blank">脚本使用说明</a>）'
           dialog.open({title: '下载链接（仅显示文件链接）', type: 'shareLink', list: result.list, tip: tip})
         } else if (buttonTarget == 'ariclink') {
-          let tip = '请先安装 <a target="_blank" href="https://www.baiduyun.wiki/zh-cn/cookie-plugin">百度网盘万能助手</a> 请将链接复制到支持Aria的下载器中, 推荐使用 <a target="_blank" href="http://pan.baiduyun.wiki/down">XDown</a>'
+          let tip = '请先安装 <a target="_blank" href="https://www.baiduyun.wiki/zh-cn/cookie-plugin.html">百度网盘万能助手</a> 请将链接复制到支持Aria的下载器中, 推荐使用 <a target="_blank" href="http://pan.baiduyun.wiki/down">XDown</a>'
           dialog.open({
             title: '下载链接（仅显示文件链接）',
             type: 'shareAriaLink',

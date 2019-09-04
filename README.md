@@ -23,9 +23,11 @@
 
 ## 💽 安装脚本
 
-- [安装地址1](https://github.com/syhyz1990/baiduyun/raw/master/baiduyun.user.js)
+- [安装地址1 (实时更新)](https://www.baiduyun.wiki/baiduyun.user.js)
 
-- [安装地址2](https://openuserjs.org/scripts/syhyz1990/百度网盘直链下载助手)
+- [安装地址2](https://github.com/syhyz1990/baiduyun/raw/master/baiduyun.user.js)
+
+- [安装地址3](https://openuserjs.org/scripts/syhyz1990/百度网盘直链下载助手)
 
 ## 🔔 更新日志
 
@@ -38,11 +40,11 @@
 
 ## 🚀 速度测试
 
-**[Xdown(推荐)](http://pan.baiduyun.wiki/down)**
+**[Xdown(支持批量链接)](http://pan.baiduyun.wiki/down)**
 
 ![Xdown](https://i.loli.net/2019/08/18/l4DzJh3Zvr8Osmt.gif)
 
-**IDM**
+**[IDM(稳定)](http://pan.baiduyun.wiki/down)**
 
 IDM 用户请升级到6.35版本以上，打开`设置->下载->User-Agent for manually added downloads` `改成
 ```text

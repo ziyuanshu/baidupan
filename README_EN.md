@@ -21,9 +21,11 @@ Support Baidu network disk PC-side webpage to get the share link download addres
 
 ## 💽 Install
 
-- [Address 1](https://github.com/syhyz1990/baiduyun/raw/master/baiduyun.user.js)
+- [Address 1](https://www.baiduyun.wiki/baiduyun.user.js)
 
-- [address 2](https://openuserjs.org/scripts/syhyz1990/百度网盘直链下载助手)
+- [Address 2](https://github.com/syhyz1990/baiduyun/raw/master/baiduyun.user.js)
+
+- [address 3](https://openuserjs.org/scripts/syhyz1990/百度网盘直链下载助手)
 
 ## 🔔 Changelog
 

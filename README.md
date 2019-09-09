@@ -7,10 +7,9 @@
 
 支持百度网盘PC端网页获取分享链接下载地址和我的网盘下载地址。安装后会在对应界面出现【下载助手】按钮, 配合多线程下载工具达到提速的效果。
 
-**自 2.7.0 版本起，脚本支持自动更新和获取不限速链接，请尽快[更新](https://github.com/syhyz1990/baiduyun/raw/master/baiduyun.user.js)**
+**自 2.7.0 版本起，脚本支持自动更新和获取不限速链接，请尽快[更新](https://www.baiduyun.wiki/baiduyun.user.js)**
 
 **自 2.5.0 版本起，脚本支持Aria2C链接**
-
 
 
 ## 📖 使用教程
@@ -31,7 +30,7 @@
 
 ## 🔔 更新日志
 
-**2019-09-03** : v2.7.3 修复XDown获取免登录链接时仍然被限速的问题，需要升级XDown到[1.0.0.4](http://pan.baiduyun.wiki/down)。
+**2019-09-09** : v2.7.4 支持IDM批量复制下载功能，修复分享页面aria链接只能复制两个的bug。更新IDM使用教程
 
 [查看更多](https://www.baiduyun.wiki/zh-cn/changelog.html)
 

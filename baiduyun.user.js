@@ -1,14 +1,12 @@
 // ==UserScript==
 // @name              百度网盘直链下载助手
 // @namespace         https://github.com/syhyz1990/baiduyun
-// @version           2.7.3
+// @version           2.7.4
 // @icon              https://pan.baidu.com/ppres/static/images/favicon.ico
 // @description       【百度网盘直链下载助手】是一款免客户端获取百度网盘文件真实下载地址的油猴脚本，支持Windows，Mac，Linux，Android等多平台，可使用IDM，迅雷，Aria2c协议等多线程加速工具加速下载。
 // @author            syhyz1990
 // @license           MIT
 // @supportURL        https://github.com/syhyz1990/baiduyun
-// @updateURL         https://github.com/syhyz1990/baiduyun/raw/master/baiduyun.user.js
-// @downloadURL       https://github.com/syhyz1990/baiduyun/raw/master/baiduyun.user.js
 // @match             *://pan.baidu.com/disk/home*
 // @match             *://yun.baidu.com/disk/home*
 // @match             *://pan.baidu.com/s/*
@@ -33,7 +31,7 @@
 'use strict'
 
 ;(function () {
-  const version = '2.7.3'
+  const version = '2.7.4'
   const classMap = {
     'list': 'zJMtAEb',
     'grid': 'fyQgAEb',
@@ -691,7 +689,7 @@
           swal('没有链接可以显示，API链接不要全部选中文件夹！')
           return
         }
-        dialog.open({title: 'API下载链接', type: 'batch', list: batchLinkList, tip: tip, showcopy: true})
+        dialog.open({title: 'API下载链接', type: 'batch', list: batchLinkList, tip: tip})
       } else if (id.indexOf('outerlink') != -1) {
         getOuterlinkBatchLinkAll(function (batchLinkListAll) {
           batchLinkList = getOuterlinkBatchLinkFirst(batchLinkListAll)
@@ -1167,7 +1165,7 @@
 
     function highButtonClick() {
       if (bdstoken !== null) {
-        swal('请退出当前账号或使用小号/隐私模式获取不限速链接！！！')
+        swal('请退出当前账号或使用浏览器小号/隐私模式获取不限速链接！！！')
         return false
       }
 
@@ -1570,8 +1568,8 @@
           let link = result.list[0].dlink
           execDownload(link)
         } else if (buttonTarget == 'link') {
-          let tip = '直接复制链接无效，请安装 IDM 及浏览器扩展后使用（<a href="https://www.baiduyun.wiki/zh-cn/" target="_blank">脚本使用说明</a>）'
-          dialog.open({title: '下载链接（仅显示文件链接）', type: 'shareLink', list: result.list, tip: tip})
+          let tip = '支持使用IDM批量下载，需 <a target="_blank" href="http://pan.baiduyun.wiki/down">IDM版本>= 6.3.5</a>，<a target="_blank" href="https://www.baiduyun.wiki/zh-cn/idm.html">参考</a>'
+          dialog.open({title: '下载链接（仅显示文件链接）', type: 'shareLink', list: result.list, tip: tip, showcopy: true})
         } else if (buttonTarget == 'ariclink') {
           let tip = '请先安装 <a target="_blank" href="https://www.baiduyun.wiki/zh-cn/cookie-plugin.html">百度网盘万能助手</a> 请将链接复制到支持Aria的下载器中, 推荐使用 <a target="_blank" href="http://pan.baiduyun.wiki/down">XDown</a>'
           dialog.open({
@@ -1627,8 +1625,8 @@
         swal('页面过期，请刷新重试')
         return false
       } else if (downloadLink.errno === 0) {
-        let tip = "若IDM下载失败，请使用Aria2c链接或将文件保存至网盘后使用API下载"
-        dialog.open({title: '下载链接（仅显示文件链接）', type: 'shareLink', list: downloadLink.list, tip: tip})
+        let tip = '支持使用IDM批量下载，需 <a target="_blank" href="http://pan.baiduyun.wiki/down">IDM版本>= 6.3.5</a>，<a target="_blank" href="https://www.baiduyun.wiki/zh-cn/idm.html">参考</a>'
+        dialog.open({title: '下载链接（仅显示文件链接）', type: 'shareLink', list: downloadLink.list, tip: tip, showcopy:true})
       } else {
         swal(errorMsg.fail)
       }
@@ -1957,32 +1955,44 @@
             if (element.downloadlink == 'error')
               return
             if (index == linkList.length - 1)
-              content = content + element.downloadlink
+              content += element.downloadlink
             else
-              content = content + element.downloadlink + '\r\n'
+              content += element.downloadlink + '\r\n'
           })
         } else if (showParams.type == 'batchAria') {
           $.each(linkList, function (index, element) {
             if (element.downloadlink == 'error')
               return
             if (index == linkList.length - 1)
-              content = content + aria2c(element.downloadlink, element.filename)
+              content += aria2c(element.downloadlink, element.filename)
             else
-              content = content + aria2c(element.downloadlink, element.filename) + '\r\n'
+              content += aria2c(element.downloadlink, element.filename) + '\r\n'
           })
-        } else if (showParams.type == 'shareAriaLink') {
-          console.log(linkList)
+        } else if (showParams.type == 'shareLink') {
           $.each(linkList, function (index, element) {
-            if (element.url == 'error')
+            if (element.dlink == 'error')
               return
             if (index == linkList.length - 1)
-              content = content + aria2c(element.dlink, element.server_filename)
+              content +=element.dlink
             else
-              content = content +  aria2c(element.dlink, element.server_filename) + '\r\n'
+              content += element.dlink + '\r\n'
+          })
+        } else if (showParams.type == 'shareAriaLink') {
+          $.each(linkList, function (index, element) {
+            if (element.dlink == 'error')
+              return
+            if (index == linkList.length - 1)
+              content += aria2c(element.dlink, element.server_filename)
+            else
+              content += aria2c(element.dlink, element.server_filename) + '\r\n'
           })
         }
         GM_setClipboard(content, 'text')
-        swal('已将链接复制到剪贴板！')
+        if (content != '') {
+          swal('已将链接复制到剪贴板！')
+        } else{
+          swal('复制失败，请手动复制！')
+        }
       })
 
       $dialog_edit_button.click(function () {
@@ -2097,7 +2107,6 @@
         $('div.dialog-header h3 span.dialog-title', dialog).text(params.title)
         $.each(params.list, function (index, element) {
           element.dlink = replaceLink(element.dlink)
-          console.log(element.dlink)
           if (element.isdir == 1) return
           let $div = $('<div style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap"><div style="width:100px;float:left;overflow:hidden;text-overflow:ellipsis" title="' + element.server_filename + '">' + element.server_filename + '</div><span>：</span><a href="' + element.dlink + '">' + element.dlink + '</a></div>')
           $('div.dialog-body', dialog).append($div)
@@ -2144,18 +2153,18 @@
             if (element.downloadlink == 'error')
               return
             if (index == linkList.length - 1)
-              content = content + element.downloadlink
+              content += element.downloadlink
             else
-              content = content + element.downloadlink + '\r\n'
+              content += element.downloadlink + '\r\n'
           })
         } else if (showParams.type == 'link') {
           $.each(linkList, function (index, element) {
             if (element.url == 'error')
               return
             if (index == linkList.length - 1)
-              content = content + element.url
+              content += element.url
             else
-              content = content + element.url + '\r\n'
+              content += element.url + '\r\n'
           })
         }
         $dialog_textarea.val(content)

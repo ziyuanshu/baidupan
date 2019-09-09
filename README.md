@@ -1,5 +1,5 @@
 <p align="center">
-  <img width="600" src="https://raw.githubusercontent.com/syhyz1990/baiduyun/master/logo.png">
+  <img width="256" src="https://raw.githubusercontent.com/syhyz1990/baiduyun/master/logo.png">
 </p>
 
 <p align="center">

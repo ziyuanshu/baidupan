@@ -1,20 +1,19 @@
 <p align="center">
-  <img width="256" src="https://raw.githubusercontent.com/syhyz1990/baiduyun/master/logo.png">
+  <img width="160" src="https://raw.githubusercontent.com/syhyz1990/baiduyun/master/logo.png">
 </p>
 
 <p align="center">
-    <img src="https://img.shields.io/badge/tamperMonkey-v4.8-brightgreen.svg" alt="tampermonkey">
-    <img src="https://img.shields.io/badge/chrome%20x64-v76.0-brightgreen.svg" alt="chrome">
-    <img src="https://img.shields.io/badge/safari%20-v12.0-brightgreen.svg" alt="safari">
-    <img src="https://img.shields.io/badge/platform-Windows%20%7C%20Mac%20%7C%20Android-blue.svg" alt="platform">
+  <img src="https://img.shields.io/badge/tamperMonkey-v4.8-brightgreen.svg" alt="tampermonkey">
+  <img src="https://img.shields.io/badge/chrome%20x64-v76.0-brightgreen.svg" alt="chrome">
+  <img src="https://img.shields.io/badge/safari%20-v12.0-brightgreen.svg" alt="safari">
+  <img src="https://img.shields.io/badge/platform-Windows%20%7C%20Mac%20%7C%20Android-blue.svg" alt="platform">
+  <a href="https://www.baiduyun.wiki/zh-cn/donate.html">
+    <img src="https://img.shields.io/badge/%24-donate-ff69b4.svg" alt="donate">
+  </a>
   <a href="https://github.com/syhyz1990/baiduyun">
     <img src="https://img.shields.io/badge/Star-9k+-yellow.svg?style=social&logo=github" alt="stars">
   </a>
-  <a href="https://www.baiduyun.wiki/zh-cn/donate.html">
-      <img src="https://img.shields.io/badge/%24-donate-ff69b4.svg" alt="donate">
-    </a>
 </p>
-
 
 # 百度网盘直链下载助手
 

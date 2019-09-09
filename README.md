@@ -19,7 +19,7 @@
   </a>
 </p>
 
-[中文](README.md) | [English](README_EN.md)
+[中文文档](README.md) | [English Docs](README_EN.md)
 
 👉 本脚本适用于多平台支持安装 Tampermonkey 或 暴力猴扩展的浏览器，如Chrome，360，QQ，UC等。
 

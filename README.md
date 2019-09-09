@@ -1,8 +1,6 @@
 <p align="center">
-  <img width="600" src="https://i.loli.net/2019/09/09/bmAaZjfwEqOh4JV.png">
+  <img width="600" src="https://raw.githubusercontent.com/syhyz1990/baiduyun/master/logo.png">
 </p>
-
-<h1 align="center">百度网盘直链下载助手</h1>
 
 <p align="center">
     <img src="https://img.shields.io/badge/tamperMonkey-v4.8-brightgreen.svg" alt="tampermonkey">
@@ -17,6 +15,8 @@
     </a>
 </p>
 
+
+#百度网盘直链下载助手
 
 [中文](README.md) | [English](README_EN.md)
 

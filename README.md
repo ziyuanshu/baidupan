@@ -1,5 +1,9 @@
+<h1 align="center">百度网盘直链下载助手</h1>
+
 <p align="center">
-  <img width="160" src="https://raw.githubusercontent.com/syhyz1990/baiduyun/master/logo.png">
+  <a href="https://www.baiduyun.wiki">
+    <img width="160" src="https://raw.githubusercontent.com/syhyz1990/baiduyun/master/logo.png" alt="百度网盘直链下载助手">
+  </a>
 </p>
 
 <p align="center">
@@ -15,8 +19,6 @@
   </a>
 </p>
 
-# 百度网盘直链下载助手
-
 [中文](README.md) | [English](README_EN.md)
 
 👉 本脚本适用于多平台支持安装 Tampermonkey 或 暴力猴扩展的浏览器，如Chrome，360，QQ，UC等。
@@ -27,6 +29,12 @@
 
 **自 2.5.0 版本起，脚本支持Aria2C链接**
 
+## 🔧 支持功能
+  - [x] 支持免登录获取不限速链接
+  - [x] 支持批量获取下载链接
+  - [x] 支持300M以下的文件夹下载
+  - [x] 支持IDM，XDown，Aria等多线程下载器
+  - [x] 支持自动更新
 
 ## 📖 使用教程
 

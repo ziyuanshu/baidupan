@@ -1,5 +1,22 @@
-# 百度网盘直链下载助手
-![TamperMonkey v4.8](https://img.shields.io/badge/tamperMonkey-v4.8-brightgreen.svg) ![Chrome x64 v60.4](https://img.shields.io/badge/chrome%20x64-v76.0-brightgreen.svg) ![Safari v11.0.3](https://img.shields.io/badge/safari%20-v12.0-brightgreen.svg) ![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20Mac%20%7C%20Android-blue.svg) [![Stars](https://img.shields.io/badge/GitHub-9000+-yellow.svg?style=social&logo=github)](https://github.com/syhyz1990/baiduyun)
+<p align="center">
+  <img width="600" src="https://i.loli.net/2019/09/09/bmAaZjfwEqOh4JV.png">
+</p>
+
+<h1 align="center">百度网盘直链下载助手</h1>
+
+<p align="center">
+    <img src="https://img.shields.io/badge/tamperMonkey-v4.8-brightgreen.svg" alt="tampermonkey">
+    <img src="https://img.shields.io/badge/chrome%20x64-v76.0-brightgreen.svg" alt="chrome">
+    <img src="https://img.shields.io/badge/safari%20-v12.0-brightgreen.svg" alt="safari">
+    <img src="https://img.shields.io/badge/platform-Windows%20%7C%20Mac%20%7C%20Android-blue.svg" alt="platform">
+  <a href="https://github.com/syhyz1990/baiduyun">
+    <img src="https://img.shields.io/badge/Star-9k+-yellow.svg?style=social&logo=github" alt="stars">
+  </a>
+  <a href="https://www.baiduyun.wiki/zh-cn/donate.html">
+      <img src="https://img.shields.io/badge/%24-donate-ff69b4.svg" alt="donate">
+    </a>
+</p>
+
 
 [中文](README.md) | [English](README_EN.md)
 

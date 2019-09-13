@@ -28,7 +28,7 @@ Support Baidu network disk PC-side webpage to get the share link download addres
 
 **Since version 2.7.0, the script supports automatic update and access to unlimited links, please update [as soon as possible](https://github.com/syhyz1990/baiduyun/raw/master/baiduyun.user.js)**
 
-**Since version 2.5.0, scripts support Aria2C links**
+**Since version 2.5.0, scripts support aria2c links**
 
 ## 📖 Tutorials
 
@@ -40,7 +40,7 @@ Support Baidu network disk PC-side webpage to get the share link download addres
 
 ## 💽 Install
 
-- [Address 1](https://www.baiduyun.wiki/baiduyun.user.js)
+- [Address 1](https://www.baiduyun.wiki/install.html)
 
 - [Address 2](https://github.com/syhyz1990/baiduyun/raw/master/baiduyun.user.js)
 

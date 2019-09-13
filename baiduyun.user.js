@@ -3,10 +3,11 @@
 // @namespace         https://github.com/syhyz1990/baiduyun
 // @version           2.7.4
 // @icon              https://pan.baidu.com/ppres/static/images/favicon.ico
-// @description       【百度网盘直链下载助手】是一款免客户端获取百度网盘文件真实下载地址的油猴脚本，支持Windows，Mac，Linux，Android等多平台，可使用IDM，迅雷，Aria2c协议等多线程加速工具加速下载。
+// @description       【百度网盘直链下载助手】是一款免客户端获取百度网盘文件真实下载地址的油猴脚本，支持Windows，Mac，Linux，Android等多平台，可使用IDM，迅雷，Aria2c协议等多线程加速工具加速下载，免登录下载告别下载限速问题。
 // @author            syhyz1990
 // @license           MIT
 // @supportURL        https://github.com/syhyz1990/baiduyun
+// @updateURL         https://www.baiduyun.wiki/install.html
 // @match             *://pan.baidu.com/disk/home*
 // @match             *://yun.baidu.com/disk/home*
 // @match             *://pan.baidu.com/s/*
@@ -681,7 +682,7 @@
           swal('没有链接可以显示，API链接不要全部选中文件夹！')
           return
         }
-        dialog.open({title: 'Aria链接（双击链接复制）', type: 'batchAria', list: batchLinkList, tip: tip, showcopy: true})
+        dialog.open({title: 'Aria链接', type: 'batchAria', list: batchLinkList, tip: tip, showcopy: true})
       } else if (id.indexOf('api') != -1) {
         batchLinkList = getAPIBatchLink(linkType)
         tip = '直接复制链接无效，请安装 IDM 及浏览器扩展后使用（<a href="https://www.baiduyun.wiki/zh-cn/" target="_blank">脚本使用说明</a>）'
@@ -1626,7 +1627,7 @@
         return false
       } else if (downloadLink.errno === 0) {
         let tip = '支持使用IDM批量下载，需 <a target="_blank" href="http://pan.baiduyun.wiki/down">IDM版本>= 6.3.5</a>，<a target="_blank" href="https://www.baiduyun.wiki/zh-cn/idm.html">参考</a>'
-        dialog.open({title: '下载链接（仅显示文件链接）', type: 'shareLink', list: downloadLink.list, tip: tip, showcopy:true})
+        dialog.open({title: '下载链接（仅显示文件链接）', type: 'shareLink', list: downloadLink.list, tip: tip, showcopy: true})
       } else {
         swal(errorMsg.fail)
       }
@@ -1973,7 +1974,7 @@
             if (element.dlink == 'error')
               return
             if (index == linkList.length - 1)
-              content +=element.dlink
+              content += element.dlink
             else
               content += element.dlink + '\r\n'
           })
@@ -1990,7 +1991,7 @@
         GM_setClipboard(content, 'text')
         if (content != '') {
           swal('已将链接复制到剪贴板！')
-        } else{
+        } else {
           swal('复制失败，请手动复制！')
         }
       })
@@ -2054,7 +2055,7 @@
             let $item_first
             if (params.type == 'batchAria') {
               let link = aria2c(element.downloadlink, element.filename)
-              $item_first = $('<div class="item-first" style="overflow:hidden;text-overflow:ellipsis"><a href="javasctipt:void(0)" class="aria2c-link" alt="双击复制链接地址">' + link + '</a></div>')
+              $item_first = $('<div class="item-first" style="overflow:hidden;text-overflow:ellipsis"><a href="javasctipt:void(0)" class="aria2c-link">' + link + '</a></div>')
             } else {
               $item_first = $('<div class="item-first" style="overflow:hidden;text-overflow:ellipsis"><a href="' + element.downloadlink + '">' + element.downloadlink + '</a></div>')
             }
@@ -2066,7 +2067,7 @@
                 return
               if (params.type == 'batchAria') {
                 let link = aria2c(item.url, element.filename)
-                $item = $('<div class="item-ex" style="display:none;overflow:hidden;text-overflow:ellipsis"><a href="javasctipt:void(0)" class="aria2c-link" alt="双击复制链接地址">' + link + '</a></div>')
+                $item = $('<div class="item-ex" style="display:none;overflow:hidden;text-overflow:ellipsis"><a href="javasctipt:void(0)" class="aria2c-link">' + link + '</a></div>')
               } else {
                 item.url = replaceLink(item.url)
                 $item = $('<div class="item-ex" style="display:none;overflow:hidden;text-overflow:ellipsis"><a href="' + item.url + '">' + item.url + '</a></div>')
@@ -2130,7 +2131,7 @@
         $.each(params.list, function (index, element) {
           if (element.isdir == 1) return
           let link = aria2c(element.dlink, element.server_filename)
-          let $div = $('<div style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap"><div style="width:100px;float:left;overflow:hidden;text-overflow:ellipsis" title="' + element.server_filename + '">' + element.server_filename + '</div><span>：</span><a href="javasctipt:void(0)" class="aria2c-link" alt="双击复制链接地址">' + link + '</a></div>')
+          let $div = $('<div style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap"><div style="width:100px;float:left;overflow:hidden;text-overflow:ellipsis" title="' + element.server_filename + '">' + element.server_filename + '</div><span>：</span><a href="javasctipt:void(0)" class="aria2c-link">' + link + '</a></div>')
           $('div.dialog-body', dialog).append($div)
         })
       }
@@ -2320,7 +2321,7 @@
     function createHelp() {
       setTimeout(() => {
         let topbar = $('.' + classMap['header'])
-        let toptemp = $('<span class="cMEMEF" node-type="help-author"><a href="https://www.baiduyun.wiki" style="color: #ddd" target="_blank">教程</a></span>')
+        let toptemp = $('<span class="cMEMEF" node-type="help-author" style="opacity: .5" ><a href="https://www.baiduyun.wiki/zh-cn/" target="_blank">教程</a><i class="find-light-icon" style="display: inline;background-color: #009fe8;"></i></span>')
         topbar.append(toptemp)
       }, 5000)
     }
@@ -2329,7 +2330,7 @@
       switch (detectPage()) {
         case 'disk':
           if (GM_getValue('current_version') < GM_getValue('lastest_version'))
-            $('.aside-absolute-container').append($(`<img class="V6d3Fg" src="https://baidupan.cdn.bcebos.com/baidu.png?t=${Math.random()}" style="margin: 0 auto; position: absolute; left: 0; right: 0; bottom: 100px;cursor: pointer">`))
+            $('.aside-absolute-container').append($(`<img class="V6d3Fg" src="https://www.baiduyun.wiki/bd.png?t=${Math.random()}" style="margin: 0 auto; position: absolute; left: 0; right: 0; bottom: 100px;cursor: pointer;max-width: 190px">`))
           $(document).on('click', '.V6d3Fg', function () {
             GM_openInTab('http://pan.baiduyun.wiki/home')
           })
@@ -2339,10 +2340,10 @@
           let sidebar, sidetemp
           if ($('.bd-aside').length > 0) {
             sidebar = $('.bd-aside')
-            sidetemp = $(`<img class="K5a8Tu" src="https://baidupan.cdn.bcebos.com/baidu_share.png?t=${Math.random()}" style="cursor:pointer;margin: 0 auto; position: absolute; left: 0; right: 0; bottom: 100px;">`)
+            sidetemp = $(`<img class="K5a8Tu" src="https://www.baiduyun.wiki/bds.png?t=${Math.random()}" style="cursor:pointer;margin: 0 auto; position: absolute; left: 0; right: 0; bottom: 100px;max-width: 215px">`)
           } else {
             sidebar = $('.module-aside')
-            sidetemp = $(`<img class="K5a8Tu" src="https://baidupan.cdn.bcebos.com/baidu_share.png?t=${Math.random()}" style="cursor:pointer;margin: 10px 0">`)
+            sidetemp = $(`<img class="K5a8Tu" src="https://www.baiduyun.wiki/bds.png?t=${Math.random()}" style="cursor:pointer;margin: 10px 0;max-width: 215px">`)
           }
           sidebar.append(sidetemp)
           $(document).on('click', '.K5a8Tu', function () {
@@ -2386,8 +2387,13 @@
       oMeta.content = 'upgrade-insecure-requests'
       document.getElementsByTagName('head')[0].appendChild(oMeta)
 
-      $(document).on('click', '.aria2c-link ', function (event) {
-        event.preventDefault()
+      $(document).on('contextmenu', '.aria2c-link', function (e) {
+        e.preventDefault()
+        return false
+      })
+
+      $(document).on('mousedown', '.aria2c-link', function (e) {
+        e.preventDefault()
         let link = $(this).text()
         GM_setClipboard(link, 'text')
         swal('已将链接复制到剪贴板！请复制到XDown中下载')

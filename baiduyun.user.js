@@ -1,13 +1,13 @@
 // ==UserScript==
 // @name              百度网盘直链下载助手
 // @namespace         https://github.com/syhyz1990/baiduyun
-// @version           2.7.4
+// @version           2.8.0
 // @icon              https://pan.baidu.com/ppres/static/images/favicon.ico
 // @description       【百度网盘直链下载助手】是一款免客户端获取百度网盘文件真实下载地址的油猴脚本，支持Windows，Mac，Linux，Android等多平台，可使用IDM，迅雷，Aria2c协议等多线程加速工具加速下载，免登录下载告别下载限速问题。
 // @author            syhyz1990
 // @license           MIT
 // @supportURL        https://github.com/syhyz1990/baiduyun
-// @updateURL         https://www.baiduyun.wiki/install.html
+// @updateURL         https://www.baiduyun.wiki/baiduyun.user.js
 // @match             *://pan.baidu.com/disk/home*
 // @match             *://yun.baidu.com/disk/home*
 // @match             *://pan.baidu.com/s/*
@@ -32,7 +32,7 @@
 'use strict'
 
 ;(function () {
-  const version = '2.7.4'
+  const version = '2.8.0'
   const classMap = {
     'list': 'zJMtAEb',
     'grid': 'fyQgAEb',
@@ -47,7 +47,7 @@
     'checked': 'EzubGg',
     'chekbox-grid': 'cEefyz',
     'list-view': 'vdAfKMb',
-    'item-active': 'zwcb105L',
+    'item-active': 'psac0p9Y',
     'grid-view': 'JKvHJMb',
     'bar-search': 'OFaPaO',
     'list-tools': 'tcuLAu',
@@ -62,7 +62,7 @@
     'toobig': '提示：只支持300M以下的文件夹，若链接无法下载，请进入文件夹后勾选文件获取！'
   }
 
-  let secretCode = GM_getValue('secretCode') ? GM_getValue('secretCode') : '286652'
+  const secretCode = GM_getValue('secretCode') ? GM_getValue('secretCode') : '286652'
   const userAgent = "netdisk;2.2.2;pc;pc-mac;10.14.5;macbaiduyunguanjia"
 
   function clog(c1, c2, c3) {
@@ -92,8 +92,7 @@
   //网盘页面的下载助手
   function PanHelper() {
     let yunData, sign, timestamp, bdstoken, logid, fid_list
-    let fileList = [], selectFileList = [], batchLinkList = [], batchLinkListAll = [], linkList = [],
-      list_grid_status = 'list'
+    let fileList = [], selectFileList = [], batchLinkList = [], batchLinkListAll = [], linkList = [], list_grid_status = 'list'
     let observer, currentPage, currentPath, currentCategory, dialog, searchKey
     let panAPIUrl = location.protocol + "//" + location.host + "/api/"
     let restAPIUrl = location.protocol + "//pcs.baidu.com/rest/2.0/pcs/"
@@ -254,10 +253,8 @@
       }
 
       $checkbox.each(function (index, element) {
-        $(element).bind('click', function (e) {
-          let $parent = $(this).parent()
-          let filename
-          let isActive
+        $(element).on('click', function (e) {
+          let $parent = $(this).parent(), filename, isActive
 
           if (list_grid_status == 'list') {
             filename = $('div.file-name div.text a', $parent).attr('title')
@@ -412,14 +409,14 @@
     function addButton() {
       $('div.' + classMap['bar-search']).css('width', '18%')
       let $dropdownbutton = $('<span class="g-dropdown-button"></span>')
-      let $dropdownbutton_a = $('<a class="g-button g-button-blue" href="javascript:void(0);"><span class="g-button-right"><em class="icon icon-speed" title="百度网盘下载助手"></em><span class="text" style="width: 60px;">下载助手</span></span></a>')
-      let $dropdownbutton_span = $('<span class="menu" style="width:104px"></span>')
+      let $dropdownbutton_a = $('<a class="g-button g-button-blue" href="javascript:;"><span class="g-button-right"><em class="icon icon-speed" title="百度网盘下载助手"></em><span class="text" style="width: 60px;">下载助手</span></span></a>')
+      let $dropdownbutton_span = $('<span class="menu" style="width:114px"></span>')
 
       let $directbutton = $('<span class="g-button-menu" style="display:block"></span>')
       let $directbutton_span = $('<span class="g-dropdown-button g-dropdown-button-second" menulevel="2"></span>')
-      let $directbutton_a = $('<a class="g-button" href="javascript:void(0);"><span class="g-button-right"><span class="text" style="width:auto">aria2c下载</span></span></a>')
+      let $directbutton_a = $('<a class="g-button" href="javascript:;"><span class="g-button-right"><span class="text" style="width:auto">直链下载</span></span></a>')
       let $directbutton_menu = $('<span class="menu" style="width:120px;left:79px"></span>')
-      let $directbutton_batchhttplink_button = $('<a id="batchhttplink-direct" class="g-button-menu" href="javascript:void(0);">显示链接</a>')
+      let $directbutton_batchhttplink_button = $('<a id="batchhttplink-direct" class="g-button-menu" href="javascript:;">显示链接</a>')
       $directbutton_menu.append($directbutton_batchhttplink_button)
       $directbutton.append($directbutton_span.append($directbutton_a).append($directbutton_menu))
       $directbutton.hover(function () {
@@ -427,13 +424,25 @@
       })
       $directbutton_batchhttplink_button.click(batchClick)
 
+      let $ariadirectbutton = $('<span class="g-button-menu" style="display:block"></span>')
+      let $ariadirectbutton_span = $('<span class="g-dropdown-button g-dropdown-button-second" menulevel="2"></span>')
+      let $ariadirectbutton_a = $('<a class="g-button" href="javascript:;"><span class="g-button-right"><span class="text" style="width:auto">aria直链下载</span></span></a>')
+      let $ariadirectbutton_menu = $('<span class="menu" style="width:120px;left:79px"></span>')
+      let $ariadirectbutton_batchhttplink_button = $('<a id="batchhttplink-aria" class="g-button-menu" href="javascript:;">显示链接</a>')
+      $ariadirectbutton_menu.append($ariadirectbutton_batchhttplink_button)
+      $ariadirectbutton.append($ariadirectbutton_span.append($ariadirectbutton_a).append($ariadirectbutton_menu))
+      $ariadirectbutton.hover(function () {
+        $ariadirectbutton_span.toggleClass('button-open')
+      })
+      $ariadirectbutton_batchhttplink_button.click(batchClick)
+
       let $apibutton = $('<span class="g-button-menu" style="display:block"></span>')
       let $apibutton_span = $('<span class="g-dropdown-button g-dropdown-button-second" menulevel="2"></span>')
-      let $apibutton_a = $('<a class="g-button" href="javascript:void(0);"><span class="g-button-right"><span class="text" style="width:auto">API下载</span></span></a>')
+      let $apibutton_a = $('<a class="g-button" href="javascript:;"><span class="g-button-right"><span class="text" style="width:auto">API下载</span></span></a>')
       let $apibutton_menu = $('<span class="menu" style="width:120px;left:77px"></span>')
-      let $apibutton_download_button = $('<a id="download-api" class="g-button-menu" href="javascript:void(0);">直接下载</a>')
-      let $apibutton_batchhttplink_button = $('<a id="batchhttplink-api" class="g-button-menu" href="javascript:void(0);">显示链接</a>')
-      let $setting_button = $('<a id="appid-setting" class="g-button-menu" href="javascript:void(0);">脚本配置</a>')
+      let $apibutton_download_button = $('<a id="download-api" class="g-button-menu" href="javascript:;">直接下载</a>')
+      let $apibutton_batchhttplink_button = $('<a id="batchhttplink-api" class="g-button-menu" href="javascript:;">显示链接</a>')
+      let $setting_button = $('<a id="appid-setting" class="g-button-menu" href="javascript:;">脚本配置</a>')
       $apibutton_menu.append($apibutton_download_button).append($apibutton_batchhttplink_button).append($setting_button)
       $apibutton.append($apibutton_span.append($apibutton_a).append($apibutton_menu))
       $apibutton.hover(function () {
@@ -445,9 +454,9 @@
 
       let $outerlinkbutton = $('<span class="g-button-menu" style="display:block"></span>')
       let $outerlinkbutton_span = $('<span class="g-dropdown-button g-dropdown-button-second" menulevel="2"></span>')
-      let $outerlinkbutton_a = $('<a class="g-button" href="javascript:void(0);"><span class="g-button-right"><span class="text" style="width:auto">aria外链下载</span></span></a>')
+      let $outerlinkbutton_a = $('<a class="g-button" href="javascript:;"><span class="g-button-right"><span class="text" style="width:auto">aria外链下载</span></span></a>')
       let $outerlinkbutton_menu = $('<span class="menu" style="width:120px;left:79px"></span>')
-      let $outerlinkbutton_batchlink_button = $('<a id="batchlink-outerlink" class="g-button-menu" href="javascript:void(0);">显示链接</a>')
+      let $outerlinkbutton_batchlink_button = $('<a id="batchlink-outerlink" class="g-button-menu" href="javascript:;">显示链接</a>')
       $outerlinkbutton_menu.append($outerlinkbutton_batchlink_button)
       $outerlinkbutton.append($outerlinkbutton_span.append($outerlinkbutton_a).append($outerlinkbutton_menu))
       $outerlinkbutton.hover(function () {
@@ -456,7 +465,7 @@
       $outerlinkbutton_batchlink_button.click(batchClick)
 
       let $github = $('<iframe src="https://ghbtns.com/github-btn.html?user=syhyz1990&repo=baiduyun&type=star&count=true" frameborder="0" scrolling="0" style="height: 20px;max-width: 120px;padding: 0 5px;box-sizing: border-box;margin-top: 5px;"></iframe>')
-      $dropdownbutton_span.append($apibutton).append($directbutton).append($outerlinkbutton).append($github)
+      $dropdownbutton_span.append($directbutton).append($ariadirectbutton).append($outerlinkbutton).append($apibutton).append($github)
       $dropdownbutton.append($dropdownbutton_a).append($dropdownbutton_span)
 
       $dropdownbutton.hover(function () {
@@ -487,12 +496,11 @@
         if (selectFileList.length === 0) {
           swal(errorMsg.unselected)
           return
-        } else if (selectFileList.length == 1) {
-          if (selectFileList[0].isdir === 1)
-            downloadType = 'batch'
-          else if (selectFileList[0].isdir === 0)
-            downloadType = 'dlink'
-        } else if (selectFileList.length > 1) {
+        }
+        if (selectFileList.length == 1) {
+          selectFileList[0].isdir === 1 ? downloadType = 'batch' : downloadType = 'dlink'
+        }
+        if (selectFileList.length > 1) {
           downloadType = 'batch'
         }
 
@@ -650,14 +658,7 @@
               return
             }
             tip = '左键点击调用IDM下载（<b>复制链接无效</b>）'
-            dialog.open({
-              title: '下载链接',
-              type: 'GMlink',
-              list: linkList,
-              tip: tip,
-              showcopy: false,
-              showedit: false
-            })
+            dialog.open({title: '下载链接', type: 'GMlink', list: linkList, tip: tip, showcopy: false, showedit: false})
           })
         }
       }
@@ -675,11 +676,20 @@
       linkType = id.indexOf('https') == -1 ? (id.indexOf('http') == -1 ? location.protocol + ':' : 'http:') : 'https:'
       batchLinkList = []
       batchLinkListAll = []
-      if (id.indexOf('direct') != -1) {  //aria下载
+      if (id.indexOf('direct') != -1) {  //直链下载
+        batchLinkList = getDirectBatchLink(linkType)
+        let tip = '支持使用IDM批量下载，需 <a target="_blank" href="http://pan.baiduyun.wiki/down">IDM版本>= 6.3.5</a>，<a target="_blank" href="https://www.baiduyun.wiki/zh-cn/idm.html">参考</a>'
+        if (batchLinkList.length === 0) {
+          swal('没有链接可以显示，不要选中文件夹！')
+          return
+        }
+        dialog.open({title: '直链下载', type: 'batch', list: batchLinkList, tip: tip, showcopy: true})
+      }
+      if (id.indexOf('aria') != -1) {  //aria下载
         batchLinkList = getDirectBatchLink(linkType)
         tip = '请先安装 <a target="_blank" href="https://www.baiduyun.wiki/zh-cn/cookie-plugin.html">百度网盘万能助手</a> 请将链接复制到支持Aria的下载器中, 推荐使用 <a target="_blank" href="http://pan.baiduyun.wiki/down">XDown</a>（仅支持300M以下的文件夹）'
         if (batchLinkList.length === 0) {
-          swal('没有链接可以显示，API链接不要全部选中文件夹！')
+          swal('没有链接可以显示，不要选中文件夹！')
           return
         }
         dialog.open({title: 'Aria链接', type: 'batchAria', list: batchLinkList, tip: tip, showcopy: true})
@@ -699,15 +709,7 @@
             return
           }
           let tip = '请先安装 <a target="_blank" href="https://www.baiduyun.wiki/zh-cn/cookie-plugin.html">百度网盘万能助手</a> 请将链接复制到支持Aria的下载器中, 推荐使用 <a target="_blank" href="http://pan.baiduyun.wiki/down">XDown</a>'
-          dialog.open({
-            title: '下载链接（仅显示文件链接）',
-            type: 'batchAria',
-            list: batchLinkList,
-            alllist: batchLinkListAll,
-            tip: tip,
-            showcopy: true,
-            showall: true
-          })
+          dialog.open({title: '下载链接（仅显示文件链接）', type: 'batchAria', list: batchLinkList, alllist: batchLinkListAll, tip: tip, showcopy: true, showall: true})
         })
       }
     }
@@ -792,7 +794,6 @@
       let hash = location.hash
       let regx = new RegExp("path=([^&]*)(&|$)", 'i')
       let result = hash.match(regx)
-      //console.log(result);
       return decodeURIComponent(result[1])
     }
 
@@ -1010,7 +1011,7 @@
 
     function createIframe() {
       let $div = $('<div class="helper-hide" style="padding:0;margin:0;display:block"></div>')
-      let $iframe = $('<iframe src="javascript:void(0)" id="helperdownloadiframe" style="display:none"></iframe>')
+      let $iframe = $('<iframe src="javascript:;" id="helperdownloadiframe" style="display:none"></iframe>')
       $div.append($iframe)
       $('body').append($div)
 
@@ -1138,17 +1139,16 @@
       } else
         $('div.slide-show-right').css('width', '500px')
       let $dropdownbutton = $('<span class="g-dropdown-button"></span>')
-      let $dropdownbutton_a = $('<a class="g-button g-button-blue" data-button-id="b200" data-button-index="200" href="javascript:void(0);"></a>')
+      let $dropdownbutton_a = $('<a class="g-button g-button-blue" style="width: 114px;" data-button-id="b200" data-button-index="200" href="javascript:;"></a>')
       let $dropdownbutton_a_span = $('<span class="g-button-right"><em class="icon icon-speed" title="百度网盘下载助手"></em><span class="text" style="width: 60px;">下载助手</span></span>')
       let $dropdownbutton_span = $('<span class="menu" style="width:auto;z-index:41"></span>')
 
-      let $downloadButton = $('<a data-menu-id="b-menu207" class="g-button-menu" href="javascript:void(0);">直接下载</a>')
-      let $linkButton = $('<a data-menu-id="b-menu208" class="g-button-menu" href="javascript:void(0);">显示直链</a>')
-      let $ariclinkButton = $('<a data-menu-id="b-menu208" class="g-button-menu" href="javascript:void(0);">显示aria链接</a>')
-      let $highButton = $('<a data-menu-id="b-menu209" class="g-button-menu" style="color: #4ff808;" href="javascript:void(0);">免登录链接</a>')
+      let $downloadButton = $('<a data-menu-id="b-menu207" class="g-button-menu" href="javascript:;">直接下载</a>')
+      let $linkButton = $('<a data-menu-id="b-menu208" class="g-button-menu" href="javascript:;">显示直链</a>')
+      let $ariclinkButton = $('<a data-menu-id="b-menu208" class="g-button-menu" href="javascript:;">显示aria链接</a>')
+      let $highButton = $('<a data-menu-id="b-menu209" class="g-button-menu" style="color: #F24C43;font-weight: 700;" href="javascript:;">免登录链接</a>')
 
-      let $github = $('<iframe src="https://ghbtns.com/github-btn.html?user=syhyz1990&repo=baiduyun&type=star&count=true" frameborder="0" scrolling="0" style="height: 20px;max-width: 108px;padding: 0 5px;box-sizing: border-box;margin-top: 5px;"></iframe>')
-
+      let $github = $('<iframe src="https://ghbtns.com/github-btn.html?user=syhyz1990&repo=baiduyun&type=star&count=true" frameborder="0" scrolling="0" style="height: 20px;max-width: 120px;padding: 0 5px;box-sizing: border-box;margin-top: 5px;"></iframe>')
       $dropdownbutton_span.append($downloadButton).append($linkButton).append($ariclinkButton).append($highButton).append($github)
       $dropdownbutton_a.append($dropdownbutton_a_span)
       $dropdownbutton.append($dropdownbutton_a).append($dropdownbutton_span)
@@ -1218,13 +1218,7 @@
         return false
       } else if (downloadLink.errno === 0) {
         let tip = '请先安装 <a target="_blank" href="https://www.baiduyun.wiki/zh-cn/cookie-plugin.html">百度网盘万能助手</a> 请将链接复制到支持Aria的下载器中, 推荐使用 <a target="_blank" href="http://pan.baiduyun.wiki/down">XDown</a>'
-        dialog.open({
-          title: '下载链接（仅显示文件链接）',
-          type: 'shareAriaLink',
-          list: downloadLink.list,
-          tip: tip,
-          showcopy: true
-        })
+        dialog.open({title: '下载链接（仅显示文件链接）', type: 'shareAriaLink', list: downloadLink.list, tip: tip, showcopy: true})
       } else {
         swal(errorMsg.fail)
       }
@@ -1232,7 +1226,7 @@
 
     function createIframe() {
       let $div = $('<div class="helper-hide" style="padding:0;margin:0;display:block"></div>')
-      let $iframe = $('<iframe src="javascript:void(0)" id="helperdownloadiframe" style="display:none"></iframe>')
+      let $iframe = $('<iframe src="javascript:;" id="helperdownloadiframe" style="display:none"></iframe>')
       $div.append($iframe)
       $('body').append($div)
     }
@@ -1275,19 +1269,12 @@
 
     //监视视图变化
     function registerListGridStatus() {
-      let $a_list = $('a[data-type=list]')
-      $a_list.click(function () {
-        list_grid_status = 'list'
-      })
-
-      let $a_grid = $('a[data-type=grid]')
-      $a_grid.click(function () {
-        list_grid_status = 'grid'
-      })
+      getListGridStatus()
     }
 
     //监视文件选择框
     function registerCheckbox() {
+      list_grid_status = getListGridStatus()
       let $checkbox = $('span.' + classMap['checkbox'])
       if (list_grid_status == 'grid') {
         $checkbox = $('.' + classMap['chekbox-grid'])
@@ -1299,10 +1286,10 @@
           let isActive
 
           if (list_grid_status == 'list') {
-            filename = $('div.file-name div.text a', $parent).attr('title')
+            filename = $('.file-name div.text a', $parent).attr('title')
             isActive = $(this).parents('dd').hasClass('JS-item-active')
           } else if (list_grid_status == 'grid') {
-            filename = $('div.file-name a', $(this)).attr('title')
+            filename = $('div.file-name a', $parent).attr('title')
             isActive = !$(this).hasClass('JS-item-active')
           }
 
@@ -1573,13 +1560,7 @@
           dialog.open({title: '下载链接（仅显示文件链接）', type: 'shareLink', list: result.list, tip: tip, showcopy: true})
         } else if (buttonTarget == 'ariclink') {
           let tip = '请先安装 <a target="_blank" href="https://www.baiduyun.wiki/zh-cn/cookie-plugin.html">百度网盘万能助手</a> 请将链接复制到支持Aria的下载器中, 推荐使用 <a target="_blank" href="http://pan.baiduyun.wiki/down">XDown</a>'
-          dialog.open({
-            title: '下载链接（仅显示文件链接）',
-            type: 'shareAriaLink',
-            list: result.list,
-            tip: tip,
-            showcopy: true
-          })
+          dialog.open({title: '下载链接（仅显示文件链接）', type: 'shareAriaLink', list: result.list, tip: tip, showcopy: true})
         }
       } else {
         swal('发生错误！')
@@ -1695,12 +1676,7 @@
           success: function (res) {
             if (res.errno == 0) {
               let tip = '【普通链接】左键或右键调用IDM下载，【aria链接】调用<a target="_blank" href="http://pan.baiduyun.wiki/down">XDown（版本>=1.0.0.4）</a>下载'
-              dialog.open({
-                title: '不限速链接（仅支持单文件）',
-                type: 'highLink',
-                list: res.dlink,
-                tip: tip
-              })
+              dialog.open({title: '不限速链接（仅支持单文件）', type: 'highLink', list: res.dlink, tip: tip})
             }
             if (res.errno == -19) {  //验证码
               vcode = res.vcode
@@ -1774,12 +1750,7 @@
           if (res.errno == 0) {
             removeVCode()
             let tip = '【普通链接】左键或右键调用IDM下载，【aria链接】调用<a target="_blank" href="http://pan.baiduyun.wiki/down">XDown（版本>=1.0.0.4）</a>下载'
-            dialog.open({
-              title: '不限速链接（仅支持单文件）',
-              type: 'highLink',
-              list: res.dlink,
-              tip: tip
-            })
+            dialog.open({title: '不限速链接（仅支持单文件）', type: 'highLink', list: res.dlink, tip: tip})
           }
           if (res.errno == -19) {  //验证码
             swal({
@@ -2095,7 +2066,7 @@
             let $div
             if (params.type == 'batchAria') {
               let link = aria2c(element.downloadlink, element.filename)
-              $div = $('<div style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap"><div style="width:100px;float:left;overflow:hidden;text-overflow:ellipsis" title="' + element.filename + '">' + element.filename + '</div><span>：</span><a href="javascript:void(0)" class="aria2c-link">' + link + '</a></div>')
+              $div = $('<div style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap"><div style="width:100px;float:left;overflow:hidden;text-overflow:ellipsis" title="' + element.filename + '">' + element.filename + '</div><span>：</span><a href="javascript:;" class="aria2c-link">' + link + '</a></div>')
             } else {
               $div = $('<div style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap"><div style="width:100px;float:left;overflow:hidden;text-overflow:ellipsis" title="' + element.filename + '">' + element.filename + '</div><span>：</span><a href="' + element.downloadlink + '">' + element.downloadlink + '</a></div>')
             }
@@ -2119,8 +2090,8 @@
         link = replaceLink(link)
         $('div.dialog-header h3 span.dialog-title', dialog).text(params.title)
         let $div = $('<div style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap"><div style="width:100px;float:left;overflow:hidden;text-overflow:ellipsis">普通链接</div><span>：</span><a href="' + link + '">' + link + '</a></div>')
-        let airaLink = `aria2c "${link}" --forbidCookie "1" --header "User-Agent: ${userAgent}"`
-        let $div2 = $('<div style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap"><div style="width:100px;float:left;overflow:hidden;text-overflow:ellipsis"">Aria链接</div><span>：</span><a href="javasctipt:void(0)" class="aria2c-link">' + airaLink + '</a></div>')
+        let ariaLink = `aria2c "${link}" --forbidCookie "1" --header "User-Agent: ${userAgent}"`
+        let $div2 = $('<div style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap"><div style="width:100px;float:left;overflow:hidden;text-overflow:ellipsis"">Aria链接</div><span>：</span><a href="javasctipt:void(0)" class="aria2c-link">' + ariaLink + '</a></div>')
         $('div.dialog-body', dialog).append($div).append($div2)
       }
 
@@ -2213,11 +2184,11 @@
       let $dialog_verify_body = $('<div class="verify-body">请输入验证码：</div>')
       let $dialog_input = $('<input id="dialog-input" type="text" style="padding:3px;width:85px;height:23px;border:1px solid #c6c6c6;background-color:white;vertical-align:middle;" class="input-code" maxlength="4">')
       let $dialog_img = $('<img id="dialog-img" class="img-code" style="margin-left:10px;vertical-align:middle;" alt="点击换一张" src="" width="100" height="30">')
-      let $dialog_refresh = $('<a href="javascript:void(0)" style="text-decoration:underline;" class="underline">换一张</a>')
+      let $dialog_refresh = $('<a href="javascript:;" style="text-decoration:underline;" class="underline">换一张</a>')
       let $dialog_err = $('<div id="dialog-err" style="padding-left:84px;height:18px;color:#d80000" class="verify-error"></div>')
       let $dialog_footer = $('<div class="dialog-footer g-clearfix"></div>')
-      let $dialog_confirm_button = $('<a class="g-button g-button-blue" data-button-id="" data-button-index href="javascript:void(0)" style="padding-left:36px"><span class="g-button-right" style="padding-right:36px;"><span class="text" style="width:auto;">确定</span></span></a>')
-      let $dialog_cancel_button = $('<a class="g-button" data-button-id="" data-button-index href="javascript:void(0);" style="padding-left: 36px;"><span class="g-button-right" style="padding-right: 36px;"><span class="text" style="width: auto;">取消</span></span></a>')
+      let $dialog_confirm_button = $('<a class="g-button g-button-blue" data-button-id="" data-button-index href="javascript:;" style="padding-left:36px"><span class="g-button-right" style="padding-right:36px;"><span class="text" style="width:auto;">确定</span></span></a>')
+      let $dialog_cancel_button = $('<a class="g-button" data-button-id="" data-button-index href="javascript:;" style="padding-left: 36px;"><span class="g-button-right" style="padding-right: 36px;"><span class="text" style="width: auto;">取消</span></span></a>')
 
       $dialog_header.append($dialog_control)
       $dialog_verify_body.append($dialog_input).append($dialog_img).append($dialog_refresh)
@@ -2297,7 +2268,7 @@
         url: 'https://api.baiduyun.wiki/update?ver=' + version + '&a=' + ~~GM_getValue('SETTING_A'),
         method: 'GET',
         success: function (res) {
-          if (res.code == 200) {
+          if (res.code === 200) {
             GM_setValue('lastest_version', res.version)
             if (res.version > version) {
               swal({
@@ -2378,6 +2349,8 @@
 
       let script = document.createElement("script")
       script.type = "text/javascript"
+      script.async = true
+      script.defer = true
       script.src = "https://js.users.51.la/19988117.js"
       document.getElementsByTagName("head")[0].appendChild(script)
 

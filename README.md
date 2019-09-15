@@ -15,7 +15,7 @@
     <img src="https://img.shields.io/badge/%24-donate-ff69b4.svg" alt="donate">
   </a>
   <a href="https://github.com/syhyz1990/baiduyun">
-    <img src="https://img.shields.io/badge/Star-9k+-yellow.svg?style=social&logo=github" alt="stars">
+    <img src="https://img.shields.io/badge/Star-10k+-yellow.svg?style=social&logo=github" alt="stars">
   </a>
 </p>
 
@@ -29,7 +29,11 @@
 
 **自 2.5.0 版本起，脚本支持aria2c链接**
 
-## 🔧 支持功能
+## 🎨 助手界面
+
+![](https://i.loli.net/2019/09/15/VkxjsPX6pmuAvot.png)
+
+## 🔧 插件功能
   - [x] 支持免登录获取不限速链接
   - [x] 支持批量获取下载链接
   - [x] 支持300M以下的文件夹下载
@@ -46,35 +50,27 @@
 
 ## 💽 安装脚本
 
-- [安装地址1 (实时更新)](https://www.baiduyun.wiki/install.html)
-
-- [安装地址2](https://github.com/syhyz1990/baiduyun/raw/master/baiduyun.user.js)
-
-- [安装地址3](https://openuserjs.org/scripts/syhyz1990/百度网盘直链下载助手)
+- [安装地址 (实时更新)](https://www.baiduyun.wiki/install.html)
 
 ## 🔔 更新日志
 
-**2019-09-09** : v2.7.4 支持IDM批量复制下载功能，修复分享页面aria链接只能复制两个的bug。更新IDM使用教程
+**2019-09-15** : v2.8.0 我的网盘新增IDM直链批量复制下载功能，修复“未选中文件”的提示，支持列表视图切换，大幅提升脚本加载速度
 
 [查看更多](https://www.baiduyun.wiki/zh-cn/changelog.html)
 
-## ✨ 插件功能
-- 获取百度网盘的直链真实下载地址，加快下载速度
-
 ## 🚀 速度测试
 
-**[Xdown(支持批量链接)](http://pan.baiduyun.wiki/down)**
-
-![Xdown](https://i.loli.net/2019/08/18/l4DzJh3Zvr8Osmt.gif)
-
-**[IDM(稳定)](http://pan.baiduyun.wiki/down)**
-
 IDM 用户请升级到6.35版本以上，打开`设置->下载->User-Agent for manually added downloads` `改成
-```text
+```html
 netdisk;2.2.2;pc;pc-mac;10.14.5;macbaiduyunguanjia
 ```
+- **[IDM下载速度](http://pan.baiduyun.wiki/down)**
 
-![IDM](https://i.loli.net/2019/05/04/5ccc6d8156d75.gif)
+![IDM](https://i.loli.net/2019/09/15/u9dRYDn6ekrKfXy.gif)
+
+- **[XDown下载速度](http://pan.baiduyun.wiki/down)**
+
+![XDown](https://i.loli.net/2019/09/15/9f3bkXGNT8HBo1K.gif)
 
 ## 👻 注意事项
 不支持勾选文件夹，可同时选择多个文件
@@ -83,7 +79,7 @@ netdisk;2.2.2;pc;pc-mac;10.14.5;macbaiduyunguanjia
 本脚本仅在浏览器端运行，源码公开可见，仅做研究使用，不得用于非法获利， 如产生法律纠纷与脚本作者无关!!!
 
 ## 💻 脚本反馈
-[反馈问题](https://github.com/syhyz1990/baiduyun/issues)
+[反馈问题](https://www.baiduyun.wiki/zh-cn/feedback.html)
 
 ## 🤓 捐赠作者
 如果您觉得脚本对您有帮助，您可以通过支付宝或微信，扫描二维码，捐赠 X元，^_^，谢谢！

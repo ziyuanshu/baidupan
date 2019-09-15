@@ -73,7 +73,7 @@ netdisk;2.2.2;pc;pc-mac;10.14.5;macbaiduyunguanjia
 ![XDown](https://i.loli.net/2019/09/15/9f3bkXGNT8HBo1K.gif)
 
 ## 👻 注意事项
-不支持勾选文件夹，可同时选择多个文件
+不支持超过300M的文件夹，可批量选择文件进行下载，更多请参考 [常见问题](https://www.baiduyun.wiki/zh-cn/question.html)
 
 ## 📜 免责声明 
 本脚本仅在浏览器端运行，源码公开可见，仅做研究使用，不得用于非法获利， 如产生法律纠纷与脚本作者无关!!!

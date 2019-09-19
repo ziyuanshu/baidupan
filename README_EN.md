@@ -53,7 +53,7 @@ Get the real-chain download address of Baidu's network disk, speed up the downlo
 
 **[Xdown(recommended)](http://pan.baiduyun.wiki/down)**
 
-![XDown](https://i.loli.net/2019/09/15/9f3bkXGNT8HBo1K.gif)
+![XDown](https://i.loli.net/2019/09/19/187PZzbespSWMKx.gif)
 
 **IDM**
 

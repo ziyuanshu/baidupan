@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name              百度网盘直链下载助手
 // @namespace         https://github.com/syhyz1990/baiduyun
-// @version           2.8.1
+// @version           2.8.2
 // @icon              https://pan.baidu.com/ppres/static/images/favicon.ico
 // @description       【百度网盘直链下载助手】是一款免客户端获取百度网盘文件真实下载地址的油猴脚本，支持Windows，Mac，Linux，Android等多平台，可使用IDM，迅雷，Aria2c协议等多线程加速工具加速下载，免登录下载告别下载限速问题。
 // @author            syhyz1990
@@ -16,7 +16,7 @@
 // @match             *://yun.baidu.com/share/*
 // @require           https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js
 // @require           https://cdn.bootcss.com/sweetalert/2.1.2/sweetalert.min.js
-// @connect           *
+// @connect           meek.com.cn
 // @run-at            document-idle
 // @grant             unsafeWindow
 // @grant             GM_xmlhttpRequest
@@ -32,7 +32,7 @@
 'use strict'
 
 ;(function () {
-  const version = '2.8.1';
+  const version = '2.8.2';
   const classMap = {
     'list': 'zJMtAEb',
     'grid': 'fyQgAEb',
@@ -468,8 +468,8 @@
       let $sharebutton = $('<span class="g-button-menu" style="display:block;cursor: pointer">分享后下载</span>');
 
       let $github = $('<iframe src="https://ghbtns.com/github-btn.html?user=syhyz1990&repo=baiduyun&type=star&count=true" frameborder="0" scrolling="0" style="height: 20px;max-width: 120px;padding: 0 5px;box-sizing: border-box;margin-top: 5px;"></iframe>');
-      //$dropdownbutton_span.append($directbutton).append($ariadirectbutton).append($outerlinkbutton).append($apibutton).append($sharebutton).append($github);
-      $dropdownbutton_span.append($apibutton).append($sharebutton).append($github);
+      $dropdownbutton_span.append($directbutton).append($ariadirectbutton).append($outerlinkbutton).append($apibutton).append($sharebutton).append($github);
+      //$dropdownbutton_span.append($apibutton).append($sharebutton).append($github);
       $dropdownbutton.append($dropdownbutton_a).append($dropdownbutton_span);
 
       $dropdownbutton.hover(function () {
@@ -915,7 +915,7 @@
         num: 100,
         key: searchKey,
         channel: 'chunlei',
-        app_id: 250258,
+        app_id: 250528,
         bdstoken: bdstoken,
         logid: logid,
         clienttype: 0
@@ -1175,16 +1175,28 @@
             },
             1e3);
       }
+
       $.ajax({
         method: 'GET',
-        url: 'https://api.baiduyun.wiki/pset/' + surl,
+        url: 'https://api.baiduyun.wiki/reset/' + surl,
         success: function (res) {
-          if (res.access_code) {
-            tip.text('发现提取码，已自动为您填写');
-            input.val(res.access_code);//填写密码
-            setTimeout(function () {
-              btn.click();
-            }, 1000);
+          if (res.link) {
+            GM_xmlhttpRequest({
+              method: 'GET',
+              url: res.link,
+              onload: function (xhr) {
+                var res = JSON.parse(xhr.responseText);
+                if (res.access_code) {
+                  tip.text('发现提取码，已自动为您填写');
+                  input.val(res.access_code);//填写密码
+                  setTimeout(function () {
+                    btn.click();
+                  }, 1000);
+                } else {
+                  tip.text('未发现提取码，请手动填写');
+                }
+              }
+            });
           } else {
             tip.text('未发现提取码，请手动填写');
           }
@@ -1253,8 +1265,8 @@
       let $highButton = $('<a data-menu-id="b-menu209" class="g-button-menu" style="color: #F24C43;font-weight: 700;" href="javascript:;">极速下载</a>');
 
       let $github = $('<iframe src="https://ghbtns.com/github-btn.html?user=syhyz1990&repo=baiduyun&type=star&count=true" frameborder="0" scrolling="0" style="height: 20px;max-width: 120px;padding: 0 5px;box-sizing: border-box;margin-top: 5px;"></iframe>');
-      //$dropdownbutton_span.append($downloadButton).append($linkButton).append($ariclinkButton).append($highButton).append($github);
-      $dropdownbutton_span.append($highButton).append($github);
+      $dropdownbutton_span.append($downloadButton).append($linkButton).append($ariclinkButton).append($highButton).append($github);
+      //$dropdownbutton_span.append($highButton).append($github);
       $dropdownbutton_a.append($dropdownbutton_a_span);
       $dropdownbutton.append($dropdownbutton_a).append($dropdownbutton_span);
 

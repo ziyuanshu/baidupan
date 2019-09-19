@@ -54,9 +54,7 @@
 
 ## 🔔 更新日志
 
-**2019-09-18** : v2.8.1 屏蔽暂时无效的下载方式，新增分享后下载，免登录链接替换为极速链接，不再需要退出账号
-
-[查看更多](https://www.baiduyun.wiki/zh-cn/changelog.html)
+[点击查看](https://www.baiduyun.wiki/zh-cn/changelog.html)
 
 ## 🚀 速度测试
 
@@ -70,7 +68,7 @@ netdisk;2.2.2;pc;pc-mac;10.14.5;macbaiduyunguanjia
 
 - **[XDown下载速度](http://pan.baiduyun.wiki/down)**
 
-![XDown](https://i.loli.net/2019/09/15/9f3bkXGNT8HBo1K.gif)
+![XDown](https://i.loli.net/2019/09/19/187PZzbespSWMKx.gif)
 
 ## 👻 注意事项
 不支持超过300M的文件夹，可批量选择文件进行下载，更多请参考 [常见问题](https://www.baiduyun.wiki/zh-cn/question.html)

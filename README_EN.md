@@ -29,6 +29,10 @@ Support Baidu network disk PC-side webpage to get the share link download addres
 
 **Since version 2.5.0, scripts support aria2c links**
 
+## 🎨 Interface
+
+![](https://i.loli.net/2019/09/15/VkxjsPX6pmuAvot.png)
+
 ## 📖 Tutorials
 
 - [Windows](https://www.baiduyun.wiki/zh-cn/windows.html)
@@ -66,9 +70,10 @@ Do not support checking the folder, you can select multiple files at the same ti
 This script is only run on the browser side. The source code is publicly visible. It can only be used for research purposes. It should not be used for illegal profit. For example, legal disputes are irrelevant to the script author!!!
 
 ## 💻 Feedback
+
 [Feedback](https://www.baiduyun.wiki/zh-cn/feedback.html)
 
 ## 🤓 Donate
 If you feel that the script is helpful to you, you can scan the QR code via Alipay or WeChat, donate X dollar, ^_^, thank you!
- 
+
 ![WeChat](https://i.loli.net/2019/05/04/5ccc6d088bc31.jpg) ![Alipay](https://i.loli.net/2019/05/04/5ccc6d08a22f7.jpg)

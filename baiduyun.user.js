@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name              百度网盘直链下载助手
 // @namespace         https://github.com/syhyz1990/baiduyun
-// @version           2.8.2
+// @version           2.8.3
 // @icon              https://pan.baidu.com/ppres/static/images/favicon.ico
 // @description       【百度网盘直链下载助手】是一款免客户端获取百度网盘文件真实下载地址的油猴脚本，支持Windows，Mac，Linux，Android等多平台，可使用IDM，迅雷，Aria2c协议等多线程加速工具加速下载，免登录下载告别下载限速问题。
 // @author            syhyz1990
@@ -16,6 +16,7 @@
 // @match             *://yun.baidu.com/share/*
 // @require           https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js
 // @require           https://cdn.bootcss.com/sweetalert/2.1.2/sweetalert.min.js
+// @connect           baidu.com
 // @connect           meek.com.cn
 // @run-at            document-idle
 // @grant             unsafeWindow
@@ -32,7 +33,7 @@
 'use strict'
 
 ;(function () {
-  const version = '2.8.2';
+  const version = '2.8.3';
   const classMap = {
     'list': 'zJMtAEb',
     'grid': 'fyQgAEb',
@@ -78,8 +79,15 @@
     let baiduyunPlugin_BDUSS = localStorage.getItem('baiduyunPlugin_BDUSS') ? localStorage.getItem('baiduyunPlugin_BDUSS') : '{"baiduyunPlugin_BDUSS":""}';
     let BDUSS = JSON.parse(baiduyunPlugin_BDUSS).BDUSS;
     if (!BDUSS) {
-      swal('请先安装百度网盘万能助手');
-      GM_openInTab('https://www.baiduyun.wiki/zh-cn/cookie-plugin.html', {active: true});
+      swal({
+        title: "提示",
+        text: "请先安装【百度网盘万能助手】",
+        buttons: {confirm: {text: "安装", value: 'confirm'}}
+      }).then((value) => {
+        if (value === 'confirm') {
+          location.href = 'https://www.baiduyun.wiki/zh-cn/assistant.html';
+        }
+      });
       return '请先安装百度网盘万能助手，安装后请重启浏览器！！！';
     }
     return `aria2c "${link}" --out "${filename}" --header "User-Agent: ${userAgent}" --header "Cookie: BDUSS=${BDUSS}"`;
@@ -468,8 +476,8 @@
       let $sharebutton = $('<span class="g-button-menu" style="display:block;cursor: pointer">分享后下载</span>');
 
       let $github = $('<iframe src="https://ghbtns.com/github-btn.html?user=syhyz1990&repo=baiduyun&type=star&count=true" frameborder="0" scrolling="0" style="height: 20px;max-width: 120px;padding: 0 5px;box-sizing: border-box;margin-top: 5px;"></iframe>');
-      $dropdownbutton_span.append($directbutton).append($ariadirectbutton).append($outerlinkbutton).append($apibutton).append($sharebutton).append($github);
-      //$dropdownbutton_span.append($apibutton).append($sharebutton).append($github);
+      //$dropdownbutton_span.append($directbutton).append($ariadirectbutton).append($outerlinkbutton).append($apibutton).append($sharebutton).append($github);
+      $dropdownbutton_span.append($directbutton).append($ariadirectbutton).append($apibutton).append($sharebutton).append($github);
       $dropdownbutton.append($dropdownbutton_a).append($dropdownbutton_span);
 
       $dropdownbutton.hover(function () {
@@ -691,7 +699,7 @@
       batchLinkListAll = [];
       if (id.indexOf('direct') != -1) {  //直链下载
         batchLinkList = getDirectBatchLink(linkType);
-        let tip = '支持使用IDM批量下载，需 <a target="_blank" href="http://pan.baiduyun.wiki/down">IDM版本>= 6.3.5</a>，<a target="_blank" href="https://www.baiduyun.wiki/zh-cn/idm.html">参考</a>';
+        let tip = '支持使用IDM批量下载，需升级 <a href="https://www.baiduyun.wiki/zh-cn/assistant.html">[百度网盘万能助手]</a> 至v2.0.0'
         if (batchLinkList.length === 0) {
           swal('没有链接可以显示，不要选中文件夹！');
           return;
@@ -700,7 +708,7 @@
       }
       if (id.indexOf('aria') != -1) {  //aria下载
         batchLinkList = getDirectBatchLink(linkType);
-        tip = '请先安装 <a target="_blank" href="https://www.baiduyun.wiki/zh-cn/cookie-plugin.html">百度网盘万能助手</a> 请将链接复制到支持Aria的下载器中, 推荐使用 <a target="_blank" href="http://pan.baiduyun.wiki/down">XDown</a>（仅支持300M以下的文件夹）';
+        tip = '请先安装 <a  href="https://www.baiduyun.wiki/zh-cn/assistant.html">百度网盘万能助手</a> 请将链接复制到支持Aria的下载器中, 推荐使用 <a  href="http://pan.baiduyun.wiki/down">XDown</a>（仅支持300M以下的文件夹）';
         if (batchLinkList.length === 0) {
           swal('没有链接可以显示，不要选中文件夹！');
           return;
@@ -708,7 +716,7 @@
         dialog.open({title: 'Aria链接', type: 'batchAria', list: batchLinkList, tip: tip, showcopy: true});
       } else if (id.indexOf('api') != -1) {
         batchLinkList = getAPIBatchLink(linkType);
-        tip = '直接复制链接无效，请安装 IDM 及浏览器扩展后使用（<a href="https://www.baiduyun.wiki/zh-cn/" target="_blank">脚本使用说明</a>）';
+        tip = '直接复制链接无效，请安装 IDM 及浏览器扩展后使用（<a href="https://www.baiduyun.wiki/zh-cn/" >脚本使用说明</a>）';
         if (batchLinkList.length === 0) {
           swal('没有链接可以显示，API链接不要全部选中文件夹！');
           return;
@@ -721,7 +729,7 @@
             swal('没有链接可以显示，API链接不要全部选中文件夹！');
             return;
           }
-          let tip = '请先安装 <a target="_blank" href="https://www.baiduyun.wiki/zh-cn/cookie-plugin.html">百度网盘万能助手</a> 请将链接复制到支持Aria的下载器中, 推荐使用 <a target="_blank" href="http://pan.baiduyun.wiki/down">XDown</a>';
+          let tip = '请先安装 <a  href="https://www.baiduyun.wiki/zh-cn/assistant.html">百度网盘万能助手</a> 请将链接复制到支持Aria的下载器中, 推荐使用 <a  href="http://pan.baiduyun.wiki/down">XDown</a>';
           dialog.open({
             title: '下载链接（仅显示文件链接）',
             type: 'batchAria',
@@ -1068,7 +1076,8 @@
 
     function execDownload(link) {
       clog("下载链接：" + link);
-      $('#helperdownloadiframe').attr('src', link);
+      GM_openInTab(link, {active: true});
+      //$('#helperdownloadiframe').attr('src', link);
     }
 
     function createIframe() {
@@ -1334,7 +1343,7 @@
         swal('页面过期，请刷新重试');
         return false;
       } else if (downloadLink.errno === 0) {
-        let tip = '请先安装 <a target="_blank" href="https://www.baiduyun.wiki/zh-cn/cookie-plugin.html">百度网盘万能助手</a> 请将链接复制到支持Aria的下载器中, 推荐使用 <a target="_blank" href="http://pan.baiduyun.wiki/down">XDown</a>';
+        let tip = '请先安装 <a  href="https://www.baiduyun.wiki/zh-cn/assistant.html">百度网盘万能助手</a> 请将链接复制到支持Aria的下载器中, 推荐使用 <a  href="http://pan.baiduyun.wiki/down">XDown</a>';
         dialog.open({
           title: '下载链接（仅显示文件链接）',
           type: 'shareAriaLink',
@@ -1679,7 +1688,7 @@
           let link = result.list[0].dlink;
           execDownload(link);
         } else if (buttonTarget == 'link') {
-          let tip = '支持使用IDM批量下载，需 <a target="_blank" href="http://pan.baiduyun.wiki/down">IDM版本>= 6.3.5</a>，<a target="_blank" href="https://www.baiduyun.wiki/zh-cn/idm.html">参考</a>';
+          let tip = '支持使用IDM批量下载，需升级 <a href="https://www.baiduyun.wiki/zh-cn/assistant.html">[百度网盘万能助手]</a> 至v2.0.0';
           dialog.open({
             title: '下载链接（仅显示文件链接）',
             type: 'shareLink',
@@ -1688,7 +1697,7 @@
             showcopy: true
           });
         } else if (buttonTarget == 'ariclink') {
-          let tip = '请先安装 <a target="_blank" href="https://www.baiduyun.wiki/zh-cn/cookie-plugin.html">百度网盘万能助手</a> 请将链接复制到支持Aria的下载器中, 推荐使用 <a target="_blank" href="http://pan.baiduyun.wiki/down">XDown</a>';
+          let tip = '请先安装 <a  href="https://www.baiduyun.wiki/zh-cn/assistant.html">百度网盘万能助手</a> 请将链接复制到支持Aria的下载器中, 推荐使用 <a  href="http://pan.baiduyun.wiki/down">XDown</a>';
           dialog.open({
             title: '下载链接（仅显示文件链接）',
             type: 'shareAriaLink',
@@ -1742,7 +1751,7 @@
         swal('页面过期，请刷新重试');
         return false;
       } else if (downloadLink.errno === 0) {
-        let tip = '支持使用IDM批量下载，需 <a target="_blank" href="http://pan.baiduyun.wiki/down">IDM版本>= 6.3.5</a>，<a target="_blank" href="https://www.baiduyun.wiki/zh-cn/idm.html">参考</a>';
+        let tip = '支持使用IDM批量下载，需升级 <a href="https://www.baiduyun.wiki/zh-cn/assistant.html">[百度网盘万能助手]</a> 至v2.0.0';
         dialog.open({
           title: '下载链接（仅显示文件链接）',
           type: 'shareLink',
@@ -1816,7 +1825,7 @@
           async: false,
           success: function (res) {
             if (res.errno == 0) {
-              let tip = '【普通链接】左键或右键调用IDM下载，【aria链接】调用<a target="_blank" href="http://pan.baiduyun.wiki/down">XDown（版本>=1.0.0.4）</a>下载';
+              let tip = '【普通链接】左键或右键调用IDM下载，【aria链接】调用<a  href="http://pan.baiduyun.wiki/down">XDown（版本>=1.0.0.4）</a>下载';
               dialog.open({title: '不限速链接（仅支持单文件）', type: 'highLink', list: res.dlink, tip: tip});
             }
             if (res.errno == -19) {  //验证码
@@ -1890,7 +1899,7 @@
         success: function (res) {
           if (res.errno == 0) {
             removeVCode();
-            let tip = '【普通链接】左键或右键调用IDM下载，【aria链接】调用<a target="_blank" href="http://pan.baiduyun.wiki/down">XDown（版本>=1.0.0.4）</a>下载';
+            let tip = '【普通链接】左键或右键调用IDM下载，【aria链接】调用<a  href="http://pan.baiduyun.wiki/down">XDown（版本>=1.0.0.4）</a>下载';
             dialog.open({title: '不限速链接（仅支持单文件）', type: 'highLink', list: res.dlink, tip: tip});
           }
           if (res.errno == -19) {  //验证码
@@ -1941,7 +1950,8 @@
 
     function execDownload(link) {
       clog('下载链接：' + link);
-      $('#helperdownloadiframe').attr('src', link);
+      GM_openInTab(link, {active: true});
+      //$('#helperdownloadiframe').attr('src', link);
     }
   }
 
@@ -2415,10 +2425,10 @@
               swal({
                 title: "发现新版本",
                 text: res.changelog,
-                buttons: {cancel: "取消", confirm: {text: "更新", value: 'confirm'}}
+                buttons: {confirm: {text: "更新", value: 'confirm'}}
               }).then((value) => {
                 if (value === 'confirm') {
-                  GM_openInTab(res.updateURL, {active: true});
+                  location.href = res.updateURL;
                 }
               });
             }
@@ -2433,7 +2443,7 @@
     function createHelp() {
       setTimeout(() => {
         let topbar = $('.' + classMap['header']);
-        let toptemp = $('<span class="cMEMEF" node-type="help-author" style="opacity: .5" ><a href="https://www.baiduyun.wiki/zh-cn/" target="_blank">教程</a><i class="find-light-icon" style="display: inline;background-color: #009fe8;"></i></span>');
+        let toptemp = $('<span class="cMEMEF" node-type="help-author" style="opacity: .5" ><a href="https://www.baiduyun.wiki/zh-cn/" >教程</a><i class="find-light-icon" style="display: inline;background-color: #009fe8;"></i></span>');
         topbar.append(toptemp);
       }, 5000);
     }
@@ -2473,7 +2483,7 @@
           GM_setValue('SETTING_A', true);
         }
         if (GM_getValue('SETTING_P') === undefined) {
-          GM_setValue('SETTING_P', false);
+          GM_setValue('SETTING_P', true);
         }
         let dom = '';
         if (GM_getValue('SETTING_P')) {

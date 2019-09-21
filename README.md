@@ -58,10 +58,8 @@
 
 ## 🚀 速度测试
 
-IDM 用户请升级到6.35版本以上，打开`设置->下载->User-Agent for manually added downloads` `改成
-```html
-netdisk;2.2.2;pc;pc-mac;10.14.5;macbaiduyunguanjia
-```
+IDM 用户请先安装 [百度网盘万能助手](https://www.baiduyun.wiki/download.html)
+
 - **[IDM下载速度](http://pan.baiduyun.wiki/down)**
 
 ![IDM](https://i.loli.net/2019/09/15/u9dRYDn6ekrKfXy.gif)

@@ -52,7 +52,7 @@
 
 - [安装地址 (实时更新)](https://www.baiduyun.wiki/install.html)
 
-## 🔔 更新日志
+## 🔔 更新历史
 
 [点击查看](https://www.baiduyun.wiki/zh-cn/changelog.html)
 

@@ -25,7 +25,7 @@
 
 支持百度网盘PC端网页获取分享链接下载地址和我的网盘下载地址。安装后会在对应界面出现【下载助手】按钮, 配合多线程下载工具达到提速的效果。
 
-**自 2.9.1 版本起，脚本支持[在线解析](https://www.baidusu.com)下载地址**
+**自 2.9.1 版本起，脚本支持[在线解析](https://www.baidusu.com)**
 
 **自 2.5.0 版本起，脚本支持aria2c链接**
 
@@ -39,6 +39,7 @@
   - [x] 支持300M以下的文件夹下载
   - [x] 支持IDM，XDown，Aria等多线程下载器
   - [x] 支持自动更新
+  - [x] [支持在线解析](https://pan.baidusu.com)
 
 ## 📖 使用教程
 
@@ -68,6 +69,14 @@ IDM 用户请先安装 [百度网盘万能助手](https://www.baiduyun.wiki/down
 
 ![XDown](https://i.loli.net/2019/09/19/187PZzbespSWMKx.gif)
 
+## 🔗 友情推荐
+[![](https://i.loli.net/2019/10/08/JFXRhqzPya3gG8b.png)](https://glados001.com)
+
+发现一个好用的加速器，点击上方图片，复制下方邀请码，注册成功免费试用28天
+```text
+邀请码：STCVO-U62NB-ZBZ0G-SW0T1
+```
+
 ## 👻 注意事项
 不支持超过300M的文件夹，可批量选择文件进行下载，更多请参考 [常见问题](https://www.baiduyun.wiki/zh-cn/question.html)
 
@@ -80,4 +89,4 @@ IDM 用户请先安装 [百度网盘万能助手](https://www.baiduyun.wiki/down
 ## 🤓 捐赠作者
 如果您觉得脚本对您有帮助，您可以通过支付宝或微信，扫描二维码，捐赠 X元，^_^，谢谢！
  
-![微信](https://i.loli.net/2019/05/04/5ccc6d088bc31.jpg) ![支付宝](https://i.loli.net/2019/05/04/5ccc6d08a22f7.jpg)
+(![wechat](https://i.loli.net/2019/10/08/vs39MCwGfUkzolg.jpg) ![支付宝](https://i.loli.net/2019/05/04/5ccc6d08a22f7.jpg)

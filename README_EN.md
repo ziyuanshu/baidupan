@@ -25,7 +25,7 @@
 
 Support Baidu network disk PC-side webpage to get the share link download address and my network disk download address. After installation, the [Download Assistant] button will appear on the corresponding interface, and the multi-threaded download tool can achieve the effect of speed increase.
 
-**Since version 2.7.0, the script supports automatic update and access to unlimited links, please update [as soon as possible](https://github.com/syhyz1990/baiduyun/raw/master/baiduyun.user.js)**
+**Since version 2.9.1, you can get the link on https://www.baidusu.com directly**
 
 **Since version 2.5.0, scripts support aria2c links**
 
@@ -62,6 +62,16 @@ Get the real-chain download address of Baidu's network disk, speed up the downlo
 **IDM**
 
 ![IDM](https://i.loli.net/2019/09/15/u9dRYDn6ekrKfXy.gif)
+
+## 🔗 Recommend
+[![](https://i.loli.net/2019/10/08/3QHf4XPnNi2saeW.png))](https://glados001.com)
+
+GLaDOS is your networking manager, provides you reliable DNS and data connections with Global IDC , Business Networks and Cloud services
+
+Register from `https://glados001.com` and input the invitation code below , you will get 28 days for trail
+```text
+Invitation code：STCVO-U62NB-ZBZ0G-SW0T1
+```
 
 ## 👻 Notes
 Do not support checking the folder, you can select multiple files at the same time

@@ -89,4 +89,4 @@ IDM 用户请先安装 [百度网盘万能助手](https://www.baiduyun.wiki/down
 ## 🤓 捐赠作者
 如果您觉得脚本对您有帮助，您可以通过支付宝或微信，扫描二维码，捐赠 X元，^_^，谢谢！
  
-(![wechat](https://i.loli.net/2019/10/08/vs39MCwGfUkzolg.jpg) ![支付宝](https://i.loli.net/2019/05/04/5ccc6d08a22f7.jpg)
+![wechat](https://i.loli.net/2019/10/08/vs39MCwGfUkzolg.jpg) ![支付宝](https://i.loli.net/2019/05/04/5ccc6d08a22f7.jpg)

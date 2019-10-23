@@ -69,8 +69,8 @@ IDM 用户请先安装 [百度网盘万能助手](https://www.baiduyun.wiki/down
 
 ![XDown](https://i.loli.net/2019/09/19/187PZzbespSWMKx.gif)
 
-## 🔗 友情推荐
-[![](https://i.loli.net/2019/10/08/JFXRhqzPya3gG8b.png)](https://glados001.com)
+## 🔗 海外加速
+[![](https://i.loli.net/2019/10/08/JFXRhqzPya3gG8b.png)](https://glados.space/landing/STCVO-U62NB-ZBZ0G-SW0T1)
 
 发现一个好用的加速器，点击上方图片，复制下方邀请码，注册成功免费试用28天
 ```text

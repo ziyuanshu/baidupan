@@ -64,7 +64,7 @@ Get the real-chain download address of Baidu's network disk, speed up the downlo
 ![IDM](https://i.loli.net/2019/09/15/u9dRYDn6ekrKfXy.gif)
 
 ## 🔗 Recommend
-[![](https://i.loli.net/2019/10/08/3QHf4XPnNi2saeW.png))](https://glados001.com)
+[![](https://i.loli.net/2019/10/08/JFXRhqzPya3gG8b.png)](https://glados.space/landing/STCVO-U62NB-ZBZ0G-SW0T1)
 
 GLaDOS is your networking manager, provides you reliable DNS and data connections with Global IDC , Business Networks and Cloud services
 

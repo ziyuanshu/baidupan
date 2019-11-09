@@ -35,7 +35,6 @@
   - [x] 支持300M以下的文件夹下载
   - [x] 支持IDM，XDown，Aria等多线程下载器
   - [x] 支持自动更新
-  - [x] [支持在线解析](https://pan.baidusu.com)
 
 ## 📖 使用教程
 

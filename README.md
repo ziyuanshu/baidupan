@@ -25,10 +25,6 @@
 
 支持百度网盘PC端网页获取分享链接下载地址和我的网盘下载地址。安装后会在对应界面出现【下载助手】按钮, 配合多线程下载工具达到提速的效果。
 
-**自 2.9.1 版本起，脚本支持[在线解析](https://www.baidusu.com)**
-
-**自 2.5.0 版本起，脚本支持aria2c链接**
-
 ## 🎨 助手界面
 
 ![](https://i.loli.net/2019/09/15/VkxjsPX6pmuAvot.png)
@@ -69,10 +65,10 @@ IDM 用户请先安装 [百度网盘万能助手](https://www.baiduyun.wiki/down
 
 ![XDown](https://i.loli.net/2019/09/19/187PZzbespSWMKx.gif)
 
-## 🔗 海外加速
+## 🔗 游戏加速器
 [![](https://i.loli.net/2019/10/08/JFXRhqzPya3gG8b.png)](https://glados.space/landing/STCVO-U62NB-ZBZ0G-SW0T1)
 
-发现一个好用的加速器，点击上方图片，复制下方邀请码，注册成功免费试用28天
+发现一个好用的游戏加速器，点击上方图片，复制下方邀请码，注册成功免费试用28天
 ```text
 邀请码：STCVO-U62NB-ZBZ0G-SW0T1
 ```

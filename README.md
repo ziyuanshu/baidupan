@@ -46,7 +46,7 @@
 
 ## 💽 安装脚本
 
-- [安装地址 (实时更新)](https://www.baiduyun.wiki/install.html)
+- [安装地址](https://www.baiduyun.wiki/install.html)
 
 ## 🔔 更新历史
 
@@ -65,12 +65,9 @@ IDM 用户请先安装 [百度网盘万能助手](https://www.baiduyun.wiki/down
 ![XDown](https://i.loli.net/2019/09/19/187PZzbespSWMKx.gif)
 
 ## 🔗 游戏加速器
-[![](https://i.loli.net/2019/10/08/JFXRhqzPya3gG8b.png)](https://glados.space/landing/STCVO-U62NB-ZBZ0G-SW0T1)
 
-发现一个好用的游戏加速器，点击上方图片，复制下方邀请码，注册成功免费试用28天
-```text
-邀请码：STCVO-U62NB-ZBZ0G-SW0T1
-```
+发现一个好用的游戏加速器，注册成功免费试用28天
+[点击领取](https://glados.work/landing/STCVO-U62NB-ZBZ0G-SW0T1)
 
 ## 👻 注意事项
 不支持超过300M的文件夹，可批量选择文件进行下载，更多请参考 [常见问题](https://www.baiduyun.wiki/zh-cn/question.html)

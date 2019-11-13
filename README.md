@@ -64,9 +64,9 @@ IDM 用户请先安装 [百度网盘万能助手](https://www.baiduyun.wiki/down
 
 ![XDown](https://i.loli.net/2019/09/19/187PZzbespSWMKx.gif)
 
-## 🔗 加速器[推荐]
+## 🔗 上网加速器[推荐]
 
-超好用加速器，注册成功免费试用28天
+超好用科学上网加速器，注册成功免费试用28天
 [点击领取](https://glados.work/landing/STCVO-U62NB-ZBZ0G-SW0T1)
 
 ## 👻 注意事项

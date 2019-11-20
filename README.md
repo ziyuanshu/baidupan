@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://www.baiduyun.wiki">
-    <img width="160" src="https://raw.githubusercontent.com/syhyz1990/baiduyun/master/logo.png" alt="百度网盘直链下载助手">
+    <img width="160" src="https://www.baiduyun.wiki/logo.png" alt="百度网盘直链下载助手">
   </a>
 </p>
 
@@ -25,7 +25,6 @@
 
 支持百度网盘PC端网页获取分享链接下载地址和我的网盘下载地址。安装后会在对应界面出现【下载助手】按钮, 配合多线程下载工具达到提速的效果。
 
-
 ## 🎨 助手界面
 
 ![](https://i.loli.net/2019/09/15/VkxjsPX6pmuAvot.png)
@@ -46,7 +45,7 @@
 
 ## 💽 安装脚本
 
-- [安装地址 (实时更新)](https://www.baiduyun.wiki/install.html)
+- [安装地址](https://www.baiduyun.wiki/install.html)
 
 ## 🔔 更新历史
 
@@ -64,13 +63,11 @@ IDM 用户请先安装 [百度网盘万能助手](https://www.baiduyun.wiki/down
 
 ![XDown](https://i.loli.net/2019/09/19/187PZzbespSWMKx.gif)
 
-## 🔗 海外加速
-[![](https://i.loli.net/2019/10/08/JFXRhqzPya3gG8b.png)](https://glados.space/landing/STCVO-U62NB-ZBZ0G-SW0T1)
+## 🔗 上网加速[推荐]
 
-发现一个好用的加速器，点击上方图片，复制下方邀请码，注册成功免费试用28天
-```text
-邀请码：STCVO-U62NB-ZBZ0G-SW0T1
-```
+Github打不开? 论文查不到? 统统走开
+超好用科学上网加速器，注册成功免费试用28天
+[点击免费领取](https://glados.work/landing/STCVO-U62NB-ZBZ0G-SW0T1)
 
 ## 👻 注意事项
 不支持超过300M的文件夹，可批量选择文件进行下载，更多请参考 [常见问题](https://www.baiduyun.wiki/zh-cn/question.html)

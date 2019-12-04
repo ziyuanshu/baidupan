@@ -63,16 +63,6 @@ Get the real-chain download address of Baidu's network disk, speed up the downlo
 
 ![IDM](https://i.loli.net/2019/09/15/u9dRYDn6ekrKfXy.gif)
 
-## 🔗 Recommend
-[![](https://i.loli.net/2019/10/08/JFXRhqzPya3gG8b.png)](https://glados.space/landing/STCVO-U62NB-ZBZ0G-SW0T1)
-
-GLaDOS is your networking manager, provides you reliable DNS and data connections with Global IDC , Business Networks and Cloud services
-
-Register from `https://glados001.com` and input the invitation code below , you will get 28 days for trail
-```text
-Invitation code：STCVO-U62NB-ZBZ0G-SW0T1
-```
-
 ## 👻 Notes
 Do not support checking the folder, you can select multiple files at the same time
 

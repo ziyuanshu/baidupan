@@ -41,9 +41,13 @@
 
 - [MacOS平台使用教程](https://www.baiduyun.wiki/zh-cn/mac.html)
 
+- [Linux平台使用教程](https://www.baiduyun.wiki/zh-cn/linux.html)
+
 - [Android平台使用教程](https://www.baiduyun.wiki/zh-cn/android.html)
 
-## 💽 安装脚本
+## 💽 安装助手
+
+请确保已先安装 [Tampermonkey] (https://www.baiduyun.wiki/download.html) 脚本管理器
 
 - [安装地址](https://www.baiduyun.wiki/install.html)
 
@@ -63,22 +67,11 @@ IDM 用户请先安装 [百度网盘万能助手](https://www.baiduyun.wiki/down
 
 ![XDown](https://i.loli.net/2019/09/19/187PZzbespSWMKx.gif)
 
-## 🔗 上网加速[推荐]
-
-Github打不开? 论文查不到? 统统走开
-超好用科学上网加速器，注册成功免费试用28天
-[点击免费领取](https://glados.work/landing/STCVO-U62NB-ZBZ0G-SW0T1)
-
 ## 👻 注意事项
 不支持超过300M的文件夹，可批量选择文件进行下载，更多请参考 [常见问题](https://www.baiduyun.wiki/zh-cn/question.html)
 
 ## 📜 免责声明 
 本脚本仅在浏览器端运行，源码公开可见，仅做研究使用，不得用于非法获利， 如产生法律纠纷与脚本作者无关!!!
 
-## 💻 脚本反馈
-[反馈问题](https://www.baiduyun.wiki/zh-cn/feedback.html)
-
-## 🤓 捐赠作者
-如果您觉得脚本对您有帮助，您可以通过支付宝或微信，扫描二维码，捐赠 X元，^_^，谢谢！
- 
-![wechat](https://i.loli.net/2019/10/08/vs39MCwGfUkzolg.jpg) ![支付宝](https://i.loli.net/2019/05/04/5ccc6d08a22f7.jpg)
+## 💻 交流反馈
+![](https://i.loli.net/2019/11/28/lAFfphM8KYHeGgJ.png)

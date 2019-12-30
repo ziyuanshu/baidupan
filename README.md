@@ -30,8 +30,10 @@
 ![](https://i.loli.net/2019/09/15/VkxjsPX6pmuAvot.png)
 
 ## 🔧 插件功能
+
+  - [x] 支持多平台Windows，Linux，Mac
   - [x] 支持批量获取下载链接
-  - [x] 支持300M以下的文件夹下载
+  - [x] 支持使用RPC协议发送链接至本地或远程下载
   - [x] 支持IDM，XDown，Aria等多线程下载器
   - [x] 支持自动更新
 

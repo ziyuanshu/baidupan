@@ -1,16 +1,9 @@
 // ==UserScript==
-// @name              百度网盘直链下载助手
-// @name:en           Baidu Netdisk Assistant
-// @name:zh           百度网盘直链下载助手
-// @name:zh-CN        百度网盘直链下载助手
-// @name:ja           Baidu Netdiskストレートチェーンダウンロードアシスタントv4
+// @name              网盘直链下载助手
 // @namespace         https://github.com/syhyz1990/baiduyun
-// @version           4.1.0
+// @version           4.1.6
 // @icon              https://www.baiduyun.wiki/48x48.png
-// @description       【百度网盘直链下载助手】是一款免客户端获取百度网盘文件真实下载地址的油猴插件，支持Windows，Mac，Linux，Android等多平台，可使用IDM，XDown等多线程加速工具加速下载，支持RPC协议远程下载。
-// @description:en    [Baidu Netdisk Assistant] is an oil monkey plug-in that does not require clients to obtain the real download address of Baidu Netdisk files. It supports Windows, Mac, Linux, Android and other platforms. Multithreaded acceleration tools such as IDM and XDown can be used. Accelerate download, support remote download.
-// @description:ja    [Baidu Netdiskストレートチェーンダウンロードアシスタント]は、クライアントがBaidu Netdiskファイルの実際のダウンロードアドレスを取得する必要のないオイルモンキープラグインです。Windows、Mac、Linux、Android、およびその他のプラットフォームをサポートしています。IDMやXDownなどのマルチスレッドアクセラレーションツールを使用できます。 ダウンロードの高速化、リモートダウンロードのサポート、バージョン4.0.0の新しいアップグレード。
-// @author            syhyz2020
+// @description       【网盘直链下载助手】是一款免客户端获取百度网盘文件真实下载地址的油猴插件，支持Windows，Mac，Linux，Android等多平台，可使用IDM，XDown等多线程加速工具加速下载，支持RPC协议远程下载。
 // @license           AGPL
 // @supportURL        https://github.com/syhyz1990/baiduyun
 // @updateURL         https://www.baiduyun.wiki/baiduyun.user.js
@@ -25,31 +18,34 @@
 // @require           https://cdn.jsdelivr.net/npm/sweetalert2@9
 // @connect           baidu.com
 // @connect           baidupcs.com
-// @connect           meek.com.cn
+// @connect           baiduyun.wiki
 // @connect           *
 // @run-at            document-idle
 // @grant             unsafeWindow
 // @grant             GM_addStyle
 // @grant             GM_xmlhttpRequest
+// @grant             GM_download
 // @grant             GM_setClipboard
 // @grant             GM_setValue
 // @grant             GM_getValue
 // @grant             GM_openInTab
+// @grant             GM_info
 // @grant             GM_registerMenuCommand
 // ==/UserScript==
 
-;(function () {
+;(() => {
     'use strict';
-
-    const version = '4.1.0';
+    const version = '4.1.6';
+    const realVersion = GM_info.script.version;
     const classMap = {
         'bar-search': 'OFaPaO',
         'list-tools': 'tcuLAu',
         'header': 'vyQHNyb'
     };
+    const hostname = location.hostname;
     const errorMsg = {
         'dir': '提示：不支持整个文件夹下载，可进入文件夹内获取文件链接下载！',
-        'unlogin': '提示：登录百度网盘后才能使用此功能哦！',
+        'unlogin': '提示：登录网盘后才能使用此功能哦！',
         'fail': '提示：获取下载链接失败！请刷新网页后重试！',
         'unselected': '提示：请先选择要下载的文件！',
         'morethan': '提示：多个文件请点击【显示链接】！',
@@ -62,9 +58,7 @@
     let secretCode = getValue('secretCodeV') ? getValue('secretCodeV') : defaultCode;
     let ids = [];
     let userAgent = '';
-    let userAgentDefault = navigator.userAgent;
     let number = ['', '①', '②', '③', '④', '⑤', '⑥', '⑦', '⑧', '⑨'];
-    let copyright = 'Powerd By <a style="margin-left: 5px;" href="https://www.baiduyun.wiki" target="_blank">网盘直链下载助手</a>，建议配合网盘 <a href="https://pan.baidu.com/buy/checkoutcounter?from=homepage&svip=1" target="_blank">超级会员</a> 使用';
     let Toast = Swal.mixin({
         toast: true,
         position: 'top',
@@ -87,7 +81,7 @@
         c1 = c1 ? c1 : '';
         c2 = c2 ? c2 : '';
         c3 = c3 ? c3 : '';
-        console.group('[百度网盘直链下载助手]');
+        console.group('[网盘直链下载助手]');
         console.log(c1, c2, c3);
         console.groupEnd();
     }
@@ -107,7 +101,6 @@
                     GM_openInTab('https://www.baiduyun.wiki/zh-cn/assistant.html', {active: true});
                 }
             });
-
         }
         return BDUSS;
     }
@@ -123,7 +116,6 @@
     }
 
     function replaceLink(link) {
-        //return link ? link.replace(/&/g, '&amp;amp;') : '';
         return link ? link.replace(/&/g, '&amp;') : '';
     }
 
@@ -143,10 +135,6 @@
         let oDate = new Date();  //创建日期对象
         oDate.setTime(oDate.getTime() + t * 60 * 1000); //设置过期时间
         document.cookie = key + '=' + value + ';expires=' + oDate.toGMTString();  //设置cookie的名称，数值，过期时间
-    }
-
-    function removeCookie(key) {
-        setCookie(key, '', -1);  //cookie的过期时间设为昨天
     }
 
     function getValue(name) {
@@ -200,7 +188,7 @@
         }
 
         function w(e, n) {
-            return n ? p(String(e)).replace(/[+\/]/g, function (e) {
+            return n ? p(String(e)).replace(/[+\/]/g, (e) => {
                 return "+" == e ? "-" : "_";
             }).replace(/=/g, "") : p(String(e));
         }
@@ -234,36 +222,34 @@
             $dialog_button.append($dialog_button_div);
             $dialog_div.append($dialog_button);
 
-            $dialog_copy_button.click(function () {
+            $dialog_copy_button.click(() => {
                 let content = '';
-                if (showParams.type == 'batch') {
-                    $.each(linkList, function (index, element) {
-                        if (index == linkList.length - 1)
+                if (showParams.type === 'batch') {
+                    $.each(linkList, (index, element) => {
+                        if (index === linkList.length - 1)
                             content += element.downloadlink[0];
                         else
                             content += element.downloadlink[0] + '\r\n';
                     });
                 }
-                if (showParams.type == 'batchAria') {
-                    $.each(linkList, function (index, element) {
-                        if (index == linkList.length - 1)
-                            content += decodeURIComponent(aria2c(element.downloadlink[0], element.filename, userAgentDefault));
+                if (showParams.type === 'batchAria') {
+                    $.each(linkList, (index, element) => {
+                        if (index === linkList.length - 1)
+                            content += decodeURIComponent(aria2c(element.dlink, element.filename, userAgent));
                         else
-                            content += decodeURIComponent(aria2c(element.downloadlink[0], element.filename, userAgentDefault) + '\r\n');
+                            content += decodeURIComponent(aria2c(element.dlink, element.filename, userAgent) + '\r\n');
                     });
                 }
-                if (showParams.type == 'rpc') {
-                    $.each(linkList, function (index, element) {
-                        if (element.downloadlink == 'error')
-                            return;
-                        if (index == linkList.length - 1)
+                if (showParams.type === 'rpc') {
+                    $.each(linkList, (index, element) => {
+                        if (index === linkList.length - 1)
                             content += element.downloadlink;
                         else
                             content += element.downloadlink + '\r\n';
                     });
                 }
-                if (showParams.type == 'shareLink') {
-                    $.each(linkList, function (index, element) {
+                if (showParams.type === 'shareLink') {
+                    $.each(linkList, (index, element) => {
                         if (element.dlink == 'error')
                             return;
                         if (index == linkList.length - 1)
@@ -273,7 +259,7 @@
                     });
                 }
                 if (showParams.type == 'shareAriaLink') {
-                    $.each(linkList, function (index, element) {
+                    $.each(linkList, (index, element) => {
                         if (element.dlink == 'error')
                             return;
                         if (index == linkList.length - 1)
@@ -297,7 +283,7 @@
                 }
             });
 
-            $dialog_edit_button.click(function () {
+            $dialog_edit_button.click(() => {
                 let $dialog_textarea = $('div.dialog-body textarea[name=dialog-textarea]', dialog);
                 let $dialog_item = $('div.dialog-body div', dialog);
                 $dialog_item.hide();
@@ -308,7 +294,7 @@
                 $dialog_exit_button.show();
             });
 
-            $dialog_exit_button.click(function () {
+            $dialog_exit_button.click(() => {
                 let $dialog_textarea = $('div.dialog-body textarea[name=dialog-textarea]', dialog);
                 let $dialog_item = $('div.dialog-body div', dialog);
                 $dialog_textarea.hide();
@@ -331,13 +317,13 @@
             return $shadow;
         }
 
-        this.open = function (params) {
+        this.open = (params) => {
             showParams = params;
             linkList = [];
             if (params.type == 'link') {
                 linkList = params.list.urls;
                 $('div.dialog-header h3 span.dialog-title', dialog).text(params.title + "：" + params.list.filename);
-                $.each(params.list.urls, function (index, element) {
+                $.each(params.list.urls, (index, element) => {
                     element.url = replaceLink(element.url);
                     let $div = $('<div><div style="width:30px;float:left">' + element.rank + ':</div><div style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis"><a href="' + element.url + '">' + element.url + '</a></div></div>');
 
@@ -346,13 +332,13 @@
             }
 
             //批量下载 - 我的网盘
-            if (params.type == 'batch' || params.type == 'batchAria' || params.type == 'batchAriaRPC') {
+            if (params.type === 'batch' || params.type === 'batchAria' || params.type === 'batchAriaRPC' || params.type === 'pcs') {
                 linkList = params.list;
                 $('div.dialog-header h3 span.dialog-title', dialog).text(params.title);
-                $.each(params.list, function (index, element) {
+                $.each(params.list, (index, element) => {
                     let $div = $('<div class="row"><div class="ui-title" title="' + element.filename + '">' + element.filename + '</div><span>：</span></div>');
-                    if (params.type == 'batch') {  //API
-                        $.each(element.downloadlink, function (i, e) {
+                    if (params.type === 'batch') {  //API
+                        $.each(element.downloadlink, (i, e) => {
                             if (i === 0) {
                                 $div.append($('<a class="ui-link api-link" href="' + e + '" data-link=' + e + '>默认链接</a>'));
                             } else {
@@ -361,54 +347,43 @@
                             }
                         });
                     }
-                    if (params.type == 'batchAria') {  //Aria下载
-                        $.each(element.downloadlink, function (i, e) {
-                            let link = aria2c(e, element.filename, userAgentDefault);
-                            if (i === 0) {
-                                $div.append($('<a class="ui-link aria-link" data-link=' + link + ' href="javascript:;">默认链接</a>'));
-                            } else {
-                                if (getValue('SETTING_B'))
-                                    $div.append($('<a class="ui-link aria-link" data-link=' + link + ' href="javascript:;">备用链接' + number[i] + '</a>'));
-                            }
-                        });
+                    if (params.type === 'pcs') {  //PCS
+                        $div.append($('<a class="ui-link pcs-link" data-filename=' + element.filename + ' data-link=' + element.dlink + ' href="javascript:;">' + element.dlink + '</a>'));
                     }
-                    if (params.type == 'batchAriaRPC') {
-                        $.each(element.downloadlink, function (i, e) {
-                            if (i === 0) {
-                                $div.append($('<a href="javascript:;" class="ui-link aria-rpc" data-link="' + e + '" data-filename="' + element.filename + '">发送默认</a>'));
-                            } else {
-                                if (getValue('SETTING_B'))
-                                    $div.append($('<a href="javascript:;" class="ui-link aria-rpc" data-link="' + e + '" data-filename="' + element.filename + '">发送备用' + number[i] + '</a>'));
-                            }
-                        });
+                    if (params.type === 'batchAria') {  //Aria下载
+                        let link = decodeURIComponent(aria2c(element.dlink, element.filename, userAgent));
+                        $div.append($('<a class="ui-link aria-link" href="javascript:;">' + link + '</a>'));
+                    }
+                    if (params.type === 'batchAriaRPC') {
+                        $div.append($('<button class="aria-rpc" data-link="' + element.dlink + '" data-filename="' + element.filename + '">点击发送到Aria下载器</button>'));
                     }
                     $('div.dialog-body', dialog).append($div);
                 });
             }
-            if (params.type == 'shareLink') {
+            if (params.type === 'shareLink') {
                 linkList = params.list;
                 $('div.dialog-header h3 span.dialog-title', dialog).text(params.title);
-                $.each(params.list, function (index, element) {
+                $.each(params.list, (index, element) => {
                     element.dlink = replaceLink(element.dlink);
                     if (element.isdir == 1) return;
                     let $div = $('<div class="row"><div class="ui-title" title="' + element.server_filename + '">' + element.server_filename + '</div><span>：</span><a href="' + element.dlink + '" class="share-download">' + element.dlink + '</a></div>');
                     $('div.dialog-body', dialog).append($div);
                 });
             }
-            if (params.type == 'rpcLink') {
+            if (params.type === 'rpcLink') {
                 linkList = params.list;
                 $('div.dialog-header h3 span.dialog-title', dialog).text(params.title);
-                $.each(params.list, function (index, element) {
+                $.each(params.list, (index, element) => {
                     element.dlink = replaceLink(element.dlink);
                     if (element.isdir == 1) return;
                     let $div = $('<div class="row"><div class="ui-title" title="' + element.server_filename + '">' + element.server_filename + '</div><span>：</span><button class="aria-rpc" data-link="' + element.dlink + '" data-filename="' + element.server_filename + '">点击发送到Aria</button></div>');
                     $('div.dialog-body', dialog).append($div);
                 });
             }
-            if (params.type == 'shareAriaLink') {
+            if (params.type === 'shareAriaLink') {
                 linkList = params.list;
                 $('div.dialog-header h3 span.dialog-title', dialog).text(params.title);
-                $.each(params.list, function (index, element) {
+                $.each(params.list, (index, element) => {
                     if (element.isdir == 1) return;
                     let link = decodeURIComponent(aria2c(element.dlink, element.server_filename));
                     let $div = $('<div class="row"><div class="ui-title" title="' + element.server_filename + '">' + element.server_filename + '</div><span>：</span><a href="javasctipt:void(0)" class="aria-link">' + link + '</a></div>');
@@ -428,7 +403,7 @@
             dialog.show();
         };
 
-        this.close = function () {
+        this.close = () => {
             dialogControl();
         };
 
@@ -483,25 +458,25 @@
             $dialog_control.click(dialogControl);
             $dialog_img.click(refreshVCode);
             $dialog_refresh.click(refreshVCode);
-            $dialog_input.keypress(function (event) {
+            $dialog_input.keypress((event) => {
                 if (event.which == 13)
                     confirmClick();
             });
             $dialog_confirm_button.click(confirmClick);
             $dialog_cancel_button.click(dialogControl);
-            $dialog_input.click(function () {
+            $dialog_input.click(() => {
                 $('#dialog-err').text('');
             });
             return $dialog_div;
         }
 
-        this.open = function (vcode) {
+        this.open = (vcode) => {
             if (vcode)
                 $('#dialog-img').attr('src', vcode.img);
             dialog.show();
             shadow.show();
         };
-        this.close = function () {
+        this.close = () => {
             dialogControl();
         };
         dialog = createDialog();
@@ -522,9 +497,9 @@
         let dialog, searchKey;
         let panAPIUrl = location.protocol + "//" + location.host + "/api/";
         let restAPIUrl = location.protocol + "//pcs.baidu.com/rest/2.0/pcs/";
-        let clientAPIUrl = location.protocol + "//d.pcs.baidu.com/rest/2.0/pcs/";
+        let clientAPIUrl = location.protocol + "//pan.baidu.com/rest/2.0/";
 
-        this.init = function () {
+        this.init = () => {
             yunData = unsafeWindow.yunData;
             clog('初始化信息:', yunData);
             if (yunData === undefined) {
@@ -554,96 +529,63 @@
 
         function registerEventListener() {
             registerDownload();
-            //registerShareClick();
         }
 
         //下载事件
         function registerDownload() {
-            $(document).on('click', '.api-link', function (e) {
+            $(document).on('click', '.api-link', (e) => {
                 e.preventDefault();
                 if (e.target.dataset.link) {
                     execDownload(e.target.dataset.link);
                 }
             });
-            $(document).on('click', '.aria-rpc', function (e) {
+            $(document).on('click', '.aria-rpc', (e) => {
                 let link = e.target.dataset.link;
                 let filename = e.target.dataset.filename;
-                let headers = {};
-                if (!isSuperVIP()) {  //普通用户需要设置userAgentDefault为空
-                    headers = {
-                        "User-Agent": userAgent
-                    };
-                }
+
+                let url = ariaRPC.domain + ":" + ariaRPC.port + '/jsonrpc';
+                let json_rpc = {
+                    id: new Date().getTime(),
+                    jsonrpc: '2.0',
+                    method: 'aria2.addUri',
+                    params: [
+                        "token:" + ariaRPC.token,
+                        [link],
+                        {
+                            dir: ariaRPC.dir,
+                            out: filename,
+                            header: ['User-Agent:' + userAgent, 'Cookie: BDUSS=' + getBDUSS()]
+                        }
+                    ]
+                };
 
                 GM_xmlhttpRequest({
-                    method: "HEAD",
-                    headers: headers,
-                    url: e.target.dataset.link,
-                    onload: function (res) {
-                        let finalUrl = res.finalUrl;
-                        if (finalUrl) {
-                            let url = ariaRPC.domain + ":" + ariaRPC.port + '/jsonrpc';
-                            let json_rpc = {
-                                id: new Date().getTime(),
-                                jsonrpc: '2.0',
-                                method: 'aria2.addUri',
-                                params: [
-                                    "token:" + ariaRPC.token,
-                                    [finalUrl],
-                                    {
-                                        dir: ariaRPC.dir,
-                                        out: filename,
-                                        header: isSuperVIP() ? ['User-Agent:' + userAgentDefault, 'Cookie: BDUSS=' + getBDUSS()] : ['User-Agent:' + userAgent, 'Cookie: BDUSS=' + getBDUSS()]
-                                    }
-                                ]
-                            };
-
-                            GM_xmlhttpRequest({
-                                method: "POST",
-                                headers: {
-                                    "User-Agent": userAgent
-                                },
-                                url: url,
-                                responseType: 'json',
-                                timeout: 3000,
-                                data: JSON.stringify(json_rpc),
-                                onload: function (response) {
-                                    if (response.response.result) {
-                                        Toast.fire({
-                                            icon: 'success',
-                                            title: '任务已发送至RPC下载器'
-                                        });
-                                    } else {
-                                        Toast.fire({
-                                            icon: 'error',
-                                            title: response.response.message
-                                        });
-                                    }
-                                },
-                                ontimeout: function () {
-                                    Toast.fire({
-                                        icon: 'error',
-                                        title: '无法连接到RPC服务，请检查RPC配置'
-                                    });
-                                }
+                    method: "POST",
+                    headers: {"User-Agent": userAgent},
+                    url: url,
+                    responseType: 'json',
+                    timeout: 3000,
+                    data: JSON.stringify(json_rpc),
+                    onload: (response) => {
+                        if (response.response.result) {
+                            Toast.fire({
+                                icon: 'success',
+                                title: '任务已发送至RPC下载器'
+                            });
+                        } else {
+                            Toast.fire({
+                                icon: 'error',
+                                title: response.response.message
                             });
                         }
                     },
-                });
-            });
-        }
-
-        //监视点击分享按钮
-        function registerShareClick() {
-            $(document).on('click', '[title="分享"]', function () {
-                let inv = setInterval(function () {
-                    if ($('#share-method-public').length === 0) {
-                        $(".share-method-line").parent().append('<div class="share-method-line"><input type="radio" id="share-method-public" name="share-method" value="public" checked><span class="icon radio-icon icon-radio-non"></span><label for="share-method-public"><b>公开分享</b><span>任何人访问链接即可查看，下载！</span></div>');
-                    } else {
-                        clearInterval(inv);
-                        $(document).off('click', '[title="分享"]');
+                    ontimeout: () => {
+                        Toast.fire({
+                            icon: 'error',
+                            title: '连接到RPC服务器超时，请检查RPC配置'
+                        });
                     }
-                }, 100);
+                });
             });
         }
 
@@ -651,7 +593,7 @@
         function addButton() {
             $('div.' + classMap['bar-search']).css('width', '18%');
             let $dropdownbutton = $('<span class="g-dropdown-button"></span>');
-            let $dropdownbutton_a = $('<a class="g-button g-button-blue" href="javascript:;"><span class="g-button-right"><em class="icon icon-picpre-download" title="百度网盘下载助手"></em><span class="text" style="width: 60px;">下载助手</span></span></a>');
+            let $dropdownbutton_a = $('<a class="g-button" href="javascript:;"><span class="g-button-right"><em class="icon icon-download"></em><span class="text" style="width: 60px;">下载助手</span></span></a>');
             let $dropdownbutton_span = $('<span class="menu" style="width:114px"></span>');
 
             let $directbutton = $('<span class="g-button-menu" style="display:block"></span>');
@@ -661,10 +603,22 @@
             let $directbutton_batchhttplink_button = $('<a id="batchhttplink-direct" class="g-button-menu" href="javascript:;">显示链接</a>');
             $directbutton_menu.append($directbutton_batchhttplink_button);
             $directbutton.append($directbutton_span.append($directbutton_a).append($directbutton_menu));
-            $directbutton.hover(function () {
+            $directbutton.hover(() => {
                 $directbutton_span.toggleClass('button-open');
             });
             $directbutton_batchhttplink_button.click(batchClick);
+
+            let $pcsbutton = $('<span class="g-button-menu" style="display:block"></span>');
+            let $pcsbutton_span = $('<span class="g-dropdown-button g-dropdown-button-second" menulevel="2"></span>');
+            let $pcsbutton_a = $('<a class="g-button" href="javascript:;"><span class="g-button-right"><span class="text" style="width:auto">API下载</span></span></a>');
+            let $pcsbutton_menu = $('<span class="menu" style="width:120px;left:79px"></span>');
+            let $pcsbutton_batchhttplink_button = $('<a id="batchhttplink-pcs" class="g-button-menu" href="javascript:;">显示链接</a>');
+            $pcsbutton_menu.append($pcsbutton_batchhttplink_button);
+            $pcsbutton.append($pcsbutton_span.append($pcsbutton_a).append($pcsbutton_menu));
+            $pcsbutton.hover(() => {
+                $pcsbutton_span.toggleClass('button-open');
+            });
+            $pcsbutton_batchhttplink_button.click(batchClick);
 
             let $ariadirectbutton = $('<span class="g-button-menu" style="display:block"></span>');
             let $ariadirectbutton_span = $('<span class="g-dropdown-button g-dropdown-button-second" menulevel="2"></span>');
@@ -673,7 +627,7 @@
             let $ariadirectbutton_batchhttplink_button = $('<a id="batchhttplink-aria" class="g-button-menu" href="javascript:;">显示链接</a>');
             $ariadirectbutton_menu.append($ariadirectbutton_batchhttplink_button);
             $ariadirectbutton.append($ariadirectbutton_span.append($ariadirectbutton_a).append($ariadirectbutton_menu));
-            $ariadirectbutton.hover(function () {
+            $ariadirectbutton.hover(() => {
                 $ariadirectbutton_span.toggleClass('button-open');
             });
             $ariadirectbutton_batchhttplink_button.click(batchClick);
@@ -686,7 +640,7 @@
             let $ariarpcbutton_setting_button = $('<a class="g-button-menu" href="javascript:;">RPC配置</a>');
             $ariarpcbutton_menu.append($ariarpcbutton_batchhttplink_button).append($ariarpcbutton_setting_button);
             $ariarpcbutton.append($ariarpcbutton_span.append($ariarpcbutton_a).append($ariarpcbutton_menu));
-            $ariarpcbutton.hover(function () {
+            $ariarpcbutton.hover(() => {
                 $ariarpcbutton_span.toggleClass('button-open');
             });
             $ariarpcbutton_batchhttplink_button.click(batchClick);
@@ -701,22 +655,17 @@
             let $setting_button = $('<a id="appid-setting" class="g-button-menu" href="javascript:;">神秘代码</a>');
             let $default_setting = $('<a id="default-setting" class="g-button-menu" href="javascript:;" style="color: #999;">恢复默认</a>');
             $apibutton_menu.append($apibutton_download_button).append($apibutton_batchhttplink_button)/*.append($setting_button).append($default_setting)*/;
-            let $sharebutton = $('<span class="g-button-menu" style="display:block;cursor: pointer">分享选中(7天)</span>');
-            let $versionButton = $('<a style="color: #e85653;font-weight: 700;" class="g-button-menu" href="javascript:;">Ver ' + version + '</a>');
-
             $apibutton.append($apibutton_span.append($apibutton_a).append($apibutton_menu));
-            $apibutton.hover(function () {
+            $apibutton.hover(() => {
                 $apibutton_span.toggleClass('button-open');
             });
             $apibutton_download_button.click(downloadClick);
             $apibutton_batchhttplink_button.click(batchClick);
             $setting_button.click(setSecretCode);
             $default_setting.click(defaultSetting);
-            $versionButton.click(versionButtonClick);
-            $sharebutton.click(shareButtonClick);
-            $dropdownbutton_span.append($apibutton)/*.append($directbutton)*/.append($ariadirectbutton).append($ariarpcbutton).append($sharebutton).append($versionButton);
+            $dropdownbutton_span.append($pcsbutton).append($ariadirectbutton).append($ariarpcbutton);
             $dropdownbutton.append($dropdownbutton_a).append($dropdownbutton_span);
-            $dropdownbutton.hover(function () {
+            $dropdownbutton.hover(() => {
                 $dropdownbutton.toggleClass('button-open');
             });
 
@@ -734,13 +683,13 @@
             let $dom = $(dom);
 
             Swal.fire({
-                    title: 'RPC配置',
-                    allowOutsideClick: false,
-                    html: $dom[0],
-                    showCancelButton: true,
-                    confirmButtonText: '保存',
-                    cancelButtonText: '取消'
-                }
+                  title: 'RPC配置',
+                  allowOutsideClick: false,
+                  html: $dom[0],
+                  showCancelButton: true,
+                  confirmButtonText: '保存',
+                  cancelButtonText: '取消'
+              }
             ).then((result) => {
                 if (result.value) {
                     setValue('rpcDomain', $('#rpcDomain').val() ? $('#rpcDomain').val() : ariaRPC.domain);
@@ -789,11 +738,6 @@
 
         function isSuperVIP() {
             return yunData.ISSVIP === 1;
-        }
-
-        function versionButtonClick() {
-            let url = 'https://www.baiduyun.wiki';
-            GM_openInTab(url, {active: true});
         }
 
         // 我的网盘 - 下载
@@ -946,7 +890,7 @@
                 let httplink = downloadLink.replace(/^([A-Za-z]+):/, 'http:');
                 let httpslink = downloadLink.replace(/^([A-Za-z]+):/, 'https:');
                 let filename = '';
-                $.each(selectFileList, function (index, element) {
+                $.each(selectFileList, (index, element) => {
                     if (selectFileList.length == 1)
                         filename = element.server_filename;
                     else {
@@ -963,7 +907,7 @@
                         {url: httpslink, rank: 2}
                     ]
                 };
-                tip = '显示模拟百度网盘网页获取的链接，可以使用右键迅雷或IDM下载，多文件打包(限300k)下载的链接可以直接复制使用';
+                tip = '显示百度网盘网页获取的链接，可以使用右键迅雷或IDM下载，多文件打包(限300k)下载的链接可以直接复制使用';
                 dialog.open({title: '下载链接', type: 'link', list: linkList, tip: tip});
             } else {
                 if (selectFileList.length === 0) {
@@ -999,7 +943,7 @@
                         ]
                     };
 
-                    tip = '显示模拟APP获取的链接(使用百度云ID)，可以右键使用迅雷或IDM下载，直接复制链接无效';
+                    tip = '显示获取的链接(使用百度云ID)，可以右键使用迅雷或IDM下载，直接复制链接无效';
                     dialog.open({title: '下载链接', type: 'link', list: linkList, tip: tip});
                 }
             }
@@ -1008,7 +952,6 @@
         // 我的网盘 - 批量下载
         function batchClick(event) {
             selectFileList = getSelectedFile();
-            clog('选中文件列表：', selectFileList);
             if (selectFileList.length === 0) {
                 Toast.fire({
                     icon: 'error',
@@ -1016,14 +959,15 @@
                 });
                 return;
             }
+            clog('选中文件列表：', selectFileList);
             let id = event.target.id;
             let linkType, tip;
             linkType = id.indexOf('https') == -1 ? (id.indexOf('http') == -1 ? location.protocol + ':' : 'http:') : 'https:';
             batchLinkList = [];
             batchLinkListAll = [];
             if (id.indexOf('direct') > 0) {  //直链下载
-                batchLinkList = getDirectBatchLink(linkType);
-                let tip = '点击链接直接下载，请先升级 <a href="https://www.baiduyun.wiki/zh-cn/assistant.html">[网盘万能助手]</a> 至 <b>v2.3.1</b>，本链接仅支持小文件下载（<300M）';
+                batchLinkList = getPCSBatchLink(linkType);
+                let tip = '点击链接直接下载，若下载失败，请尝试其他方法或参考 <a href="https://www.baiduyun.wiki/zh-cn/question.html">常见问题</a>';
                 if (batchLinkList.length === 0) {
                     Toast.fire({
                         icon: 'error',
@@ -1033,31 +977,52 @@
                 }
                 dialog.open({title: '直链下载', type: 'batch', list: batchLinkList, tip: tip, showcopy: false});
             }
+            if (id.indexOf('pcs') > 0) {  //PCS下载
+                getPCSBatchLink((batchLinkList) => {
+                    let tip = '点击链接直接下载，若下载失败，请尝试其他方法或参考 <a href="https://www.baiduyun.wiki/zh-cn/question.html">常见问题</a>';
+                    if (batchLinkList.length === 0) {
+                        Toast.fire({
+                            icon: 'error',
+                            text: errorMsg.unselected
+                        });
+                        return;
+                    }
+                    dialog.open({title: 'PCS下载', type: 'pcs', list: batchLinkList, tip: tip, showcopy: false});
+                });
+            }
             if (id.indexOf('aria') > 0) {  //ariaAPI下载
-                batchLinkList = getAPIBatchLink(linkType);
-                tip = '请先安装 <a  href="https://www.baiduyun.wiki/zh-cn/assistant.html">网盘万能助手</a> 请将链接复制到支持Aria的下载器中, 推荐使用 <a href="http://pan.baiduyun.wiki/down">XDown</a>';
-                if (batchLinkList.length === 0) {
-                    Toast.fire({
-                        icon: 'error',
-                        text: errorMsg.unselected
-                    });
-                    return;
-                }
-                dialog.open({title: 'Aria链接', type: 'batchAria', list: batchLinkList, tip: tip, showcopy: true});
+                getPCSBatchLink((batchLinkList) => {
+                    tip = '请先安装 <a  href="https://www.baiduyun.wiki/zh-cn/assistant.html">网盘万能助手</a> 请将链接复制到支持Aria的下载器中, 推荐使用 <a href="http://pan.baiduyun.wiki/down">XDown</a>';
+                    if (batchLinkList.length === 0) {
+                        Toast.fire({
+                            icon: 'error',
+                            text: errorMsg.unselected
+                        });
+                        return;
+                    }
+                    dialog.open({title: 'Aria链接', type: 'batchAria', list: batchLinkList, tip: tip, showcopy: true});
+                });
             }
             if (id.indexOf('rpc') > 0) {  //ariaAPI下载
-                batchLinkList = getAPIBatchLink(linkType);
-                tip = '点击按钮发送链接至Aria下载器中<a href="https://www.baiduyun.wiki/zh-cn/rpc.html">详细说明</a>，需配合最新版 <a href="https://www.baiduyun.wiki/zh-cn/assistant.html">[网盘万能助手]</a>，支持本地和远程下载，此功能建议配合百度会员使用';
-                if (batchLinkList.length === 0) {
-                    Toast.fire({
-                        icon: 'error',
-                        text: errorMsg.unselected
+                getPCSBatchLink((batchLinkList) => {
+                    tip = '点击按钮发送链接至Aria下载器中<a href="https://www.baiduyun.wiki/zh-cn/rpc.html">详细说明</a>，需配合最新版 <a href="https://www.baiduyun.wiki/zh-cn/assistant.html">[网盘万能助手]</a>，支持本地和远程下载，此功能建议配合百度会员使用';
+                    if (batchLinkList.length === 0) {
+                        Toast.fire({
+                            icon: 'error',
+                            text: errorMsg.unselected
+                        });
+                        return;
+                    }
+                    dialog.open({
+                        title: 'Aria RPC',
+                        type: 'batchAriaRPC',
+                        list: batchLinkList,
+                        tip: tip,
+                        showcopy: false
                     });
-                    return;
-                }
-                dialog.open({title: 'Aria RPC', type: 'batchAriaRPC', list: batchLinkList, tip: tip, showcopy: false});
+                });
             }
-            if (id.indexOf('api') != -1) {  //API下载
+            if (id.indexOf('api') > 0) {  //API下载
                 batchLinkList = getAPIBatchLink(linkType);
                 tip = '请先安装 <a href="https://www.baiduyun.wiki/zh-cn/assistant.html">网盘万能助手</a> <b>v2.3.1</b> 后点击链接下载，若下载失败，请开启 <a href="https://www.baiduyun.wiki/zh-cn/question.html" target="_blank">备用链接</a>';
                 if (batchLinkList.length === 0) {
@@ -1071,35 +1036,10 @@
             }
         }
 
-        //我的网盘 - 获取直链下载地址
-        function getDirectBatchLink(linkType) {
-            let list = [];
-            $.each(selectFileList, function (index, element) {
-                let downloadType, downloadLink, result;
-                if (element.isdir == 0)
-                    downloadType = 'dlink';
-                else
-                    downloadType = 'batch';
-                fid_list = getFidList([element]);
-                result = getDownloadLinkWithPanAPI(downloadType);
-                if (result.errno == 0) {
-                    if (downloadType == 'dlink')
-                        downloadLink = result.dlink[0].dlink;
-                    else if (downloadType == 'batch')
-                        downloadLink = result.dlink;
-                    downloadLink = downloadLink.replace(/^([A-Za-z]+):/, linkType);
-                } else {
-                    downloadLink = 'error';
-                }
-                list.push({filename: element.server_filename, downloadlink: downloadLink});
-            });
-            return list;
-        }
-
         //我的网盘 - 获取API下载地址
         function getAPIBatchLink(linkType) {
             let list = [];
-            $.each(selectFileList, function (index, element) {
+            $.each(selectFileList, (index, element) => {
                 if (element.isdir == 1)
                     return;
                 let downloadLink;
@@ -1111,6 +1051,30 @@
                 });
             });
             return list;
+        }
+
+        //我的网盘 - 获取PCS下载地址
+        function getPCSBatchLink(callback) {
+            let fsids = [];
+            $.each(selectFileList, (index, element) => {
+                if (element.isdir == 1)
+                    return;
+                fsids.push(element.fs_id);
+            });
+            fsids = encodeURIComponent(JSON.stringify(fsids));
+            let link = clientAPIUrl + `xpan/multimedia?method=filemetas&access_token=undefined&fsids=${fsids}&dlink=1`;
+            GM_xmlhttpRequest({
+                method: "GET",
+                responseType: 'json',
+                headers: {"User-Agent": userAgent},
+                url: link,
+                onload: (res) => {
+                    let response = res.response;
+                    if (response.errno === 0) {
+                        callback(response.list);
+                    }
+                }
+            });
         }
 
         function getSign() {
@@ -1129,85 +1093,11 @@
             if (list.length === 0)
                 return null;
             let fileidlist = [];
-            $.each(list, function (index, element) {
+            $.each(list, (index, element) => {
                 fileidlist.push(element.fs_id);
             });
             fidlist = '[' + fileidlist + ']';
             return fidlist;
-        }
-
-        //点击分享按钮
-        function shareButtonClick() {
-            selectFileList = getSelectedFile();
-            let path = [];
-            if (selectFileList.length === 0) {
-                Toast.fire({
-                    icon: 'error',
-                    text: errorMsg.unselected
-                });
-                return;
-            }
-
-            $.each(selectFileList, function (i, val) {
-                path.push(val['path']);
-            });
-
-            let shareAPIUrl = "https://pan.baidu.com/share/set?channel=chunlei&clienttype=0&web=1&channel=chunlei&web=1&app_id=250528&bdstoken=" + bdstoken + "&logid=" + logid;
-            let pwd = generatePwd();
-
-            let params = {
-                schannel: 4,
-                channel_list: JSON.stringify([]),
-                period: 7,
-                pwd: pwd,
-                fid_list: getFidList(selectFileList)
-            };
-
-            $.ajax({
-                url: shareAPIUrl,
-                async: false,
-                method: 'POST',
-                data: params,
-                success: function (res) {
-                    if (res.errno === 0) {
-                        let link = res.link;
-                        Swal.fire({
-                            title: "分享链接(7天有效)",
-                            allowOutsideClick: false,
-                            html: `<a href="${link}" target="_blank">${link}</a><br>提取码: ${pwd}`,
-                            confirmButtonText: '复制链接',
-                            footer: copyright
-                        }).then((result) => {
-                            if (result.value) {
-                                GM_setClipboard(link + '#' + pwd);
-                            }
-                        });
-                    }
-                }
-            });
-        }
-
-        //生成四位字母数字随机数
-        function generatePwd() {
-            function random(max, min) {
-                return Math.round(Math.random() * (max - min) + min);
-            }
-            //创建一个空字符，用于存放随机数/字母
-            var strData = "";
-            //生成随机字符库 (验证码四位，随机数三种，取公倍数12,所以循环4次。也可以是120次，1200次。)
-            for (let i = 0; i < 4; i++) {
-                let num = random(0, 9);//生成0-9的随机数
-                let az = String.fromCharCode(random(97, 122));//生成a-z
-                let AZ = String.fromCharCode(random(65, 90));//生成A-Z
-
-                strData = strData + num + az + AZ;//将生成的字符进行字符串拼接
-            }
-            // 开始真正的随机(从随机字符库中随机取出四个)
-            let str = "";
-            for (let i = 0; i < 4; i++) {
-                str += strData[random(0, strData.length - 1)];
-            }
-            return str;
         }
 
         //获取直接下载地址
@@ -1230,7 +1120,7 @@
                 async: false,
                 method: 'POST',
                 data: params,
-                success: function (response) {
+                success: (response) => {
                     result = response;
                 }
             });
@@ -1242,10 +1132,9 @@
             return restAPIUrl + 'file?method=download&path=' + encodeURIComponent(path) + '&app_id=' + secretCode;
         }
 
-
         function getDownloadById(path) {
             let paths = [];
-            $.each(ids, function (index, element) {
+            $.each(ids, (index, element) => {
                 paths.push(restAPIUrl + 'file?method=download&path=' + encodeURIComponent(path) + '&app_id=' + element);
             });
             return paths;
@@ -1267,14 +1156,13 @@
     //分享页面的下载助手
     function PanShareHelper() {
         let yunData, sign, timestamp, bdstoken, channel, clienttype, web, app_id, logid, encrypt, product, uk,
-            primaryid, fid_list, extra, shareid;
+          primaryid, fid_list, extra, shareid;
         let vcode;
         let shareType, buttonTarget, dialog, vcodeDialog;
         let selectFileList = [];
         let panAPIUrl = location.protocol + "//" + location.host + "/api/";
 
-        this.init = function () {
-            if (getValue('SETTING_P')) getShareCode();
+        this.init = () => {
             yunData = unsafeWindow.yunData;
             clog('初始化信息:', yunData);
             if (yunData === undefined) {
@@ -1325,69 +1213,6 @@
             }
         }
 
-        function getShareCode() {
-            let hash = location.hash && /^#([a-zA-Z0-9]{4})$/.test(location.hash) && RegExp.$1,
-                input = $('.pickpw input[tabindex="1"]'),
-                btn = $('.pickpw a.g-button'),
-                inputarea = $('.pickpw .input-area'),
-                tip = $('<div style="margin:-8px 0 10px ;color: #ff5858">正在获取提取码</div>'),
-                surl = (location.href.match(/\/init\?(?:surl|shareid)=((?:\w|-)+)/) || location.href.match(/\/s\/1((?:\w|-)+)/))[1];
-            if (!input || !btn) {
-                return;
-            }
-            inputarea.prepend(tip);
-            if (hash) {
-                tip.text('发现提取码，已自动为您填写');
-                setTimeout(function () {
-                        input.val(hash);
-                        btn.click();
-                    },
-                    500);
-            }
-
-            GM_xmlhttpRequest({
-                method: 'GET',
-                url: 'https://ypsuperkey.meek.com.cn/api/v1/items/BDY-' + surl + '?client_version=2019.2',
-                onload: function (xhr) {
-                    let result = JSON.parse(xhr.responseText);
-                    if (result.access_code) {
-                        tip.text('发现提取码，已自动为您填写');
-                        input.val(result.access_code);//填写密码
-                        setTimeout(function () {
-                            btn.click();
-                            showReferer(result.referrer);
-                        }, 300);
-                    } else {
-                        tip.text('未发现提取码，请手动填写');
-                    }
-                }
-            });
-        }
-
-        function showReferer(referrer) {
-            if (typeof referrer !== 'object') return false;
-            let ref = Object.values(referrer);
-            let temp = {};
-            let refs = ref.reduce((preVal, curVal) => {
-                temp[curVal.title] ? '' : temp[curVal.title] = true && preVal.push(curVal);
-                return preVal;
-            }, []);
-
-            let ins = setInterval(function () {
-                if ($('.slide-show-header').length > 0) {
-                    clearInterval(ins);
-                    let $parent = $('<div style="max-height: 82px;overflow: scroll"></div>');
-                    $('.slide-show-header').append($parent);
-                    $.each(refs, function (index, element) {
-                        if (element.title != "undefined") {
-                            let $div = $('<a style="display: block;margin-top: 7px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;" href="' + element.url + '" target="_blank">【来源】：' + element.title + '</a>');
-                            $parent.append($div);
-                        }
-                    });
-                }
-            }, 500);
-        }
-
         //判断分享类型（public或者secret）
         function getShareType() {
             return yunData.SHARE_PUBLIC === 1 ? 'public' : 'secret';
@@ -1425,35 +1250,28 @@
             } else
                 $('div.slide-show-right').css('width', '500px');
             let $dropdownbutton = $('<span class="g-dropdown-button"></span>');
-            let $dropdownbutton_a = $('<a class="g-button g-button-blue" style="width: 114px;" data-button-id="b200" data-button-index="200" href="javascript:;"></a>');
-            let $dropdownbutton_a_span = $('<span class="g-button-right"><em class="icon icon-picpre-download" title="百度网盘下载助手"></em><span class="text" style="width: 60px;">下载助手</span></span>');
+            let $dropdownbutton_a = $('<a class="g-button" style="width: 114px;" data-button-id="b200" data-button-index="200" href="javascript:;"></a>');
+            let $dropdownbutton_a_span = $('<span class="g-button-right"><em class="icon icon-download"></em><span class="text" style="width: 60px;">下载助手</span></span>');
             let $dropdownbutton_span = $('<span class="menu" style="width:auto;z-index:41"></span>');
 
             let $downloadButton = $('<a class="g-button-menu" href="javascript:;">直接下载</a>');
             let $linkButton = $('<a class="g-button-menu" href="javascript:;" data-type="down">显示链接</a>');
             let $aricLinkButton = $('<a class="g-button-menu" href="javascript:;">显示Aria链接</a>');
             let $aricRPCButton = $('<a class="g-button-menu" href="javascript:;" data-type="rpc">RPC下载</a>');
-            let $versionButton = $('<a style="color: #e85653;font-weight: 700;" class="g-button-menu" href="javascript:;">Ver ' + version + '</a>');
 
-            $dropdownbutton_span.append($downloadButton).append($linkButton).append($aricRPCButton).append($aricLinkButton).append($versionButton)/*.append($github)*/;
+            $dropdownbutton_span.append($downloadButton).append($linkButton).append($aricRPCButton).append($aricLinkButton);
             $dropdownbutton_a.append($dropdownbutton_a_span);
             $dropdownbutton.append($dropdownbutton_a).append($dropdownbutton_span);
 
-            $dropdownbutton.hover(function () {
+            $dropdownbutton.hover(() => {
                 $dropdownbutton.toggleClass('button-open');
             });
             $downloadButton.click(downloadButtonClick);
             $aricRPCButton.click(linkButtonClick);
             $linkButton.click(linkButtonClick);
             $aricLinkButton.click(ariclinkButtonClick);
-            $versionButton.click(versionButtonClick);
 
             $('div.module-share-top-bar div.bar div.x-button-box').append($dropdownbutton);
-        }
-
-        function versionButtonClick() {
-            let url = 'https://www.baiduyun.wiki';
-            GM_openInTab(url, {active: true});
         }
 
         function ariclinkButtonClick() {
@@ -1482,7 +1300,7 @@
             }
 
             buttonTarget = 'ariclink';
-            getDownloadLink(function (downloadLink) {
+            getDownloadLink((downloadLink) => {
                 if (downloadLink === undefined) return;
 
                 if (downloadLink.errno == -20) {
@@ -1531,65 +1349,51 @@
         }
 
         function registerDownload() {
-            $(document).on('click', '.aria-rpc', function (e) {
+            $(document).on('click', '.aria-rpc', (e) => {
                 let link = e.target.dataset.link;
                 let filename = e.target.dataset.filename;
 
-                GM_xmlhttpRequest({
-                    method: "HEAD",
-                    headers: {
-                        "User-Agent": userAgent
-                    },
-                    url: e.target.dataset.link,
-                    onload: function (res) {
-                        let finalUrl = res.finalUrl;
-                        if (finalUrl) {
-                            let url = ariaRPC.domain + ":" + ariaRPC.port + '/jsonrpc';
-                            let json_rpc = {
-                                id: new Date().getTime(),
-                                jsonrpc: '2.0',
-                                method: 'aria2.addUri',
-                                params: [
-                                    "token:" + ariaRPC.token,
-                                    [finalUrl],
-                                    {
-                                        dir: ariaRPC.dir,
-                                        out: filename,
-                                        header: ['User-Agent:' + userAgent, 'Cookie: BDUSS=' + getBDUSS()]
+                let url = ariaRPC.domain + ":" + ariaRPC.port + '/jsonrpc';
+                let json_rpc = {
+                    id: new Date().getTime(),
+                    jsonrpc: '2.0',
+                    method: 'aria2.addUri',
+                    params: [
+                        "token:" + ariaRPC.token,
+                        [link],
+                        {
+                            dir: ariaRPC.dir,
+                            out: filename,
+                            header: ['User-Agent:' + userAgent, 'Cookie: BDUSS=' + getBDUSS()]
 
-                                    }
-                                ]
-                            };
-                            GM_xmlhttpRequest({
-                                method: "POST",
-                                headers: {
-                                    "User-Agent": userAgent
-                                },
-                                url: url,
-                                responseType: 'json',
-                                timeout: 3000,
-                                data: JSON.stringify(json_rpc),
-                                onload: function (response) {
-                                    if (response.response.result) {
-                                        Toast.fire({
-                                            icon: 'success',
-                                            title: '任务已发送至RPC下载器'
-                                        });
-                                    } else {
-                                        Toast.fire({
-                                            icon: 'error',
-                                            title: response.response.message
-                                        });
-                                    }
-                                },
-                                ontimeout: function () {
-                                    Toast.fire({
-                                        icon: 'error',
-                                        title: '无法连接到RPC服务，请检查RPC配置'
-                                    });
-                                }
+                        }
+                    ]
+                };
+                GM_xmlhttpRequest({
+                    method: "POST",
+                    headers: {"User-Agent": userAgent},
+                    url: url,
+                    responseType: 'json',
+                    timeout: 3000,
+                    data: JSON.stringify(json_rpc),
+                    onload: (response) => {
+                        if (response.response.result) {
+                            Toast.fire({
+                                icon: 'success',
+                                title: '任务已发送至RPC下载器'
+                            });
+                        } else {
+                            Toast.fire({
+                                icon: 'error',
+                                title: response.response.message
                             });
                         }
+                    },
+                    ontimeout: () => {
+                        Toast.fire({
+                            icon: 'error',
+                            title: '连接到RPC服务器超时，请检查RPC配置'
+                        });
                     }
                 });
             });
@@ -1628,7 +1432,7 @@
                 return false;
             }
             buttonTarget = 'download';
-            getDownloadLink(function (downloadLink) {
+            getDownloadLink((downloadLink) => {
                 if (downloadLink === undefined) return;
 
                 if (downloadLink.errno == -20) {
@@ -1678,7 +1482,7 @@
                 method: 'GET',
                 async: false,
                 data: params,
-                success: function (response) {
+                success: (response) => {
                     result = response;
                 }
             });
@@ -1701,7 +1505,7 @@
                 $('#dialog-err').text('验证码输入错误，请重新输入');
                 return;
             }
-            getDownloadLinkWithVCode(val, function (result) {
+            getDownloadLinkWithVCode(val, (result) => {
                 if (result.errno == -20) {
                     vcodeDialog.close();
                     $('#dialog-err').text('验证码输入错误，请重新输入');
@@ -1759,7 +1563,7 @@
         //生成下载用的fid_list参数
         function getFidList() {
             let fidlist = [];
-            $.each(selectFileList, function (index, element) {
+            $.each(selectFileList, (index, element) => {
                 fidlist.push(element.fs_id);
             });
             return '[' + fidlist + ']';
@@ -1791,7 +1595,7 @@
             }
 
             buttonTarget = 'link';
-            getDownloadLink(function (downloadLink) {
+            getDownloadLink((downloadLink) => {
                 if (downloadLink === undefined) return;
 
                 if (downloadLink.errno == -20) {
@@ -1865,20 +1669,10 @@
                     params.append('extra', extra);
                 }
 
-                $.ajax({
-                    url: 'https://api.baiduyun.wiki/download?sign=' + sign + '&timestamp=' + timestamp + '&logid=' + logid + '&init=' + getValue('init'),
-                    cache: false,
-                    method: 'GET',
-                    async: false,
-                    complete(response) {
-                        res = response.responseText;
-                    }
-                });
-
                 GM_xmlhttpRequest({
                     method: "POST",
                     data: params,
-                    url: atob(atob(res)),
+                    url: `https://pan.baidu.com/api/sharedownload?sign=${sign}&timestamp=${timestamp}+&logid=${logid}&channel=chunlei&clienttype=12&web=1&app_id=250528`,
                     onload: function (res) {
                         cb(JSON.parse(res.response));
                     }
@@ -1906,20 +1700,10 @@
                     params.append('extra', extra);
                 }
 
-                $.ajax({
-                    url: 'https://api.baiduyun.wiki/download?sign=' + sign + '&timestamp=' + timestamp + '&logid=' + logid,
-                    cache: false,
-                    method: 'GET',
-                    async: false,
-                    complete(response) {
-                        res = response.responseText;
-                    }
-                });
-
                 GM_xmlhttpRequest({
                     method: "POST",
                     data: params,
-                    url: atob(atob(res)),
+                    url: `https://pan.baidu.com/api/sharedownload?sign=${sign}&timestamp=${timestamp}+&logid=${logid}&channel=chunlei&clienttype=12&web=1&app_id=250528`,
                     onload: function (res) {
                         cb(JSON.parse(res.response));
                     }
@@ -1936,7 +1720,7 @@
                         "User-Agent": userAgent
                     },
                     url: link,
-                    onload: function (res) {
+                    onload: (res) => {
                         //cb(JSON.parse(res.response));
                     }
                 });
@@ -1948,18 +1732,18 @@
 
     function PanPlugin() {
         clog('RPC：', ariaRPC);
-        this.init = function () {
+        this.init = () => {
             main();
+            addGMStyle();
             checkUpdate();
-            if (getValue('SETTING_H')) {
-                createHelp();
-            }
+            if (getValue('SETTING_H')) createHelp();
             createMenu();
         };
 
         function loadPanhelper() {
             switch (detectPage()) {
                 case 'disk':
+                case 'oauth2.0':
                     let panHelper = new PanHelper();
                     panHelper.init();
                     return;
@@ -1973,11 +1757,27 @@
             }
         }
 
+        function addGMStyle() {
+            GM_addStyle(`
+                .dialog .row {overflow: hidden;text-overflow: ellipsis;white-space: nowrap;}
+                .dialog .row .ui-title {width: 150px;float: left;overflow: hidden;text-overflow: ellipsis;}
+                .dialog .row .ui-link {margin-right: 20px;}
+                .dialog-body {max-height: 450px;overflow-y: auto;padding: 0 20px;}
+                .dialog-tip {padding: 0 20px;background-color: #fff;border-top: 1px solid #c4dbfe;color: #dc373c;}
+                .tm-setting {display: flex;align-items: center;justify-content: space-between;padding-top: 20px;}
+                .tm-checkbox {width: 16px;height: 16px;}
+                #dialog-copy-button {width: 120px;margin: 5px 0px 10px;cursor: pointer;background: #cc3235;border: none;height: 30px;color: #fff;border-radius: 3px;}
+                .flex-center-between {display: flex;align-items: center;justify-content: space-between}
+            `);
+        }
+
         function checkUpdate() {
-            $.ajax({
-                url: `https://api.baiduyun.wiki/update?ver=${version}&s=web`,
-                method: 'GET',
-                success: function (res) {
+            GM_xmlhttpRequest({
+                method: "GET",
+                url: `https://api.baiduyun.wiki/update?ver=${version}`,
+                responseType: 'json',
+                onload: function (r) {
+                    let res = r.response;
                     setValue('lastest_version', res.version);
                     userAgent = res.ua;
                     ids = res.ids;
@@ -1987,8 +1787,7 @@
                                 title: `发现新版本 <span style="background: #da5961;vertical-align: top;display: inline-block;font-size: 14px;height: 18px;line-height: 18px;border-radius: 3px;padding: 0 6px;color: #fff;">${res.version}</span>`,
                                 icon: 'success',
                                 html: res.changelog,
-                                confirmButtonText: '更新',
-                                footer: copyright
+                                confirmButtonText: '更新'
                             }).then((result) => {
                                 if (result.value) {
                                     location.href = res.updateURL;
@@ -2034,15 +1833,11 @@
                 let topbar = $('.' + classMap['header']);
                 let toptemp = $('<span class="cMEMEF" node-type="help-author" style="opacity: .5" ><a href="https://www.baiduyun.wiki/" target="_blank">教程</a><i class="find-light-icon" style="display: inline;background-color: #009fe8;"></i></span>');
                 topbar.append(toptemp);
-            }, 2000);
+            }, 5000);
         }
 
         function createMenu() {
-            GM_registerMenuCommand('设置', function () {
-                if (getValue('SETTING_P') === undefined) {
-                    setValue('SETTING_P', false);
-                }
-
+            GM_registerMenuCommand('设置', () => {
                 if (getValue('SETTING_H') === undefined) {
                     setValue('SETTING_H', true);
                 }
@@ -2052,11 +1847,6 @@
                 }
 
                 let dom = '';
-                if (getValue('SETTING_P')) {
-                    dom += '<label class="tm-setting">自动填写提取码<input type="checkbox" id="S-P" checked class="tm-checkbox"></label>';
-                } else {
-                    dom += '<label class="tm-setting">自动填写提取码<input type="checkbox" id="S-P" class="tm-checkbox"></label>';
-                }
                 if (getValue('SETTING_B')) {
                     dom += '<label class="tm-setting">开启备用链接<input type="checkbox" id="S-B" checked class="tm-checkbox"></label>';
                 } else {
@@ -2072,19 +1862,15 @@
                 Swal.fire({
                     title: '脚本配置',
                     html: $dom[0],
-                    confirmButtonText: '保存',
-                    footer: copyright
+                    confirmButtonText: '保存'
                 }).then((result) => {
                     history.go(0);
                 });
             });
-            $(document).on('change', '#S-P', function () {
-                setValue('SETTING_P', $(this)[0].checked);
-            });
-            $(document).on('change', '#S-B', function () {
+            $(document).on('change', '#S-B', () => {
                 setValue('SETTING_B', $(this)[0].checked);
             });
-            $(document).on('change', '#S-H', function () {
+            $(document).on('change', '#S-H', () => {
                 setValue('SETTING_H', $(this)[0].checked);
             });
         }
@@ -2092,26 +1878,20 @@
         function main() {
             setValue('current_version', version);
 
-            let script = document.createElement("script");
-            script.type = "text/javascript";
-            script.async = true;
-            script.src = "https://js.users.51.la/19988117.js";
-            document.getElementsByTagName("head")[0].appendChild(script);
-
             //解决https无法加载http资源的问题
             let oMeta = document.createElement('meta');
             oMeta.httpEquiv = 'Content-Security-Policy';
             oMeta.content = 'upgrade-insecure-requests';
             document.getElementsByTagName('head')[0].appendChild(oMeta);
 
-            $(document).on('contextmenu', '.aria-link', function (e) {
+            $(document).on('contextmenu', '.aria-link', (e) => {
                 e.preventDefault();
                 return false;
             });
 
-            $(document).on('mousedown', '.aria-link', function (e) {
+            $(document).on('mousedown', '.aria-link', (e) => {
                 e.preventDefault();
-                let link = decodeURIComponent($(this).data('link'));
+                let link = decodeURIComponent($(this).text());
                 GM_setClipboard(link, 'text');
                 Toast.fire({
                     icon: 'success',
@@ -2120,15 +1900,36 @@
                 return false;
             });
 
-            $(document).on('click', '.share-download', function (e) {
+            $(document).on('click', '.share-download', (e) => {
                 e.preventDefault();
                 if (e.target.innerText) {
                     GM_xmlhttpRequest({
                         method: "POST",
                         headers: {"User-Agent": userAgent},
                         url: e.target.innerText,
-                        onload: function (res) {
+                        onload: (res) => {
                             //GM_openInTab(res.finalUrl, {active: false});
+                        }
+                    });
+                }
+            });
+
+            $(document).on('click', '.pcs-link', (e) => {
+                let link = e.target.dataset.link;
+                let filename = e.target.dataset.filename;
+                if (link) {
+                    GM_xmlhttpRequest({
+                        method: "HEAD",
+                        headers: {"User-Agent": userAgent},
+                        url: link,
+                        onload: (res) => {
+                            let final = res.finalUrl.replace('https', "http");
+                            GM_download({
+                                url: final,
+                                headers: {"User-Agent": userAgent},
+                                name: filename,
+                                saveAs: true,
+                            });
                         }
                     });
                 }
@@ -2136,28 +1937,11 @@
         }
     }
 
-    $(function () {
-        let plugin = new PanPlugin();
-        plugin.init();
+    $(() => {
+        //阻止在其他网站运行
+        if (hostname.match(/(pan|yun).baidu.com/i)) {
+            let plugin = new PanPlugin();
+            plugin.init();
+        }
     });
-
-    GM_addStyle(`
-        .dialog .row {overflow: hidden;text-overflow: ellipsis;white-space: nowrap;}
-    
-        .dialog .row .ui-title {width: 150px;float: left;overflow: hidden;text-overflow: ellipsis;}
-    
-        .dialog .row .ui-link {margin-right: 20px;}
-    
-        .dialog-body {max-height: 450px;overflow-y: auto;padding: 0 20px;}
-    
-        .dialog-tip {padding: 0 20px;background-color: #fff;border-top: 1px solid #c4dbfe;color: #dc373c;}
-    
-        .tm-setting {display: flex;align-items: center;justify-content: space-between;padding-top: 20px;}
-    
-        .tm-checkbox {width: 16px;height: 16px;}
-    
-        #dialog-copy-button {width: 120px;margin: 5px 0px 10px;cursor: pointer;background: #cc3235;border: none;height: 30px;color: #fff;border-radius: 3px;}
-    
-        .flex-center-between {display: flex;align-items: center;justify-content: space-between}
-    `);
 })();

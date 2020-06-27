@@ -11,12 +11,6 @@
   <img src="https://img.shields.io/badge/chrome%20x64-v76.0-brightgreen.svg" alt="chrome">
   <img src="https://img.shields.io/badge/safari%20-v12.0-brightgreen.svg" alt="safari">
   <img src="https://img.shields.io/badge/platform-Windows%20%7C%20Mac%20%7C%20Android-blue.svg" alt="platform">
-  <a href="https://www.baiduyun.wiki/zh-cn/donate.html">
-    <img src="https://img.shields.io/badge/%24-donate-ff69b4.svg" alt="donate">
-  </a>
-  <a href="https://github.com/syhyz1990/baiduyun">
-    <img src="https://img.shields.io/badge/Star-10k+-yellow.svg?style=social&logo=github" alt="stars">
-  </a>
 </p>
 
 [中文文档](README.md) | [English Docs](README_EN.md)

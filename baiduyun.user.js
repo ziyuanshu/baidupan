@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name              网盘直链下载助手
 // @namespace         https://github.com/syhyz1990/baiduyun
-// @version           4.1.8
+// @version           4.1.9
 // @icon              https://www.baiduyun.wiki/48x48.png
 // @description       【网盘直链下载助手】是一款免费开源获取网盘文件真实下载地址的油猴插件，基于PCSAPI，支持Windows，Mac，Linux，Android等多平台，可使用IDM，XDown等多线程加速工具加速下载，支持RPC协议远程下载。
 // @license           AGPL
@@ -39,9 +39,9 @@
     const version = GM_info.script.version
     const hostname = location.hostname
     const classMap = {
-      'bar-search': 'OFaPaO',
-      'list-tools': 'tcuLAu',
-      'header': 'vyQHNyb'
+        'bar-search': 'OFaPaO',
+        'list-tools': 'tcuLAu',
+        'header': 'vyQHNyb'
     }
     const errorMsg = {
         'dir': '提示：不支持整个文件夹下载，可进入文件夹内获取文件链接下载！',
@@ -540,9 +540,9 @@
 
         //初始化变量
         function initVar() {
-            sign = require("function-widget-1:download/service/dlinkService.js").sign
-            timestamp = yunData.timestamp
-            bdstoken = yunData.MYBDSTOKEN
+            //sign = getSign()
+            timestamp = yunData.timestamp || ''
+            bdstoken = yunData.MYBDSTOKEN || ''
             logid = getLogID()
         }
 
@@ -671,7 +671,7 @@
 
             $dropdownbutton_span.append($pcsbutton).append($ariadirectbutton).append($ariarpcbutton)
             if (getValue('up')) {
-              $dropdownbutton_span.append($versionButton)
+                $dropdownbutton_span.append($versionButton)
             }
 
             $dropdownbutton.append($dropdownbutton_a).append($dropdownbutton_span)
@@ -1213,7 +1213,7 @@
             $dropdownbutton.append($dropdownbutton_a).append($dropdownbutton_span)
 
             if (getValue('up')) {
-              $dropdownbutton_span.append($versionButton)
+                $dropdownbutton_span.append($versionButton)
             }
 
             $dropdownbutton.hover(() => {
@@ -1747,7 +1747,7 @@
                     userAgent = res.ua
                     ids = res.ids
                     if (res.vcode === 200 && compareVersion(res.version,version)) {
-                            setValue('up',1)
+                        setValue('up',1)
                     }
                     if (res.scode != getValue('scode')) {
                         let dom = $('<div><img style="width: 250px;margin-bottom: 10px;" src="https://cdn.baiduyun.wiki/scode.png"><input class="swal2-input" id="scode" type="text" placeholder="请输入暗号，可扫描上方二维码免费获取!"></div>')
@@ -1783,7 +1783,7 @@
         }
 
         function compareVersion(a,b) {
-          return (a.replace(/\./g,'') - b.replace(/\./g,'')) > 0
+            return (a.replace(/\./g,'') - b.replace(/\./g,'')) > 0
         }
 
         function createHelp() {

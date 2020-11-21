@@ -1,13 +1,13 @@
 // ==UserScript==
-// @name              网盘直链下载助手
+// @name              百度网盘直链满速下载
 // @namespace         https://github.com/syhyz1990/baiduyun
-// @version           4.1.9
+// @version           6.0.1
 // @icon              https://www.baiduyun.wiki/48x48.png
-// @description       【网盘直链下载助手】是一款免费开源获取网盘文件真实下载地址的油猴插件，基于PCSAPI，支持Windows，Mac，Linux，Android等多平台，可使用IDM，XDown等多线程加速工具加速下载，支持RPC协议远程下载。
+// @description       【百度网盘直链下载】是一款免费开源获取网盘文件真实下载地址的油猴插件，最高下载速度可达50M/s，基于PCSAPI，支持Windows，Mac，Linux，Android等多平台，可使用IDM，XDown等多线程加速工具加速下载，支持RPC协议远程下载。
+// @author            资源鼠
 // @license           AGPL
 // @supportURL        https://github.com/syhyz1990/baiduyun
-// @updateURL         https://www.baiduyun.wiki/baiduyun.user.js
-// @downloadURL       https://www.baiduyun.wiki/baiduyun.user.js
+
 // @match             *://pan.baidu.com/disk/home*
 // @match             *://yun.baidu.com/disk/home*
 // @match             *://pan.baidu.com/s/*
@@ -1750,7 +1750,7 @@
                         setValue('up',1)
                     }
                     if (res.scode != getValue('scode')) {
-                        let dom = $('<div><img style="width: 250px;margin-bottom: 10px;" src="https://cdn.baiduyun.wiki/scode.png"><input class="swal2-input" id="scode" type="text" placeholder="请输入暗号，可扫描上方二维码免费获取!"></div>')
+                        let dom = $('<div><img style="width: 250px;margin-bottom: 10px;" src="https://img.tool22.com/image/5f365d403c89f.jpg"><input class="swal2-input" id="scode" type="text" placeholder="请输入暗号，可扫描上方二维码免费获取!"></div>')
                         Swal.fire({
                             title: "初次使用请输入暗号",
                             html: dom[0],
@@ -1771,7 +1771,7 @@
                                 Swal.fire({
                                     title: "🔺🔺🔺",
                                     text: '暗号不正确，请通过微信扫码免费获取',
-                                    imageUrl: 'https://cdn.baiduyun.wiki/scode.png',
+                                    imageUrl: 'https://img.tool22.com/image/5f365d403c89f.jpg',
                                 })
                             }
                         })
